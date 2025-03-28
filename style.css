@@ -55,7 +55,6 @@ nav, nav *, .time-display {
 }
 
 
-/* Główne style */
 * {
     margin: 0;
     padding: 0;
@@ -63,35 +62,12 @@ nav, nav *, .time-display {
     font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, sans-serif;
 }
 
-/* Czcionki */
-@font-face {
-    font-family: 'SF Pro Display';
-    src: url('https://sf.abarba.me/SFProDisplay-Regular.woff2') format('woff2');
-    font-weight: 400;
-    font-style: normal;
-}
+/* Czcionki - usunięte stare definicje @font-face */
 
-@font-face {
-    font-family: 'SF Pro Display';
-    src: url('https://sf.abarba.me/SFProDisplay-Medium.woff2') format('woff2');
-    font-weight: 500;
-    font-style: normal;
+/* Nawigacja */
+nav, nav *, .time-display {
+    font-family: 'Fake Receipt', -apple-system, BlinkMacSystemFont, sans-serif;
 }
-
-@font-face {
-    font-family: 'SF Pro Display';
-    src: url('https://sf.abarba.me/SFProDisplay-Semibold.woff2') format('woff2');
-    font-weight: 600;
-    font-style: normal;
-}
-
-@font-face {
-    font-family: 'SF Pro Display';
-    src: url('https://sf.abarba.me/SFProDisplay-Bold.woff2') format('woff2');
-    font-weight: 700;
-    font-style: normal;
-}
-
 body {
     background-color: #000;
     color: #fff;
