@@ -253,12 +253,16 @@ nav a:hover {
 
 /*ZDJĘCIE W MODALU */
 .profile-img-container {
-    background: url('https://i.ibb.co/xqB3nJyT/image.png') center/cover no-repeat;
     width: 120px;
     height: 120px;
     border-radius: 50%;
+    overflow: hidden;
     margin: 0 auto 25px;
     border: 3px solid rgba(255, 255, 255, 0.2);
+    background-image: url('https://i.ibb.co/xqB3nJyT/image.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
 }
 /*TAGI*/
 .tags-container {
