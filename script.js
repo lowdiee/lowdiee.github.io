@@ -42,7 +42,7 @@ document.addEventListener('DOMContentLoaded', function() {
             "line_linked": {
                 "enable": true,
                 "distance": 150,
-                "color": "#4facfe",
+                "color": "#141414",
                 "opacity": 0.4,
                 "width": 1
             },
