@@ -42,11 +42,11 @@
 /* Usuń stare @font-face dla Fake Receipt i zastąp tym: */
 @font-face {
     font-family: 'Fake Receipt';
-    src: url('/fonts/fake-receipt.woff2') format('woff2'),
-         url('/fonts/fake-receipt.woff') format('woff');
-    font-weight: normal;
-    font-style: normal;
-    font-display: swap; /* Lepszego ładowanie czcionki */
+    src: url('./fonts/fake-receipt.woff') format('woff');
+}
+
+nav, nav *, .time-display {
+    font-family: 'Fake Receipt', monospace !important; /* !important wymusza zmianę */
 }
 
 /* Pozostaw resztę bez zmian */
