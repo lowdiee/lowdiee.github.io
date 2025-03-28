@@ -9,7 +9,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
             },
             "color": {
-                "value": "#4facfe" // Niebieski kolor cząstek
+                "value": "#4facfe"
             },
             "shape": {
                 "type": "circle",
