@@ -4,41 +4,37 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
+    <!-- Web Font Loader i bezpośrednie importy czcionek -->
+    <script src="https://ajax.googleapis.com/ajax/libs/webfont/1.6.26/webfont.js"></script>
+    <link href="https://fonts.cdnfonts.com/css/sf-pro-display" rel="stylesheet">
+    <link href="https://fonts.cdnfonts.com/css/fake-receipt" rel="stylesheet">
     <title>Portfolio</title>
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
         }
         
-      <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css">
-    <!-- Dodaj CDN dla czcionek -->
-    <link href="https://fonts.cdnfonts.com/css/fake-receipt" rel="stylesheet">
-    <link href="https://fonts.cdnfonts.com/css/sf-pro-display" rel="stylesheet">
-    <title>Portfolio</title>
-    <style>
-        /* Menu and time keep Fake Receipt */
-        nav, nav *, .time-display {
-            font-family: 'Fake Receipt', -apple-system, BlinkMacSystemFont, sans-serif;
+        /* Tymczasowe style podczas ładowania */
+        .wf-loading body {
+            visibility: hidden;
+        }
+        
+        .wf-active body, .wf-inactive body {
+            visibility: visible;
         }
         
         body {
             background-color: #000;
             color: #fff;
             overflow-x: hidden;
-            font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, sans-serif;
+            font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
         }
-        /* ... reszta kodu pozostaje bez zmian ... */
-
         
-        /* Menu and time keep Fake Receipt */
         nav, nav *, .time-display {
-            font-family: 'Fake Receipt', -apple-system, BlinkMacSystemFont, sans-serif;
+            font-family: 'Fake Receipt', 'Courier New', Courier, monospace;
         }
         
         body {
