@@ -96,29 +96,29 @@ document.addEventListener('DOMContentLoaded', function() {
     let charIndex = 0;
     let isDeleting = false;
 
-    function type() {
-        const currentWord = words[wordIndex];
-        const currentChar = currentWord.substring(0, charIndex);
-        
-        typingText.textContent = currentChar;
-        
-        if (!isDeleting && charIndex < currentWord.length) {
-            charIndex++;
-            setTimeout(type, 100);
-        } else if (isDeleting && charIndex > 0) {
-            charIndex--;
-            setTimeout(type, 50);
-        } else {
-            isDeleting = !isDeleting;
-            if (!isDeleting) {
-                wordIndex = (wordIndex + 1) % words.length;
-            }
-            setTimeout(type, 1000);
+function type() {
+    const currentWord = words[wordIndex];
+    const currentChar = currentWord.substring(0, charIndex);
+    
+    typingText.textContent = currentChar;
+    
+    if (!isDeleting && charIndex < currentWord.length) {
+        charIndex++;
+        setTimeout(type, 100);
+    } else if (isDeleting && charIndex > 0) {
+        charIndex--;
+        setTimeout(type, 50);
+    } else {
+        isDeleting = !isDeleting;
+        if (!isDeleting) {
+            wordIndex = (wordIndex + 1) % words.length;
         }
+        setTimeout(type, 1000);
     }
+}
 
-    // Rozpocznij efekt pisania
-    type();
+// Rozpocznij efekt pisania
+type();
 
     // Efekt parallax dla tekstu
     const heroSection = document.querySelector('.hero');
