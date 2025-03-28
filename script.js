@@ -10,7 +10,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
             },
             "color": {
-                "value": "#141414"
+                "value": "#1d1d1f"
             },
             "shape": {
                 "type": "circle",
@@ -42,7 +42,7 @@ document.addEventListener('DOMContentLoaded', function() {
             "line_linked": {
                 "enable": true,
                 "distance": 150,
-                "color": "#141414",
+                "color": "#4facfe",
                 "opacity": 0.4,
                 "width": 1
             },
