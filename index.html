@@ -729,5 +729,28 @@
             typingText.style.transform = `translateY(${scrollPosition * 0.3}px)`;
         });
     </script>
+      <script>
+        // Inicjalizacja Web Font Loader
+        WebFont.load({
+            custom: {
+                families: ['SF Pro Display', 'Fake Receipt'],
+                urls: [
+                    'https://fonts.cdnfonts.com/css/sf-pro-display',
+                    'https://fonts.cdnfonts.com/css/fake-receipt'
+                ]
+            },
+            timeout: 2000
+        });
+
+        // Fallback jeśli czcionki się nie załadują
+        setTimeout(function() {
+            if (!document.fonts || !document.fonts.check('1em SF Pro Display')) {
+                document.documentElement.classList.add('no-sf-pro');
+            }
+            if (!document.fonts || !document.fonts.check('1em Fake Receipt')) {
+                document.documentElement.classList.add('no-fake-receipt');
+            }
+        }, 2500);
+    </script>
 </body>
 </html>
