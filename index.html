@@ -3,58 +3,33 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- DODANE: Czcionka Fake Receipt z CDN -->
+    <!-- Czcionki z CDN -->
+    <link href="https://fonts.cdnfonts.com/css/sf-pro-display" rel="stylesheet">
     <link href="https://fonts.cdnfonts.com/css/fake-receipt" rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
-    <title>Portfolio</title>
     <style>
+        /* Główne style */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
             font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, sans-serif;
         }
-        
-        
-        /* SF Pro Display - Apple's system font */
-        @font-face {
-            font-family: 'SF Pro Display';
-            src: url('https://sf.abarba.me/SFProDisplay-Regular.woff2') format('woff2');
-            font-weight: 400;
-            font-style: normal;
+
+        /* Nadpisanie SF Pro Display z CDN */
+        body {
+            font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, sans-serif;
         }
-        
-        @font-face {
-            font-family: 'SF Pro Display';
-            src: url('https://sf.abarba.me/SFProDisplay-Medium.woff2') format('woff2');
-            font-weight: 500;
-            font-style: normal;
-        }
-        
-        @font-face {
-            font-family: 'SF Pro Display';
-            src: url('https://sf.abarba.me/SFProDisplay-Semibold.woff2') format('woff2');
-            font-weight: 600;
-            font-style: normal;
-        }
-        
-        @font-face {
-            font-family: 'SF Pro Display';
-            src: url('https://sf.abarba.me/SFProDisplay-Bold.woff2') format('woff2');
-            font-weight: 700;
-            font-style: normal;
-        }
-        
-        /* Menu and time keep Fake Receipt */
+
+        /* Fake Receipt dla nav i time-display */
         nav, nav *, .time-display {
-            font-family: 'Fake Receipt', -apple-system, BlinkMacSystemFont, sans-serif;
+            font-family: 'Fake Receipt', 'SF Pro Display', monospace !important;
         }
-        
+
+        /* Reszta Twojego oryginalnego CSS... */
         body {
             background-color: #000;
             color: #fff;
             overflow-x: hidden;
-            font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, sans-serif;
         }
         
         nav {
