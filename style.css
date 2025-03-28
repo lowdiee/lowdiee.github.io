@@ -259,6 +259,7 @@ nav a:hover {
     overflow: hidden;
     margin: 0 auto 25px;
     border: 3px solid rgba(255, 255, 255, 0.2);
+    position: relative; /* Dodaj to jeśli potrzebujesz */
 }
 
 .profile-image {
@@ -267,24 +268,6 @@ nav a:hover {
     object-fit: cover;
     object-position: center;
     display: block;
-}
-
-.card span {
-    display: block;
-    text-align: center;
-    font-size: 24px;
-    font-weight: 600;
-    margin-bottom: 15px;
-    color: #fff;
-}
-
-.card .info {
-    color: #aaa;
-    text-align: center;
-    font-size: 16px;
-    line-height: 1.6;
-    margin-bottom: 25px;
-    font-weight: 400;
 }
 
 /*TAGI*/
