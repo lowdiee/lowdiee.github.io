@@ -42,7 +42,7 @@
 /* Usuń stare @font-face dla Fake Receipt i zastąp tym: */
 @font-face {
     font-family: 'Fake Receipt';
-    src: url('./fonts/fake-receipt.woff') format('woff');
+    src: url('https://cdn.jsdelivr.net/gh/andrewhwanpark/cloudfonts@latest/fake-receipt.woff2') format('woff2');
 }
 
 nav, nav *, .time-display {
