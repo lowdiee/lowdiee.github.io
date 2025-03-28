@@ -117,24 +117,25 @@
     z-index: -1;
 }
         
-        .projects-title {
-            font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, sans-serif;
-            font-size: 15vw;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 5px;
-            white-space: nowrap;
-            position: absolute;
-            z-index: 1;
-            background: linear-gradient(to bottom right, 
-            #ffffff 0%, 
-            #ffffff 30%, 
-            rgba(255,255,255,0.3) 100%);
-            -webkit-background-clip: text;
-            background-clip: text;
-            -webkit-text-fill-color: transparent;
-            text-shadow: 0 1px 1px rgba(0,0,0,0.2);
-        }
+.projects-title {
+    position: relative;
+    z-index: 1;
+    font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, sans-serif;
+    font-size: 15vw;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 5px;
+    white-space: nowrap;
+    background: linear-gradient(to bottom right, 
+        #ffffff 0%, 
+        #ffffff 30%, 
+        rgba(255,255,255,0.3) 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-shadow: 0 1px 1px rgba(0,0,0,0.2);
+    will-change: transform; /* Optymalizacja dla animacji */
+}
         
         /* Projects Section */
      /* Sekcja projektów */
