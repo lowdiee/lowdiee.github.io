@@ -587,40 +587,7 @@
     </div>
     
     <script>
-        // Typing effect for projects title
-        const typingText = document.getElementById('typingText');
-        const words = ["PROJECTS", "プロジェクト", "المشاريع", "프로젝트", "ПРОЕКТЫ"];
-        let wordIndex = 0;
-        let charIndex = 0;
-        let isDeleting = false;
-        let isEnd = false;
-        
-        function type() {
-            const currentWord = words[wordIndex];
-            const currentChar = currentWord.substring(0, charIndex);
-            
-            typingText.innerHTML = currentChar;
-            
-            if (!isDeleting && charIndex < currentWord.length) {
-                // Typing
-                charIndex++;
-                setTimeout(type, 100);
-            } else if (isDeleting && charIndex > 0) {
-                // Deleting
-                charIndex--;
-                setTimeout(type, 50);
-            } else {
-                // Change word
-                isDeleting = !isDeleting;
-                if (!isDeleting) {
-                    wordIndex = (wordIndex + 1) % words.length;
-                }
-                setTimeout(type, 1000);
-            }
-        }
-        
-        // Start typing effect
-        type();
+     
         
         // Modal functionality
         const aboutLink = document.querySelector('.about-link');
