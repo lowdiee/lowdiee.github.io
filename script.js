@@ -1,4 +1,4 @@
-document.addEventListener('DOMContentLoaded', function() {
+
 // Back to Top Button
 const backToTopBtn = document.querySelector('.back-to-top');
 
