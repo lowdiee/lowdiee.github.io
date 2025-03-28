@@ -394,6 +394,7 @@ nav a:hover {
 
 /* Back to Top Button */
 .back-to-top {
+  display: block; /* Dodaj tę linię */
   position: fixed;
   left: 30px;
   bottom: 30px;
