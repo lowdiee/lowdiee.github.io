@@ -314,3 +314,11 @@ nav a:hover {
         margin: 60px 0;
     }
 }
+
+/*QUOTE highlight*/
+.highlight {
+  background-color: #4facfe;
+  color: #000;
+  padding: 0 4px;
+  border-radius: 3px;
+}
