@@ -40,15 +40,16 @@
 
 /*CZCIONKA*/
 /* Usuń stare @font-face dla Fake Receipt i zastąp tym: */
+/* W pliku style.css */
 @font-face {
     font-family: 'Fake Receipt';
-    src: url('/fonts/fake-receipt.woff2') format('woff2'),
-         url('/fonts/fake-receipt.woff') format('woff');
-    font-weight: normal;
-    font-style: normal;
-    font-display: swap; /* Lepszego ładowanie czcionki */
+    src: url('https://fonts.cdnfonts.com/css/fake-receipt') format('woff2');
 }
 
+/* Użyj czcionki w elemencie */
+nav, nav *, .time-display {
+    font-family: 'Fake Receipt', monospace;
+}
 
 /* Pozostaw resztę bez zmian */
 nav, nav *, .time-display {
