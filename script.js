@@ -420,21 +420,50 @@ WebFont.load({
   }
 });
 
-// Animacja projektów
-function animateProjects() {
-    const projectItems = document.querySelectorAll('.project-item');
-    const windowHeight = window.innerHeight;
-    const triggerPoint = windowHeight * 0.8;
-
-    projectItems.forEach((item, index) => {
-        const itemTop = item.getBoundingClientRect().top;
-        
-        if (itemTop < triggerPoint) {
-            item.classList.add('animate');
-        }
+// Nowa funkcja do resetowania animacji
+function resetProjectAnimations() {
+    document.querySelectorAll('.project-item').forEach(item => {
+        item.classList.remove('animate');
     });
 }
 
-// Obsługa scrollowania
+// Ulepszona funkcja animacji
+function animateProjects() {
+    const projectItems = document.querySelectorAll('.project-item');
+    const projectsSection = document.getElementById('projects');
+    const sectionTop = projectsSection.getBoundingClientRect().top;
+    const windowHeight = window.innerHeight;
+    
+    // Resetuj animacje gdy sekcja wchodzi do widoku
+    if (sectionTop < windowHeight * 0.75 && sectionTop > -windowHeight * 0.25) {
+        resetProjectAnimations();
+        
+        projectItems.forEach((item, index) => {
+            const itemTop = item.getBoundingClientRect().top;
+            if (itemTop < windowHeight * 0.85) {
+                setTimeout(() => {
+                    item.classList.add('animate');
+                }, index * 100); // Opóźnienie dla każdego projektu
+            }
+        });
+    }
+}
+
+// Intersection Observer dla lepszej kontroli
+const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            animateProjects();
+        }
+    });
+}, { threshold: 0.1 });
+
+// Podpięcie obserwatora do sekcji projektów
+const projectsSection = document.getElementById('projects');
+if (projectsSection) {
+    observer.observe(projectsSection);
+}
+
+// Ręczne wywołanie przy ładowaniu
+document.addEventListener('DOMContentLoaded', animateProjects);
 window.addEventListener('scroll', animateProjects);
-window.addEventListener('load', animateProjects); // Animacja przy pierwszym ładowaniu
