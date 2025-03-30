@@ -183,3 +183,201 @@
         padding: 20px;
     }
 }
+
+
+/* Fuel Calculator Styles */
+.fuel-calculator {
+    background-color: #000;
+    padding: 80px 20px;
+    color: white;
+}
+
+.calculator-container {
+    max-width: 600px;
+    margin: 0 auto;
+    background: rgba(20, 20, 20, 0.8);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 16px;
+    padding: 40px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+.calculator-container h2 {
+    font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, sans-serif;
+    text-align: center;
+    margin-bottom: 30px;
+    font-size: 24px;
+    font-weight: 600;
+    color: #fff;
+}
+
+.calculator-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.form-row {
+    display: flex;
+    gap: 20px;
+}
+
+.form-row .form-group {
+    flex: 1;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.form-group label {
+    font-family: 'SF Pro Text', -apple-system, BlinkMacSystemFont, sans-serif;
+    font-size: 14px;
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.form-group input {
+    padding: 12px 16px;
+    border-radius: 8px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: rgba(30, 30, 30, 0.5);
+    color: white;
+    font-family: 'SF Pro Text', -apple-system, BlinkMacSystemFont, sans-serif;
+    font-size: 15px;
+    transition: all 0.3s ease;
+}
+
+.form-group input:focus {
+    outline: none;
+    border-color: rgba(79, 172, 254, 0.5);
+    box-shadow: 0 0 0 3px rgba(79, 172, 254, 0.1);
+}
+
+.passengers-group {
+    margin-top: 10px;
+}
+
+.passengers-selector {
+    display: flex;
+    gap: 8px;
+    background: rgba(30, 30, 30, 0.5);
+    border-radius: 8px;
+    padding: 6px;
+    width: fit-content;
+}
+
+.passenger-option {
+    padding: 8px 16px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-size: 18px;
+    line-height: 1;
+    color: rgba(255, 255, 255, 0.6);
+    background: transparent;
+}
+
+.passenger-option:hover {
+    background: rgba(255, 255, 255, 0.05);
+    color: rgba(255, 255, 255, 0.8);
+}
+
+.passenger-option.active {
+    background: rgba(79, 172, 254, 0.2);
+    color: #4facfe;
+    box-shadow: 0 0 0 1px rgba(79, 172, 254, 0.3);
+}
+
+#calculate-btn {
+    padding: 14px 20px;
+    border-radius: 8px;
+    border: none;
+    background: linear-gradient(45deg, #4facfe, #00f2fe);
+    color: #000;
+    font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, sans-serif;
+    font-weight: 500;
+    font-size: 16px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-top: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+#calculate-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(79, 172, 254, 0.4);
+}
+
+#calculate-btn svg {
+    transition: transform 0.3s ease;
+}
+
+#calculate-btn:hover svg {
+    transform: translateX(3px);
+}
+
+.calculator-results {
+    margin-top: 30px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding: 20px;
+    background: rgba(30, 30, 30, 0.3);
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.result-item {
+    display: flex;
+    justify-content: space-between;
+    font-family: 'SF Pro Text', -apple-system, BlinkMacSystemFont, sans-serif;
+    padding: 8px 0;
+}
+
+.result-item.highlight {
+    padding: 12px 0;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    margin-top: 4px;
+}
+
+.result-label {
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.result-value {
+    font-weight: 500;
+    color: #fff;
+}
+
+.result-item.highlight .result-value {
+    color: #4facfe;
+    font-weight: 600;
+}
+
+@media (max-width: 768px) {
+    .calculator-container {
+        padding: 30px 20px;
+    }
+    
+    .form-row {
+        flex-direction: column;
+        gap: 20px;
+    }
+    
+    .passengers-selector {
+        width: 100%;
+        justify-content: space-between;
+    }
+    
+    .passenger-option {
+        flex: 1;
+        text-align: center;
+    }
+}
