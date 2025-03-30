@@ -5,232 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Fuel Calculator | Your Portfolio</title>
     <link rel="stylesheet" href="../style.css">
-    <style>
-        /* Global styles */
-        body {
-            background-color: #000;
-            color: #fff;
-            font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, sans-serif;
-            margin: 0;
-            padding: 0;
-            overflow-x: hidden;
-        }
-
-        .noise-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-image: url('https://cdn.prod.website-files.com/651d15fb8f27f4a03c14ae88/651d15fb8f27f4a03c14afa4_5d8424ac4ffed73f4d72846e_5c06f51d6e75c933fe05c728_giphy.gif');
-            background-size: 480px;
-            background-attachment: fixed;
-            opacity: 0.02;
-            pointer-events: none;
-            z-index: 2147483647;
-        }
-
-        /* Navigation */
-        nav {
-            position: fixed;
-            top: 0;
-            width: 100%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 20px 40px;
-            z-index: 100;
-            background: rgba(0,0,0,0.7);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-        }
-
-        .nav-links {
-            display: flex;
-            align-items: center;
-        }
-
-        nav a {
-            color: #fff;
-            text-decoration: none;
-            margin: 0 25px;
-            font-size: 14px;
-            letter-spacing: 1px;
-            text-transform: uppercase;
-            transition: all 0.3s ease;
-            position: relative;
-            font-family: 'Fake Receipt', -apple-system, BlinkMacSystemFont, sans-serif;
-        }
-
-        nav a:hover {
-            color: #4facfe;
-        }
-
-        .time-display {
-            font-family: 'Fake Receipt', -apple-system, BlinkMacSystemFont, sans-serif;
-            font-size: 14px;
-            letter-spacing: 1px;
-            cursor: default;
-            transition: all 0.3s ease;
-            margin-left: 40px;
-        }
-
-        .time-display:hover {
-            color: #4facfe;
-        }
-
-        /* Calculator styles */
-        .fuel-calc-container {
-            max-width: 500px;
-            margin: 120px auto 60px;
-            padding: 40px;
-            background: rgba(26, 26, 26, 0.8);
-            border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            transform: translateY(50px);
-            opacity: 0;
-            transition: all 1s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-
-        .fuel-calc-container.visible {
-            transform: translateY(0);
-            opacity: 1;
-        }
-
-        .fuel-calc-title {
-            font-family: 'Fake Receipt', monospace;
-            font-size: 24px;
-            letter-spacing: 1px;
-            margin-bottom: 30px;
-            color: #4facfe;
-            text-transform: uppercase;
-            text-align: center;
-        }
-
-        .input-group {
-            margin-bottom: 25px;
-        }
-
-        .input-group label {
-            display: block;
-            font-family: 'Fake Receipt', monospace;
-            font-size: 14px;
-            letter-spacing: 1px;
-            margin-bottom: 8px;
-            color: rgba(255,255,255,0.8);
-        }
-
-        .input-group input {
-            width: 100%;
-            padding: 12px 15px;
-            background: rgba(255,255,255,0.1);
-            border: 1px solid rgba(255,255,255,0.1);
-            border-radius: 10px;
-            color: white;
-            font-family: 'SF Pro Display', -apple-system, sans-serif;
-            font-size: 16px;
-            transition: all 0.3s ease;
-        }
-
-        .input-group input:focus {
-            outline: none;
-            border-color: #4facfe;
-            background: rgba(79, 172, 254, 0.1);
-        }
-
-        /* People selector */
-        .people-selector {
-            display: flex;
-            justify-content: space-between;
-            margin-top: 15px;
-        }
-
-        .person-icon {
-            width: 36px;
-            height: 36px;
-            background: rgba(255,255,255,0.1);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .person-icon svg {
-            width: 20px;
-            height: 20px;
-            fill: rgba(255,255,255,0.6);
-            transition: all 0.3s ease;
-        }
-
-        .person-icon.selected {
-            background: #4facfe;
-        }
-
-        .person-icon.selected svg {
-            fill: #000;
-        }
-
-        /* Button */
-        .calculate-btn {
-            width: 100%;
-            padding: 15px;
-            background: linear-gradient(45deg, #4facfe, #00f2fe);
-            color: #000;
-            border: none;
-            border-radius: 10px;
-            font-family: 'Fake Receipt', monospace;
-            font-size: 14px;
-            letter-spacing: 1px;
-            text-transform: uppercase;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            margin-top: 20px;
-        }
-
-        .calculate-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(79, 172, 254, 0.4);
-        }
-
-        /* Results */
-        .results {
-            margin-top: 30px;
-            padding-top: 20px;
-            border-top: 1px solid rgba(255,255,255,0.1);
-            display: none;
-        }
-
-        .result-item {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 15px;
-            font-family: 'SF Pro Display', -apple-system, sans-serif;
-            animation: fadeIn 0.5s ease-out forwards;
-            opacity: 0;
-        }
-
-        .result-label {
-            color: rgba(255,255,255,0.7);
-        }
-
-        .result-value {
-            font-weight: 500;
-            color: #4facfe;
-        }
-
-        /* Animations */
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .result-item:nth-child(1) { animation-delay: 0.1s; }
-        .result-item:nth-child(2) { animation-delay: 0.2s; }
-    </style>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.cdnfonts.com/css/sf-pro-display" rel="stylesheet">
+    <link href="https://fonts.cdnfonts.com/css/fake-receipt" rel="stylesheet">
 </head>
 <body>
     <div class="noise-overlay" aria-hidden="true"></div>
@@ -238,6 +15,13 @@
     <nav>
         <div class="nav-links">
             <a href="../index.html">← Back to Portfolio</a>
+            <div class="dropdown">
+                <a href="#">Sites ▼</a>
+                <div class="dropdown-content">
+                    <a href="fuel-calc/index.html">Fuel Calc</a>
+                    <a href="films/index.html">Films</a>
+                </div>
+            </div>
         </div>
         <div class="time-display" id="timeDisplay"></div>
     </nav>
@@ -268,37 +52,12 @@
         <div class="input-group">
             <label>PASSENGERS</label>
             <div class="people-selector" id="peopleSelector">
-                <div class="person-icon" data-people="1">
-                    <svg viewBox="0 0 24 24">
-                        <path d="M12 4a4 4 0 0 1 4 4 4 4 0 0 1-4 4 4 4 0 0 1-4-4 4 4 0 0 1 4-4m0 10c4.42 0 8 1.79 8 4v2H4v-2c0-2.21 3.58-4 8-4z"/>
-                    </svg>
-                </div>
-                <div class="person-icon" data-people="2">
-                    <svg viewBox="0 0 24 24">
-                        <path d="M16 17v2H2v-2s0-4 7-4 7 4 7 4m-3.5-9.5A3.5 3.5 0 1 0 9 11a3.5 3.5 0 0 0 3.5-3.5m3.44 5.5A5.32 5.32 0 0 1 18 17v2h4v-2s0-3.63-6.06-4M15 4a3.39 3.39 0 0 0-1.93.59 5 5 0 0 1 0 5.82A3.39 3.39 0 0 0 15 11a3.5 3.5 0 0 0 0-7z"/>
-                    </svg>
-                </div>
-                <div class="person-icon" data-people="3">
-                    <svg viewBox="0 0 24 24">
-                        <path d="M16 17v2H2v-2s0-4 7-4 7 4 7 4m-3.5-9.5A3.5 3.5 0 1 0 9 11a3.5 3.5 0 0 0 3.5-3.5m3.44 5.5A5.32 5.32 0 0 1 18 17v2h4v-2s0-3.63-6.06-4M15 4a3.39 3.39 0 0 0-1.93.59 5 5 0 0 1 0 5.82A3.39 3.39 0 0 0 15 11a3.5 3.5 0 0 0 0-7z"/>
-                        <path d="M16 17v2H2v-2s0-4 7-4 7 4 7 4m-3.5-9.5A3.5 3.5 0 1 0 9 11a3.5 3.5 0 0 0 3.5-3.5m3.44 5.5A5.32 5.32 0 0 1 18 17v2h4v-2s0-3.63-6.06-4M15 4a3.39 3.39 0 0 0-1.93.59 5 5 0 0 1 0 5.82A3.39 3.39 0 0 0 15 11a3.5 3.5 0 0 0 0-7z" transform="translate(8)"/>
-                    </svg>
-                </div>
-                <div class="person-icon" data-people="4">
-                    <svg viewBox="0 0 24 24">
-                        <path d="M16 17v2H2v-2s0-4 7-4 7 4 7 4m-3.5-9.5A3.5 3.5 0 1 0 9 11a3.5 3.5 0 0 0 3.5-3.5m3.44 5.5A5.32 5.32 0 0 1 18 17v2h4v-2s0-3.63-6.06-4M15 4a3.39 3.39 0 0 0-1.93.59 5 5 0 0 1 0 5.82A3.39 3.39 0 0 0 15 11a3.5 3.5 0 0 0 0-7z"/>
-                        <path d="M16 17v2H2v-2s0-4 7-4 7 4 7 4m-3.5-9.5A3.5 3.5 0 1 0 9 11a3.5 3.5 0 0 0 3.5-3.5m3.44 5.5A5.32 5.32 0 0 1 18 17v2h4v-2s0-3.63-6.06-4M15 4a3.39 3.39 0 0 0-1.93.59 5 5 0 0 1 0 5.82A3.39 3.39 0 0 0 15 11a3.5 3.5 0 0 0 0-7z" transform="translate(8)"/>
-                        <path d="M16 17v2H2v-2s0-4 7-4 7 4 7 4m-3.5-9.5A3.5 3.5 0 1 0 9 11a3.5 3.5 0 0 0 3.5-3.5m3.44 5.5A5.32 5.32 0 0 1 18 17v2h4v-2s0-3.63-6.06-4M15 4a3.39 3.39 0 0 0-1.93.59 5 5 0 0 1 0 5.82A3.39 3.39 0 0 0 15 11a3.5 3.5 0 0 0 0-7z" transform="translate(16)"/>
-                    </svg>
-                </div>
-                <div class="person-icon" data-people="5">
-                    <svg viewBox="0 0 24 24">
-                        <path d="M16 17v2H2v-2s0-4 7-4 7 4 7 4m-3.5-9.5A3.5 3.5 0 1 0 9 11a3.5 3.5 0 0 0 3.5-3.5m3.44 5.5A5.32 5.32 0 0 1 18 17v2h4v-2s0-3.63-6.06-4M15 4a3.39 3.39 0 0 0-1.93.59 5 5 0 0 1 0 5.82A3.39 3.39 0 0 0 15 11a3.5 3.5 0 0 0 0-7z"/>
-                        <path d="M16 17v2H2v-2s0-4 7-4 7 4 7 4m-3.5-9.5A3.5 3.5 0 1 0 9 11a3.5 3.5 0 0 0 3.5-3.5m3.44 5.5A5.32 5.32 0 0 1 18 17v2h4v-2s0-3.63-6.06-4M15 4a3.39 3.39 0 0 0-1.93.59 5 5 0 0 1 0 5.82A3.39 3.39 0 0 0 15 11a3.5 3.5 0 0 0 0-7z" transform="translate(8)"/>
-                        <path d="M16 17v2H2v-2s0-4 7-4 7 4 7 4m-3.5-9.5A3.5 3.5 0 1 0 9 11a3.5 3.5 0 0 0 3.5-3.5m3.44 5.5A5.32 5.32 0 0 1 18 17v2h4v-2s0-3.63-6.06-4M15 4a3.39 3.39 0 0 0-1.93.59 5 5 0 0 1 0 5.82A3.39 3.39 0 0 0 15 11a3.5 3.5 0 0 0 0-7z" transform="translate(16)"/>
-                        <path d="M16 17v2H2v-2s0-4 7-4 7 4 7 4m-3.5-9.5A3.5 3.5 0 1 0 9 11a3.5 3.5 0 0 0 3.5-3.5m3.44 5.5A5.32 5.32 0 0 1 18 17v2h4v-2s0-3.63-6.06-4M15 4a3.39 3.39 0 0 0-1.93.59 5 5 0 0 1 0 5.82A3.39 3.39 0 0 0 15 11a3.5 3.5 0 0 0 0-7z" transform="translate(24)"/>
-                    </svg>
-                </div>
+                <!-- Icons will be added via CSS -->
+                <div class="person-icon" data-people="1"></div>
+                <div class="person-icon" data-people="2"></div>
+                <div class="person-icon" data-people="3"></div>
+                <div class="person-icon" data-people="4"></div>
+                <div class="person-icon" data-people="5"></div>
             </div>
         </div>
         
@@ -320,126 +79,6 @@
         </div>
     </main>
 
-    <script>
-        // Time display (same as main site)
-        const timeDisplay = document.getElementById('timeDisplay');
-        let isHovering = false;
-        let cetInterval, gmtInterval;
-
-        function updateCET() {
-            const now = new Date();
-            const cetOptions = {
-                timeZone: 'Europe/Paris',
-                hour: '2-digit',
-                minute: '2-digit',
-                second: '2-digit',
-                hour12: false
-            };
-            timeDisplay.textContent = `CET ${now.toLocaleTimeString('en-GB', cetOptions)}`;
-        }
-
-        function updateGMT() {
-            const now = new Date();
-            const gmtOptions = {
-                timeZone: 'GMT',
-                hour: '2-digit',
-                minute: '2-digit',
-                second: '2-digit',
-                hour12: false
-            };
-            timeDisplay.textContent = `GMT ${now.toLocaleTimeString('en-GB', gmtOptions)}`;
-        }
-
-        function setupTimeDisplay() {
-            clearInterval(cetInterval);
-            clearInterval(gmtInterval);
-
-            if (isHovering) {
-                updateGMT();
-                gmtInterval = setInterval(updateGMT, 1000);
-            } else {
-                updateCET();
-                cetInterval = setInterval(updateCET, 1000);
-            }
-        }
-
-        timeDisplay.addEventListener('mouseenter', () => {
-            isHovering = true;
-            setupTimeDisplay();
-        });
-
-        timeDisplay.addEventListener('mouseleave', () => {
-            isHovering = false;
-            setupTimeDisplay();
-        });
-
-        setupTimeDisplay();
-
-        // People selector
-        const peopleIcons = document.querySelectorAll('.person-icon');
-        let selectedPeople = 1;
-
-        peopleIcons.forEach(icon => {
-            icon.addEventListener('click', () => {
-                peopleIcons.forEach(i => i.classList.remove('selected'));
-                icon.classList.add('selected');
-                selectedPeople = parseInt(icon.getAttribute('data-people'));
-            });
-        });
-
-        // Select first person by default
-        peopleIcons[0].classList.add('selected');
-
-        // Calculator logic
-        document.getElementById('calculateBtn').addEventListener('click', () => {
-            const origin = document.getElementById('origin').value;
-            const destination = document.getElementById('destination').value;
-            const consumption = parseFloat(document.getElementById('consumption').value);
-            const price = parseFloat(document.getElementById('price').value);
-
-            if (!origin || !destination || isNaN(consumption) {
-                alert('Please fill all required fields!');
-                return;
-            }
-
-            // For now using mock distance - will be replaced with Google Maps API
-            const distance = getMockDistance(origin, destination);
-            const fuelNeeded = (distance * consumption) / 100;
-            const totalCost = fuelNeeded * price;
-
-            document.getElementById('distanceResult').textContent = distance.toFixed(1);
-            document.getElementById('fuelNeeded').textContent = fuelNeeded.toFixed(2);
-            document.getElementById('totalCost').textContent = totalCost.toFixed(2);
-
-            // Show results with animation
-            document.getElementById('results').style.display = 'block';
-            
-            // Reset animations
-            const resultItems = document.querySelectorAll('.result-item');
-            resultItems.forEach(item => {
-                item.style.animation = 'none';
-                void item.offsetWidth; // Trigger reflow
-                item.style.animation = '';
-            });
-        });
-
-        // Mock distance function - replace with Google Maps API later
-        function getMockDistance(origin, destination) {
-            // This will be replaced with actual API call
-            return Math.random() * 300 + 50; // Random distance between 50-350km
-        }
-
-        // Handle Enter key
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'Enter') {
-                document.getElementById('calculateBtn').click();
-            }
-        });
-
-        // Show container with animation
-        window.addEventListener('load', () => {
-            document.getElementById('fuelCalc').classList.add('visible');
-        });
-    </script>
+    <script src="script.js"></script>
 </body>
 </html>
