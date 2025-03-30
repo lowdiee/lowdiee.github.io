@@ -173,6 +173,7 @@ nav a:hover {
     margin: 0 auto;
     max-width: 1400px;
     width: 100%;
+    ustify-items: center;
 }
 
 .project-item {
