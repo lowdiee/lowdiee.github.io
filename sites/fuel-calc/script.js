@@ -106,3 +106,54 @@ handleScroll();
 
 // Add scroll event listener
 window.addEventListener('scroll', handleScroll);
+
+
+// Fuel Calculator
+document.addEventListener('DOMContentLoaded', function() {
+    const minusBtn = document.querySelector('.passenger-btn.minus');
+    const plusBtn = document.querySelector('.passenger-btn.plus');
+    const passengerCount = document.querySelector('.passenger-count .count');
+    const calculateBtn = document.getElementById('calculate-btn');
+    
+    let passengers = 1;
+    
+    // Passenger count controls
+    minusBtn.addEventListener('click', function() {
+        if (passengers > 1) {
+            passengers--;
+            passengerCount.textContent = passengers;
+        }
+    });
+    
+    plusBtn.addEventListener('click', function() {
+        if (passengers < 8) {
+            passengers++;
+            passengerCount.textContent = passengers;
+        }
+    });
+    
+    // Calculate button
+    calculateBtn.addEventListener('click', function() {
+        // For now we'll use a fixed distance since we don't have Google Maps API integrated yet
+        const distance = 300; // km - to be replaced with actual distance calculation
+        const consumption = parseFloat(document.getElementById('fuel-consumption').value);
+        const fuelPrice = parseFloat(document.getElementById('fuel-price').value);
+        
+        // Calculations
+        const fuelNeeded = (distance * consumption) / 100;
+        const totalCost = fuelNeeded * fuelPrice;
+        const costPerPerson = totalCost / passengers;
+        
+        // Display results
+        document.getElementById('distance').textContent = distance + ' km';
+        document.getElementById('fuel-needed').textContent = fuelNeeded.toFixed(1) + ' l';
+        document.getElementById('total-cost').textContent = totalCost.toFixed(2) + ' zł';
+        document.getElementById('cost-per-person').textContent = costPerPerson.toFixed(2) + ' zł';
+        
+        // Show results
+        document.getElementById('results').style.display = 'block';
+    });
+    
+    // Initialize with empty results
+    document.getElementById('results').style.display = 'none';
+});
