@@ -204,3 +204,30 @@ document.getElementById('calculate-btn').addEventListener('click', function() {
         results.style.transform = 'translateY(0)';
     }, 10);
 });
+
+// Passenger selection
+document.querySelectorAll('.passenger-option').forEach(option => {
+    option.addEventListener('click', function() {
+        document.querySelectorAll('.passenger-option').forEach(opt => {
+            opt.classList.remove('active');
+        });
+        this.classList.add('active');
+    });
+});
+
+// Calculate function
+document.querySelector('.calculate-btn').addEventListener('click', function() {
+    // Example calculation (replace with real logic)
+    const distance = 250; // km
+    const consumption = parseFloat(document.getElementById('fuel-consumption').value);
+    const price = parseFloat(document.getElementById('fuel-price').value);
+    const passengers = document.querySelector('.passenger-option.active').dataset.value;
+    
+    const fuelNeeded = (distance * consumption) / 100;
+    const totalCost = fuelNeeded * price;
+    
+    // Display results
+    document.getElementById('distance-result').textContent = distance + ' km';
+    document.getElementById('fuel-result').textContent = fuelNeeded.toFixed(1) + ' L';
+    document.getElementById('cost-result').textContent = totalCost.toFixed(2) + ' PLN';
+});
