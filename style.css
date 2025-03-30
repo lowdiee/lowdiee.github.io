@@ -1,17 +1,17 @@
-/*NOISE*/
-.noise-overlay { 
-position: fixed;
-  top: -50%;
-  left: -50%;
-  right: -50%;
-  bottom: -50%;
-  width: 200%;
-  height: 200vh;
-  background: transparent url('http://assets.iceable.com/img/noise-transparent.png') repeat 0 0;
-  background-repeat: repeat;
-  animation: bg-animation .2s infinite;
-  opacity: .9;
-  visibility: visible;
+/* NOISE - POPRAWIONA WERSJA */
+.noise-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    min-height: 100%;
+    background: url('http://assets.iceable.com/img/noise-transparent.png') repeat;
+    animation: bg-animation 0.2s infinite;
+    opacity: 0.9;
+    pointer-events: none;
+    z-index: 9999;
+    transform: translateZ(0); /* Przyspiesza renderowanie */
 }
 
 @keyframes bg-animation {
