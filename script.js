@@ -1,5 +1,4 @@
-
-// Custom Cursor
+// Custom Cursor - zaktualizowana wersja
 const cursor = document.querySelector('.cursor');
 const cursorF = document.querySelector('.cursor-f');
 
@@ -43,20 +42,45 @@ function cursorLoop() {
 
 cursorLoop();
 
-// Click animations
-function mousedown() {
-    gsap.to(cursor, {scale: 4.5, duration: 0.3});
-    gsap.to(cursorF, {scale: 0.4, duration: 0.3});
+// Click animations - ZAKTUALIZOWANE
+function handleMouseDown() {
+    gsap.to(cursor, {
+        scale: 4.5,
+        duration: 0.3,
+        ease: "power2.out"
+    });
+    gsap.to(cursorF, {
+        scale: 0.4,
+        duration: 0.3,
+        ease: "power2.out"
+    });
 }
 
-function mouseup() {
-    gsap.to(cursor, {scale: 1, duration: 0.3});
-    gsap.to(cursorF, {scale: 1, duration: 0.3});
+function handleMouseUp() {
+    gsap.to(cursor, {
+        scale: 1,
+        duration: 0.4,
+        ease: "elastic.out(1, 0.5)"
+    });
+    gsap.to(cursorF, {
+        scale: 1,
+        duration: 0.4,
+        ease: "elastic.out(1, 0.5)"
+    });
 }
 
-window.addEventListener('mousedown', mousedown, false);
-window.addEventListener('mouseup', mouseup, false);
+// Poprawiona obsługa eventów
+document.addEventListener('mousedown', handleMouseDown);
+document.addEventListener('mouseup', handleMouseUp);
 
+// Dodatkowo dla spójności na całej stronie
+document.addEventListener('mouseleave', () => {
+    gsap.to([cursor, cursorF], { opacity: 0, duration: 0.3 });
+});
+
+document.addEventListener('mouseenter', () => {
+    gsap.to([cursor, cursorF], { opacity: 1, duration: 0.3 });
+});
 
 // Back to Top Button
 const backToTopBtn = document.querySelector('.back-to-top');
