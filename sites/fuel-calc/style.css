@@ -38,22 +38,22 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    min-height: calc(100vh - 80px);
-    padding: 40px 20px;
+    min-height: 100vh;
+    padding: 20px;
     background-color: #000;
 }
 
-.calculator-card {
+.calc-container {
     width: 100%;
     max-width: 400px;
-    background: rgba(20, 20, 20, 0.8);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 16px;
+    background: rgba(25, 25, 25, 0.8);
+    border-radius: 24px;
     padding: 30px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-.calculator-title {
+.calc-title {
     font-family: 'Fake Receipt', monospace;
     font-size: 14px;
     letter-spacing: 2px;
@@ -63,11 +63,11 @@
     text-transform: uppercase;
 }
 
-.input-group {
+.calc-input-group {
     margin-bottom: 20px;
 }
 
-.input-row {
+.calc-row {
     display: flex;
     gap: 15px;
 }
@@ -76,7 +76,7 @@
     flex: 1;
 }
 
-.input-label {
+.calc-label {
     font-family: 'Fake Receipt', monospace;
     font-size: 12px;
     color: rgba(255, 255, 255, 0.6);
@@ -86,95 +86,94 @@
     text-transform: uppercase;
 }
 
-.input-field {
-    background: rgba(30, 30, 30, 0.5);
+.calc-input {
+    width: 100%;
+    padding: 14px 20px;
+    background: rgba(35, 35, 35, 0.5);
     border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 10px;
-    padding: 0 15px;
-    height: 50px;
-    display: flex;
-    align-items: center;
-}
-
-.with-unit {
-    padding-right: 10px;
-}
-
-.input-field input {
-    background: transparent;
-    border: none;
+    border-radius: 12px;
     color: white;
     font-family: 'SF Pro Display', sans-serif;
     font-size: 16px;
-    width: 100%;
-    height: 100%;
     outline: none;
+    transition: all 0.3s;
 }
 
-.unit {
+.calc-input:focus {
+    border-color: rgba(79, 172, 254, 0.5);
+    box-shadow: 0 0 0 2px rgba(79, 172, 254, 0.2);
+}
+
+.calc-input-with-unit {
+    position: relative;
+}
+
+.calc-input-with-unit .calc-input {
+    padding-right: 70px;
+}
+
+.calc-unit {
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
     font-family: 'Fake Receipt', monospace;
     font-size: 12px;
     color: rgba(255, 255, 255, 0.5);
-    margin-left: 5px;
-    white-space: nowrap;
 }
 
-.passenger-selector {
+.passenger-buttons {
     display: flex;
-    background: rgba(30, 30, 30, 0.5);
-    border-radius: 10px;
-    padding: 5px;
+    gap: 8px;
 }
 
-.passenger-option {
+.passenger-btn {
     flex: 1;
-    text-align: center;
-    padding: 12px 0;
+    padding: 12px;
+    background: rgba(35, 35, 35, 0.5);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    color: rgba(255, 255, 255, 0.7);
     font-family: 'SF Pro Display', sans-serif;
     font-size: 16px;
-    color: rgba(255, 255, 255, 0.6);
     cursor: pointer;
-    transition: all 0.2s;
-    border-radius: 8px;
+    transition: all 0.3s;
 }
 
-.passenger-option.active {
+.passenger-btn.active {
     background: rgba(79, 172, 254, 0.2);
     color: #4facfe;
-    font-weight: 500;
+    border-color: rgba(79, 172, 254, 0.3);
 }
 
-.calculate-btn {
+.calc-submit-btn {
     width: 100%;
-    background: linear-gradient(45deg, #4facfe, #00f2fe);
-    color: #000;
-    border: none;
-    border-radius: 10px;
     padding: 16px;
+    background: linear-gradient(45deg, #4facfe, #00f2fe);
+    border: none;
+    border-radius: 12px;
+    color: #000;
     font-family: 'Fake Receipt', monospace;
     font-size: 14px;
     letter-spacing: 1px;
     text-transform: uppercase;
-    margin-top: 30px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
+    margin-top: 10px;
     cursor: pointer;
-    transition: transform 0.2s;
+    transition: all 0.3s;
 }
 
-.calculate-btn:hover {
+.calc-submit-btn:hover {
     transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(79, 172, 254, 0.4);
 }
 
-.results {
+.calc-results {
     margin-top: 30px;
-    border-top: 1px solid rgba(255, 255, 255, 0.1);
     padding-top: 20px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-.result-row {
+.result-item {
     display: flex;
     justify-content: space-between;
     font-family: 'SF Pro Display', sans-serif;
@@ -183,21 +182,21 @@
     color: rgba(255, 255, 255, 0.8);
 }
 
-.result-row.highlight {
+.result-item.highlight {
     color: white;
     font-weight: 500;
 }
 
-.result-row.highlight span:last-child {
+.result-item.highlight .result-value {
     color: #4facfe;
 }
 
 @media (max-width: 480px) {
-    .calculator-card {
-        padding: 25px;
+    .calc-container {
+        padding: 25px 20px;
     }
     
-    .input-row {
+    .calc-row {
         flex-direction: column;
         gap: 20px;
     }
