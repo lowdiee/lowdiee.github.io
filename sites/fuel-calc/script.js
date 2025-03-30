@@ -1,4 +1,3 @@
-
 // Time display functionality
 const timeDisplay = document.getElementById('timeDisplay');
 let isHovering = false;
@@ -120,8 +119,14 @@ window.addEventListener('load', () => {
     document.getElementById('fuelCalc').classList.add('visible');
 });
 
-// Custom cursor effect (optional)
-document.addEventListener('mousemove', (e) => {
-    // You can add custom cursor effects here if needed
-    // Currently using CSS cursor property
-});
+// About modal functionality (if needed)
+const aboutLink = document.querySelector('.about-link');
+const aboutModal = document.getElementById('aboutModal');
+
+if (aboutLink && aboutModal) {
+    aboutLink.addEventListener('click', (e) => {
+        e.preventDefault();
+        aboutModal.classList.add('active');
+        document.body.style.overflow = 'hidden';
+    });
+}
