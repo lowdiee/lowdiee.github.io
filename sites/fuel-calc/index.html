@@ -3,27 +3,27 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Fuel Calculator | Your Portfolio</title>
-    <link rel="stylesheet" href="/style.css">
-    <link rel="stylesheet" href="sites/fuel-calc/style.css">
+    <title>Fuel Calculator | LOWDIE</title>
+    <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="style.css">
     <link href="https://fonts.cdnfonts.com/css/sf-pro-display" rel="stylesheet">
     <link href="https://fonts.cdnfonts.com/css/fake-receipt" rel="stylesheet">
 </head>
 <body>
-    <!-- FUEL CALC -->
     <div class="noise-overlay" aria-hidden="true"></div>
     
     <nav>
-        <div class="nav-links">
-            <a href="../index.html">← Back to Portfolio</a>
-            <div class="dropdown">
-                <a href="#">Sites ▼</a>
-                <div class="dropdown-content">
-                    <a href="fuel-calc/index.html">Fuel Calc</a>
-                    <a href="films/index.html">Films</a>
-                </div>
-            </div>
-        </div>
+        <ul>
+            <li><a href="https://lowdiee.site">PROJECTS</a></li>
+            <li><a href="#" class="about-link">ABOUT ME</a></li>
+            <li class="dropdown">
+                <a href="#">SITES ▼</a>
+                <ul class="dropdown-content">
+                    <li><a href="fuel-calc/index.html">FUEL CALC</a></li>
+                    <li><a href="films/index.html">FILMS</a></li>
+                </ul>
+            </li>
+        </ul>
         <div class="time-display" id="timeDisplay"></div>
     </nav>
 
@@ -53,7 +53,6 @@
         <div class="input-group">
             <label>PASSENGERS</label>
             <div class="people-selector" id="peopleSelector">
-                <!-- Icons will be added via CSS -->
                 <div class="person-icon" data-people="1"></div>
                 <div class="person-icon" data-people="2"></div>
                 <div class="person-icon" data-people="3"></div>
@@ -80,6 +79,6 @@
         </div>
     </main>
 
-    <script src="/script.js"></script>
+    <script src="script.js"></script>
 </body>
 </html>
