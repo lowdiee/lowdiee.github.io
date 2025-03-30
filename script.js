@@ -449,21 +449,25 @@ function animateProjects() {
     }
 }
 
-// Intersection Observer dla lepszej kontroli
-const observer = new IntersectionObserver((entries) => {
+// Nowy Intersection Observer
+const projectsObserver = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
         if (entry.isIntersecting) {
-            animateProjects();
+            const projectItems = entry.target.querySelectorAll('.project-item');
+            projectItems.forEach((item, index) => {
+                setTimeout(() => {
+                    item.classList.add('animate');
+                }, index * 100);
+            });
+            projectsObserver.unobserve(entry.target);
         }
     });
 }, { threshold: 0.1 });
 
-// Podpięcie obserwatora do sekcji projektów
-const projectsSection = document.getElementById('projects');
-if (projectsSection) {
-    observer.observe(projectsSection);
-}
-
-// Ręczne wywołanie przy ładowaniu
-document.addEventListener('DOMContentLoaded', animateProjects);
-window.addEventListener('scroll', animateProjects);
+// Inicjalizacja
+document.addEventListener('DOMContentLoaded', () => {
+    const projectsSection = document.getElementById('projects');
+    if (projectsSection) {
+        projectsObserver.observe(projectsSection);
+    }
+});
