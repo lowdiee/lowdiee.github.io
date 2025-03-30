@@ -206,28 +206,28 @@ document.getElementById('calculate-btn').addEventListener('click', function() {
 });
 
 // Passenger selection
-document.querySelectorAll('.passenger-option').forEach(option => {
-    option.addEventListener('click', function() {
-        document.querySelectorAll('.passenger-option').forEach(opt => {
-            opt.classList.remove('active');
-        });
+document.querySelectorAll('.passenger-btn').forEach(btn => {
+    btn.addEventListener('click', function(e) {
+        e.preventDefault();
+        document.querySelectorAll('.passenger-btn').forEach(b => b.classList.remove('active'));
         this.classList.add('active');
     });
 });
 
-// Calculate function
-document.querySelector('.calculate-btn').addEventListener('click', function() {
-    // Example calculation (replace with real logic)
-    const distance = 250; // km
-    const consumption = parseFloat(document.getElementById('fuel-consumption').value);
-    const price = parseFloat(document.getElementById('fuel-price').value);
-    const passengers = document.querySelector('.passenger-option.active').dataset.value;
+// Calculate button
+document.querySelector('.calc-submit-btn').addEventListener('click', function() {
+    // Example calculation
+    const distance = 300; // km
+    const consumption = parseFloat(document.querySelector('.calc-row .calc-input').value);
+    const price = parseFloat(document.querySelectorAll('.calc-row .calc-input')[1].value);
+    const passengers = parseInt(document.querySelector('.passenger-btn.active').textContent);
     
     const fuelNeeded = (distance * consumption) / 100;
     const totalCost = fuelNeeded * price;
     
     // Display results
-    document.getElementById('distance-result').textContent = distance + ' km';
-    document.getElementById('fuel-result').textContent = fuelNeeded.toFixed(1) + ' L';
-    document.getElementById('cost-result').textContent = totalCost.toFixed(2) + ' PLN';
+    const resultValues = document.querySelectorAll('.result-value');
+    resultValues[0].textContent = distance + ' km';
+    resultValues[1].textContent = fuelNeeded.toFixed(1) + ' L';
+    resultValues[2].textContent = totalCost.toFixed(2) + ' PLN';
 });
