@@ -1,0 +1,511 @@
+
+/*ZDJĘCIE W MODALU */
+.profile-image-container {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  overflow: hidden;
+  margin: 0 auto 25px;
+  border: 3px solid rgba(255, 255, 255, 0.2);
+}
+
+.profile-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+}
+
+
+
+/*TAGI*/
+.tags-line {
+  display: inline;
+  white-space: nowrap;
+}
+
+.tag {
+  color: #4facfe;
+  font-size: 13px;
+  font-weight: 300;
+  background: rgba(100,100,100,0.15);
+  padding: 0 5px;
+  border-radius: 10px;
+  display: inline-block;
+  margin: 0 1px;
+  line-height: 1.5;
+}
+
+
+/*CZCIONKA*/
+/* Usuń stare @font-face dla Fake Receipt i zastąp tym: */
+@font-face {
+    font-family: 'Fake Receipt';
+    src: url('/fonts/fake-receipt.woff2') format('woff2'),
+         url('/fonts/fake-receipt.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap; /* Lepszego ładowanie czcionki */
+}
+
+/* Pozostaw resztę bez zmian */
+nav, nav *, .time-display {
+    font-family: 'Fake Receipt', monospace;
+}
+
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+/* Czcionki - usunięte stare definicje @font-face */
+
+/* Nawigacja */
+nav, nav *, .time-display {
+    font-family: 'Fake Receipt', -apple-system, BlinkMacSystemFont, sans-serif;
+}
+body {
+    background-color: #000;
+    color: #fff;
+    overflow-x: hidden;
+}
+
+/* Nawigacja */
+nav {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px 40px;
+    z-index: 100;
+    background: rgba(0,0,0,0.7);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+}
+
+.nav-links {
+    display: flex;
+    align-items: center;
+    margin-right: auto;
+}
+
+nav a {
+    color: #fff;
+    text-decoration: none;
+    margin: 0 25px;
+    font-size: 14px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    transition: all 0.3s ease;
+    position: relative;
+    font-family: 'Fake Receipt', -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+nav a:hover {
+    color: #4facfe;
+}
+
+.time-display {
+    font-family: 'Fake Receipt', -apple-system, BlinkMacSystemFont, sans-serif;
+    font-size: 14px;
+    letter-spacing: 1px;
+    cursor: default;
+    transition: all 0.3s ease;
+    margin-left: auto;
+}
+
+.time-display:hover {
+    color: #4facfe;
+}
+
+
+
+.canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+}
+
+.hero {
+  position: relative;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.hero-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, #0a0a0a 0%, #000000 100%);
+  z-index: -2;
+}
+
+/* Sekcja projektów */
+.projects-section {
+    min-height: 100vh;
+    background: #000;
+    padding: 100px 40px 40px;
+    transform: translateY(100px);
+    opacity: 0;
+    transition: all 1s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.projects-section.visible {
+    transform: translateY(0);
+    opacity: 1;
+}
+
+.projects-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* Zmiana z 2 na 3 kolumny */
+    gap: 20px;
+    margin-bottom: 20px;
+}
+
+@media (max-width: 1024px) {
+    .projects-grid {
+        grid-template-columns: repeat(2, 1fr); /* 2 kolumny na tabletach */
+    }
+}
+
+@media (max-width: 768px) {
+    .projects-grid {
+        grid-template-columns: 1fr; /* 1 kolumna na mobile */
+    }
+}
+
+.project-item {
+    position: relative;
+    overflow: hidden;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    transform: scale(0.95);
+    transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    will-change: transform;
+    aspect-ratio: 16/9; /* Utrzymuje proporcje 16:9 */
+    background: #1a1a1a; /* Tło przed załadowaniem obrazu */
+}
+
+.project-item:hover {
+    transform: scale(0.98);
+    box-shadow: 0 15px 40px rgba(0,0,0,0.4);
+}
+
+.project-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    display: block;
+}
+
+.project-item:hover img {
+    transform: scale(1.05);
+}
+
+.project-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 30px;
+    background: linear-gradient(to top, rgba(0,0,0,0.9), transparent);
+    color: white;
+}
+
+.project-title {
+    font-size: 24px;
+    font-weight: 600;
+    margin-bottom: 8px;
+}
+
+.project-category {
+    font-size: 16px;
+    font-weight: 400;
+    opacity: 0.8;
+}
+
+/* Sekcje z cytatami */
+.quote-section {
+    background-color: #000;
+    padding: 100px 20px;
+    text-align: center;
+    margin: 80px 0;
+}
+
+.quote-content {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.quote-text {
+    font-size: 2.5rem;
+    font-weight: 500;
+    line-height: 1.4;
+    margin-bottom: 20px;
+}
+
+.quote-author {
+    font-size: 1.2rem;
+    font-weight: 400;
+    color: #aaa;
+    font-style: italic;
+}
+
+/* Responsywność */
+@media (max-width: 768px) {
+    .projects-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .projects-title {
+        font-size: 20vw;
+    }
+    
+    nav {
+        padding: 15px 20px;
+    }
+    
+    nav a {
+        margin: 0 15px;
+        font-size: 12px;
+    }
+    
+    .quote-text {
+        font-size: 1.8rem;
+    }
+    
+    .quote-author {
+        font-size: 1rem;
+    }
+    
+    .project-overlay {
+        padding: 20px;
+    }
+    
+    .project-title {
+        font-size: 18px;
+    }
+    
+    .project-category {
+        font-size: 14px;
+    }
+}
+
+@media (max-width: 480px) {
+    .quote-text {
+        font-size: 1.5rem;
+    }
+    
+    .quote-section {
+        padding: 60px 20px;
+        margin: 60px 0;
+    }
+}
+
+/*QUOTE highlight*/
+.highlight {
+  background: linear-gradient(45deg, #4facfe, #00f2fe);
+  color: #000;
+  padding: 0 4px;
+  border-radius: 12px;
+}
+
+
+/* Scroll Indicator - poprawiona wersja */
+.scroll-indicator {
+  position: fixed;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  opacity: 0.7;
+  transition: opacity 0.3s ease;
+  z-index: 100;
+  width: 20px; /* Zwiększona szerokość kontenera */
+}
+
+.scroll-indicator.hidden {
+  opacity: 0;
+}
+
+.scroll-indicator::before,
+.scroll-indicator::after,
+.scroll-indicator .dots::before,
+.scroll-indicator .dots::after {
+  content: '';
+  display: block;
+  margin: 0 auto 5px auto; /* Ujednolicone marginesy */
+  border: 1px solid rgba(255, 255, 255, 0.7);
+  border-radius: 50%;
+  animation: dot 3s infinite ease-in-out;
+}
+
+/* Górna kropka (największa) */
+.scroll-indicator::before {
+  width: 12px;
+  height: 12px;
+}
+
+/* Strzałka */
+.scroll-indicator::after {
+  width: 7px;
+  height: 7px;
+  border: none;
+  border-right: 1px solid rgba(255, 255, 255, 0.7);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.7);
+  transform: rotate(45deg);
+  animation: arrow 3s infinite ease-in-out;
+  animation-delay: 0.75s;
+  opacity: 0.25;
+  border-radius: 0;
+  margin-top: 0;
+}
+
+/* Średnia kropka */
+.scroll-indicator .dots::before {
+  width: 8px;
+  height: 8px;
+  animation-delay: 0.25s;
+}
+
+/* Dolna kropka (najmniejsza) */
+.scroll-indicator .dots::after {
+  width: 6px;
+  height: 6px;
+  animation-delay: 0.5s;
+  margin-bottom: 0; /* Usunięcie marginesu na dole */
+}
+
+/* Animacje pozostają bez zmian */
+@keyframes dot {
+  0% { transform: scale(0.75); opacity: 0.25; }
+  25% { transform: scale(1); opacity: 1; }
+  100% { transform: scale(0.75); opacity: 0.25; }
+}
+
+@keyframes arrow {
+  0% { transform: scale(0.75) rotate(45deg); opacity: 0.25; }
+  25% { transform: scale(1) rotate(45deg); opacity: 1; }
+  100% { transform: scale(0.75) rotate(45deg); opacity: 0.25; }
+}
+
+
+/* Back to Top Button */
+.back-to-top {
+  display: block; /* Dodaj tę linię */
+  position: fixed;
+  left: 30px;
+  bottom: 30px;
+  width: 120px;
+  height: 40px;
+  overflow: hidden;
+  border: none;
+  color: #fff;
+  background: none;
+  padding-bottom: 2em;
+  cursor: pointer;
+  z-index: 100;
+  font-family: 'Fake Receipt', monospace;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.back-to-top.visible {
+  opacity: 0.7;
+  visibility: visible;
+}
+
+.back-to-top:hover {
+  opacity: 1;
+}
+
+.back-to-top > div,
+.back-to-top > svg {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+}
+
+.back-to-top:before {
+  content: "";
+  position: absolute;
+  height: 1px;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  transform: scaleX(0);
+  transform-origin: bottom right;
+  background: currentColor;
+  transition: transform 0.25s ease-out;
+}
+
+.back-to-top:hover:before {
+  transform: scaleX(1);
+  transform-origin: bottom left;
+}
+
+.back-to-top .clone > *,
+.back-to-top .text > * {
+  opacity: 1;
+  transition: 0.2s;
+  margin-left: 4px;
+}
+
+.back-to-top .clone > * {
+  transform: translateY(40px);
+}
+
+.back-to-top:hover .clone > * {
+  opacity: 1;
+  transform: translateY(0px);
+  transition: all 0.2s cubic-bezier(0.215, 0.61, 0.355, 1) 0s;
+}
+
+.back-to-top:hover .text > * {
+  opacity: 1;
+  transform: translateY(-40px);
+  transition: all 0.2s cubic-bezier(0.215, 0.61, 0.355, 1) 0s;
+}
+
+.back-to-top:hover .clone > :nth-child(1) {
+  transition-delay: 0.1s;
+}
+
+.back-to-top:hover .clone > :nth-child(2) {
+  transition-delay: 0.15s;
+}
+
+.back-to-top:hover .clone > :nth-child(3) {
+  transition-delay: 0.2s;
+}
+
+.back-to-top svg {
+  width: 16px;
+  right: 0;
+  transition: 0.2s ease-out;
+}
+
+.back-to-top:hover svg {
+  transform: translateY(-50%) rotate(0deg);
+}
+
