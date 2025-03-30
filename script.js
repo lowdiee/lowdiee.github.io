@@ -109,7 +109,7 @@ S.Drawing = (function() {
   return {
     init: function(el) {
       canvas = document.querySelector(el);
-      context = canvas.getContext('2d');
+     context = canvas.getContext('2d', { willReadFrequently: true }); // Dodaj tę opcję
       this.adjustCanvas();
 
       window.addEventListener('resize', function() {
