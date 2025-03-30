@@ -314,53 +314,65 @@
 </section>
 	<section class="fuel-calculator">
     <div class="calculator-container">
-        <h2>Kalkulator kosztów podróży</h2>
+        <h2>Fuel Cost Calculator</h2>
         <div class="calculator-form">
-            <div class="form-group">
-                <label for="start-point">Miejsce startu:</label>
-                <input type="text" id="start-point" placeholder="Wpisz miejsce startu">
-            </div>
-            <div class="form-group">
-                <label for="destination">Miejsce docelowe:</label>
-                <input type="text" id="destination" placeholder="Wpisz miejsce docelowe">
-            </div>
-            <div class="form-group">
-                <label for="fuel-consumption">Spalanie (l/100km):</label>
-                <input type="number" id="fuel-consumption" min="1" max="30" step="0.1" value="6.5">
-            </div>
-            <div class="form-group">
-                <label>Ilość pasażerów:</label>
-                <div class="passengers-selector">
-                    <button class="passenger-btn minus">-</button>
-                    <div class="passenger-count">
-                        <span class="count">1</span>
-                        <span class="passenger-icon">👤</span>
-                    </div>
-                    <button class="passenger-btn plus">+</button>
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="start-point">From:</label>
+                    <input type="text" id="start-point" placeholder="Enter starting point">
+                </div>
+                <div class="form-group">
+                    <label for="destination">To:</label>
+                    <input type="text" id="destination" placeholder="Enter destination">
                 </div>
             </div>
-            <div class="form-group">
-                <label for="fuel-price">Cena paliwa (zł/l):</label>
-                <input type="number" id="fuel-price" min="1" max="10" step="0.01" value="6.50">
+            
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="fuel-consumption">Consumption (l/100km):</label>
+                    <input type="number" id="fuel-consumption" min="1" max="30" step="0.1" value="6.5">
+                </div>
+                <div class="form-group">
+                    <label for="fuel-price">Fuel price (PLN/l):</label>
+                    <input type="number" id="fuel-price" min="1" max="10" step="0.01" value="6.50">
+                </div>
             </div>
-            <button id="calculate-btn">Oblicz koszt</button>
+
+            <div class="form-group passengers-group">
+                <label>Passengers:</label>
+                <div class="passengers-selector">
+                    <div class="passenger-option" data-passengers="1">👤</div>
+                    <div class="passenger-option" data-passengers="2">👤👤</div>
+                    <div class="passenger-option" data-passengers="3">👤👤👤</div>
+                    <div class="passenger-option" data-passengers="4">👤👤👤👤</div>
+                    <div class="passenger-option" data-passengers="5">👤👤👤👤👤</div>
+                </div>
+            </div>
+
+            <button id="calculate-btn">
+                <span>Calculate</span>
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M5 12H19M19 12L12 5M19 12L12 19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+            </button>
         </div>
+        
         <div class="calculator-results" id="results">
             <div class="result-item">
-                <span>Dystans:</span>
-                <span id="distance">-</span>
+                <span class="result-label">Distance:</span>
+                <span class="result-value" id="distance">-</span>
             </div>
             <div class="result-item">
-                <span>Ilość paliwa:</span>
-                <span id="fuel-needed">-</span>
+                <span class="result-label">Fuel needed:</span>
+                <span class="result-value" id="fuel-needed">-</span>
             </div>
             <div class="result-item">
-                <span>Koszt podróży:</span>
-                <span id="total-cost">-</span>
+                <span class="result-label">Total cost:</span>
+                <span class="result-value" id="total-cost">-</span>
             </div>
-            <div class="result-item">
-                <span>Koszt na osobę:</span>
-                <span id="cost-per-person">-</span>
+            <div class="result-item highlight">
+                <span class="result-label">Cost per person:</span>
+                <span class="result-value" id="cost-per-person">-</span>
             </div>
         </div>
     </div>
