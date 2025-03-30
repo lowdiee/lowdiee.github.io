@@ -304,63 +304,68 @@
         </div>
         <div class="time-display" id="timeDisplay"></div>
     </nav>
-		<section class="fuel-calculator">
-    <div class="calc-container">
-        <h2 class="calc-title">FUEL CALCULATOR</h2>
-        
-        <div class="calc-input-group">
-            <label class="calc-label">FROM</label>
-            <input type="text" class="calc-input" placeholder="Current location">
+<section class="fuel-app">
+    <div class="app-window">
+        <div class="app-header">
+            <div class="app-icon">⛽</div>
+            <h2 class="app-title">FUEL CALCULATOR</h2>
         </div>
         
-        <div class="calc-input-group">
-            <label class="calc-label">TO</label>
-            <input type="text" class="calc-input" placeholder="Destination">
-        </div>
-        
-        <div class="calc-row">
-            <div class="calc-input-group half">
-                <label class="calc-label">CONSUMPTION</label>
-                <div class="calc-input-with-unit">
-                    <input type="number" class="calc-input" value="6.5" step="0.1">
-                    <span class="calc-unit">L/100KM</span>
+        <div class="app-content">
+            <div class="app-input-group">
+                <label class="app-label">FROM</label>
+                <input type="text" class="app-input" placeholder="Current location">
+            </div>
+            
+            <div class="app-input-group">
+                <label class="app-label">TO</label>
+                <input type="text" class="app-input" placeholder="Destination">
+            </div>
+            
+            <div class="app-row">
+                <div class="app-input-group">
+                    <label class="app-label">CONSUMPTION</label>
+                    <div class="app-input-with-unit">
+                        <input type="number" class="app-input" value="6.5" step="0.1">
+                        <span class="app-unit">L/100KM</span>
+                    </div>
+                </div>
+                
+                <div class="app-input-group">
+                    <label class="app-label">PRICE</label>
+                    <div class="app-input-with-unit">
+                        <input type="number" class="app-input" value="6.50" step="0.01">
+                        <span class="app-unit">PLN</span>
+                    </div>
                 </div>
             </div>
             
-            <div class="calc-input-group half">
-                <label class="calc-label">PRICE</label>
-                <div class="calc-input-with-unit">
-                    <input type="number" class="calc-input" value="6.50" step="0.01">
-                    <span class="calc-unit">PLN</span>
+            <div class="app-input-group">
+                <label class="app-label">PASSENGERS</label>
+                <div class="app-passenger-selector">
+                    <div class="passenger-option active">👤</div>
+                    <div class="passenger-option">👤👤</div>
+                    <div class="passenger-option">👤👤👤</div>
+                    <div class="passenger-option">👤👤👤👤</div>
+                    <div class="passenger-option">👤👤👤👤👤</div>
                 </div>
             </div>
+            
+            <button class="app-button">
+                CALCULATE
+            </button>
         </div>
         
-        <div class="calc-input-group">
-            <label class="calc-label">PASSENGERS</label>
-            <div class="passenger-buttons">
-                <button class="passenger-btn active">1</button>
-                <button class="passenger-btn">2</button>
-                <button class="passenger-btn">3</button>
-                <button class="passenger-btn">4</button>
-                <button class="passenger-btn">5</button>
-            </div>
-        </div>
-        
-        <button class="calc-submit-btn">
-            CALCULATE
-        </button>
-        
-        <div class="calc-results">
-            <div class="result-item">
+        <div class="app-results">
+            <div class="result-line">
                 <span>DISTANCE:</span>
                 <span class="result-value">-</span>
             </div>
-            <div class="result-item">
+            <div class="result-line">
                 <span>FUEL NEEDED:</span>
                 <span class="result-value">-</span>
             </div>
-            <div class="result-item highlight">
+            <div class="result-line highlight">
                 <span>TOTAL COST:</span>
                 <span class="result-value">-</span>
             </div>
