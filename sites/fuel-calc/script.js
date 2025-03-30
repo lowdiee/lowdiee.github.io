@@ -109,84 +109,74 @@ window.addEventListener('click', (e) => {
   }
 });
 
+// Funkcja do obliczania odległości
+function calculateDistance(origin, destination, callback) {
+    const service = new google.maps.DistanceMatrixService();
+    service.getDistanceMatrix({
+        origins: [origin],
+        destinations: [destination],
+        travelMode: 'DRIVING',
+        unitSystem: google.maps.UnitSystem.METRIC
+    }, (response, status) => {
+        if (status === 'OK') {
+            const distance = response.rows[0].elements[0].distance.value / 1000; // w km
+            callback(distance);
+        } else {
+            console.error('Error calculating distance:', status);
+            callback(null);
+        }
+    });
+}
+
 // Inicjalizacja Google Maps API
 function initGoogleMaps() {
-  const startInput = document.getElementById('start-point');
-  const destInput = document.getElementById('destination');
-  
-  const startAutocomplete = new google.maps.places.Autocomplete(startInput, {
-    types: ['geocode']
-  });
-  
-  const destAutocomplete = new google.maps.places.Autocomplete(destInput, {
-    types: ['geocode']
-  });
-  
-  // Pokazuj sugestie w naszym własnym kontenerze
-  startAutocomplete.addListener('place_changed', () => {
-    document.getElementById('start-suggestions').style.display = 'none';
-  });
-  
-  destAutocomplete.addListener('place_changed', () => {
-    document.getElementById('dest-suggestions').style.display = 'none';
-  });
-  
-  // Własna obsługa sugestii
-  startInput.addEventListener('input', function() {
-    const service = new google.maps.places.AutocompleteService();
-    service.getPlacePredictions({ input: this.value }, (predictions, status) => {
-      const suggestions = document.getElementById('start-suggestions');
-      suggestions.innerHTML = '';
-      
-      if (status === google.maps.places.PlacesServiceStatus.OK) {
-        predictions.slice(0, 5).forEach(prediction => {
-          const div = document.createElement('div');
-          div.textContent = prediction.description;
-          div.addEventListener('click', () => {
-            startInput.value = prediction.description;
-            suggestions.style.display = 'none';
-          });
-          suggestions.appendChild(div);
-        });
-        suggestions.style.display = 'block';
-      } else {
-        suggestions.style.display = 'none';
-      }
+    const startInput = document.getElementById('start-point');
+    const destInput = document.getElementById('destination');
+    const calculateBtn = document.getElementById('calculate-btn');
+    
+    const startAutocomplete = new google.maps.places.Autocomplete(startInput, {
+        types: ['geocode']
     });
-  });
-  
-  // To samo dla destination
-  destInput.addEventListener('input', function() {
-    const service = new google.maps.places.AutocompleteService();
-    service.getPlacePredictions({ input: this.value }, (predictions, status) => {
-      const suggestions = document.getElementById('dest-suggestions');
-      suggestions.innerHTML = '';
-      
-      if (status === google.maps.places.PlacesServiceStatus.OK) {
-        predictions.slice(0, 5).forEach(prediction => {
-          const div = document.createElement('div');
-          div.textContent = prediction.description;
-          div.addEventListener('click', () => {
-            destInput.value = prediction.description;
-            suggestions.style.display = 'none';
-          });
-          suggestions.appendChild(div);
-        });
-        suggestions.style.display = 'block';
-      } else {
-        suggestions.style.display = 'none';
-      }
+    
+    const destAutocomplete = new google.maps.places.Autocomplete(destInput, {
+        types: ['geocode']
     });
-  });
+    
+    calculateBtn.addEventListener('click', function() {
+        const startPlace = startInput.value;
+        const destPlace = destInput.value;
+        
+        if (!startPlace || !destPlace) {
+            alert('Please enter both start and destination locations');
+            return;
+        }
+        
+        calculateDistance(startPlace, destPlace, (distance) => {
+            if (distance !== null) {
+                const consumption = parseFloat(document.getElementById('fuel-consumption').value);
+                const price = parseFloat(document.getElementById('fuel-price').value);
+                const passengers = parseInt(document.querySelector('.passenger-btn.active').dataset.passengers);
+                
+                const fuelNeeded = (distance * consumption) / 100;
+                const totalCost = fuelNeeded * price;
+                
+                document.getElementById('distance').textContent = distance.toFixed(1) + ' km';
+                document.getElementById('fuel-needed').textContent = fuelNeeded.toFixed(1) + ' l';
+                document.getElementById('total-cost').textContent = totalCost.toFixed(2) + ' PLN';
+            } else {
+                alert('Could not calculate distance between locations');
+            }
+        });
+    });
 }
 
 // Dodaj skrypt Google Maps API
 function loadGoogleMaps() {
-  const script = document.createElement('script');
-  script.src = `https://maps.googleapis.com/maps/api/js?key=TWÓJ_KLUCZ_API&libraries=places&callback=initGoogleMaps`;
-  script.async = true;
-  script.defer = true;
-  document.head.appendChild(script);
+    const script = document.createElement('script');
+    script.src = `https://maps.googleapis.com/maps/api/js?key=TWÓJ_KLUCZ_API&libraries=places&callback=initGoogleMaps`;
+    script.async = true;
+    script.defer = true;
+    document.head.appendChild(script);
 }
 
 loadGoogleMaps();
