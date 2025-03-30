@@ -1,31 +1,24 @@
-/* NOISE - POPRAWIONA WERSJA */
 .noise-overlay {
     position: fixed;
     top: 0;
     left: 0;
-    width: 100vw;
-    height: 100vh;
-    min-height: 100%;
-    background: url('http://assets.iceable.com/img/noise-transparent.png') repeat;
-    animation: bg-animation 0.2s infinite;
-    opacity: 0.9;
+    width: 100%;
+    height: 100%;
+    background: 
+        url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="200" height="200" viewBox="0 0 200 200"><filter id="noise"><feTurbulence type="fractalNoise" baseFrequency="0.04" numOctaves="5" stitchTiles="stitch"/></filter><rect width="200" height="200" filter="url(%23noise)" opacity="0.15"/></svg>');
+    opacity: 0.04;
     pointer-events: none;
     z-index: 9999;
-    transform: translateZ(0); /* Przyspiesza renderowanie */
+    animation: noise 1.5s steps(10) infinite;
 }
 
-@keyframes bg-animation {
-    0% { transform: translate(0,0) }
-    10% { transform: translate(-5%,-5%) }
-    20% { transform: translate(-10%,5%) }
-    30% { transform: translate(5%,-10%) }
-    40% { transform: translate(-5%,15%) }
-    50% { transform: translate(-10%,5%) }
-    60% { transform: translate(15%,0) }
-    70% { transform: translate(0,10%) }
-    80% { transform: translate(-15%,0) }
-    90% { transform: translate(10%,5%) }
-    100% { transform: translate(5%,0) }
+@keyframes noise {
+    0% { transform: translate(0, 0); }
+    20% { transform: translate(-2%, -3%); }
+    40% { transform: translate(3%, 1%); }
+    60% { transform: translate(-1%, 4%); }
+    80% { transform: translate(2%, -2%); }
+    100% { transform: translate(0, 0); }
 }
 
 
