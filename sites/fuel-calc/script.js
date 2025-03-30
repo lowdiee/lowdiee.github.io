@@ -87,22 +87,28 @@ backToTopBtn.addEventListener('click', () => {
 window.addEventListener('scroll', toggleBackToTop);
 toggleBackToTop(); // Initialize
 
-// Fuel Calculator Logic
-const calculateBtn = document.getElementById('calculate-btn');
-if (calculateBtn) {
-    calculateBtn.addEventListener('click', function() {
-        // Example calculation (replace with real distance calculation)
-        const distance = 300; // km
-        const consumption = parseFloat(document.getElementById('fuel-consumption').value);
-        const price = parseFloat(document.getElementById('fuel-price').value);
-        const passengers = parseInt(document.querySelector('.passenger-btn.active').dataset.passengers);
-        
-        const fuelNeeded = (distance * consumption) / 100;
-        const totalCost = fuelNeeded * price;
-        const costPerPerson = totalCost / passengers;
-        
-        document.getElementById('distance').textContent = distance + ' km';
-        document.getElementById('fuel-needed').textContent = fuelNeeded.toFixed(1) + ' l';
-        document.getElementById('total-cost').textContent = totalCost.toFixed(2) + ' PLN';
+// Passenger selection
+document.querySelectorAll('.passenger-option').forEach(option => {
+    option.addEventListener('click', function() {
+        document.querySelectorAll('.passenger-option').forEach(opt => {
+            opt.classList.remove('active');
+        });
+        this.classList.add('active');
     });
-}
+});
+
+// Calculate function
+document.querySelector('.calculate-btn').addEventListener('click', function() {
+    // Example calculation (replace with real distance calculation)
+    const distance = 250; // km
+    const consumption = parseFloat(document.getElementById('fuel-consumption').value);
+    const price = parseFloat(document.getElementById('fuel-price').value);
+    const passengers = parseInt(document.querySelector('.passenger-option.active').dataset.passengers);
+    
+    const fuelNeeded = (distance * consumption) / 100;
+    const totalCost = fuelNeeded * price;
+    
+    document.getElementById('distance').textContent = distance + ' km';
+    document.getElementById('fuel-needed').textContent = fuelNeeded.toFixed(1) + ' L';
+    document.getElementById('total-cost').textContent = totalCost.toFixed(2) + ' PLN';
+});
