@@ -792,5 +792,19 @@
             }
         }, 2500);
     </script>
+<script>
+// Automatic image optimization with Cloudflare or Imgix
+document.addEventListener('DOMContentLoaded', function() {
+  const images = document.querySelectorAll('img[data-src]');
+  images.forEach(img => {
+    const src = img.dataset.src;
+    // Add compression parameters (example for Cloudflare CDN)
+    if(src.includes('i.ibb.co')) { // Jeśli używasz imgbb
+      img.dataset.src = src + '?width=1200&quality=80';
+    }
+  });
+});
+</script>
+	
 </body>
 </html>
