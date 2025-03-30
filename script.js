@@ -1,85 +1,72 @@
-// Custom Cursor - Fixed Version
-const cursor = document.querySelector('.cursor');
-const cursorF = document.querySelector('.cursor-f');
-
-let cursorX = 0;
-let cursorY = 0;
-let pageX = 0;
-let pageY = 0;
-let size = 8;
-let sizeF = 36;
-let followSpeed = 0.16;
-
-// Initialize cursor
-function initCursor() {
-    // Hide cursor on touch devices
+// FIXED CURSOR CODE - WORKING VERSION
+document.addEventListener('DOMContentLoaded', function() {
+    const cursor = document.querySelector('.cursor');
+    const cursorF = document.querySelector('.cursor-f');
+    
+    if (!cursor || !cursorF) return;
+    
+    // Cursor settings
+    const settings = {
+        size: 8,
+        sizeF: 36,
+        followSpeed: 0.16
+    };
+    
+    let posX = 0, posY = 0;
+    let mouseX = 0, mouseY = 0;
+    
+    // Touch device check
     if ('ontouchstart' in window) {
         cursor.style.display = 'none';
         cursorF.style.display = 'none';
         return;
     }
-
-    cursor.style.setProperty('--size', size + 'px');
-    cursorF.style.setProperty('--size', sizeF + 'px');
-
-    // Mouse move event - updated for scroll
+    
+    // Set initial cursor size
+    cursor.style.setProperty('--size', settings.size + 'px');
+    cursorF.style.setProperty('--size', settings.sizeF + 'px');
+    
+    // Mouse move event - FIXED VERSION (no scroll interference)
     document.addEventListener('mousemove', function(e) {
-        pageX = e.clientX;
-        pageY = e.clientY;
-        updateCursorPosition();
-    });
-
-    // Scroll event - update cursor position
-    window.addEventListener('scroll', updateCursorPosition);
-
-    // Click animations
+        mouseX = e.clientX;
+        mouseY = e.clientY;
+        
+        // Update immediate cursor position
+        cursor.style.left = mouseX - settings.size/2 + 'px';
+        cursor.style.top = mouseY - settings.size/2 + 'px';
+    }, { passive: true });
+    
+    // Click animations - FIXED VERSION
     document.addEventListener('mousedown', function() {
-        gsap.to(cursor, { scale: 4.5, duration: 0.3 });
-        gsap.to(cursorF, { scale: 0.4, duration: 0.3 });
+        // Scale up main cursor
+        cursor.style.transform = 'scale(4.5)';
+        // Scale down follower
+        cursorF.style.transform = 'scale(0.4)';
     });
-
+    
     document.addEventListener('mouseup', function() {
-        gsap.to(cursor, { scale: 1, duration: 0.4, ease: "elastic.out(1, 0.5)" });
-        gsap.to(cursorF, { scale: 1, duration: 0.4, ease: "elastic.out(1, 0.5)" });
+        // Reset scales with smooth transition
+        cursor.style.transform = 'scale(1)';
+        cursorF.style.transform = 'scale(1)';
     });
-
-    // Cursor visibility
-    document.addEventListener('mouseleave', function() {
-        gsap.to([cursor, cursorF], { opacity: 0, duration: 0.3 });
-    });
-
-    document.addEventListener('mouseenter', function() {
-        gsap.to([cursor, cursorF], { opacity: 1, duration: 0.3 });
-    });
-
-    // Start animation loop
-    cursorLoop();
-}
-
-// Update cursor position including scroll offset
-function updateCursorPosition() {
-    cursor.style.left = pageX - size / 2 + 'px';
-    cursor.style.top = (pageY + window.scrollY) - size / 2 + 'px';
-}
-
-// Smooth follow animation
-function lerp(start, end, amount) {
-    return (1 - amount) * start + amount * end;
-}
-
-function cursorLoop() {
-    cursorX = lerp(cursorX, pageX, followSpeed);
-    cursorY = lerp(cursorY, pageY + window.scrollY, followSpeed);
     
-    cursorF.style.top = cursorY - sizeF / 2 + 'px';
-    cursorF.style.left = cursorX - sizeF / 2 + 'px';
+    // Animation loop - FIXED (proper scroll handling)
+    function animate() {
+        // Calculate new position with easing
+        posX += (mouseX - posX) * settings.followSpeed;
+        posY += (mouseY - posY) * settings.followSpeed;
+        
+        // Apply to follower (with scroll offset)
+        const scrollY = window.scrollY || window.pageYOffset;
+        cursorF.style.left = posX - settings.sizeF/2 + 'px';
+        cursorF.style.top = (posY + scrollY) - settings.sizeF/2 + 'px';
+        
+        requestAnimationFrame(animate);
+    }
     
-    requestAnimationFrame(cursorLoop);
-}
-
-// Initialize cursor when DOM is loaded
-document.addEventListener('DOMContentLoaded', initCursor);
-
+    // Start animation
+    animate();
+});
 // Back to Top Button
 const backToTopBtn = document.querySelector('.back-to-top');
 
