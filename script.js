@@ -431,8 +431,6 @@ function animateProjects() {
         
         if (itemTop < triggerPoint) {
             item.classList.add('animate');
-        } else {
-            item.classList.remove('animate'); // Reset animacji gdy projekt znika z widoku
         }
     });
 }
@@ -440,4 +438,3 @@ function animateProjects() {
 // Obsługa scrollowania
 window.addEventListener('scroll', animateProjects);
 window.addEventListener('load', animateProjects); // Animacja przy pierwszym ładowaniu
-
