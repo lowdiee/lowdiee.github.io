@@ -168,24 +168,23 @@ nav a:hover {
 
 .projects-grid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 15px; /* Mniejsze odstępy */
+    grid-template-columns: repeat(3, minmax(0, 1fr)); /* Naprawia nakładanie się */
+    gap: 15px;
     margin: 0 auto;
     max-width: 1400px;
     width: 100%;
-    ustify-items: center;
 }
 
 .project-item {
     position: relative;
     overflow: hidden;
-    border-radius: 12px; /* Mniejsze zaokrąglenie */
-    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    border-radius: 12px;
     transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
     aspect-ratio: 16/9;
     background: #1a1a1a;
     opacity: 0;
-    transform: translateY(20px); /* Delikatne przesunięcie w dół */
+    transform: translateY(20px);
+    will-change: transform; /* Optymalizacja animacji */
 }
 
 .project-item.animate {
