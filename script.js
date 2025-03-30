@@ -1,4 +1,63 @@
 
+// Custom Cursor
+const cursor = document.querySelector('.cursor');
+const cursorF = document.querySelector('.cursor-f');
+
+let cursorX = 0;
+let cursorY = 0;
+let pageX = 0;
+let pageY = 0;
+let size = 8;
+let sizeF = 36;
+let followSpeed = .16;
+
+// Hide cursor on touch devices
+if ('ontouchstart' in window) {
+    cursor.style.display = 'none';
+    cursorF.style.display = 'none';
+}
+
+cursor.style.setProperty('--size', size+'px');
+cursorF.style.setProperty('--size', sizeF+'px');
+
+// Track mouse position
+window.addEventListener('mousemove', function(e) {
+    pageX = e.clientX;
+    pageY = e.clientY;
+    cursor.style.left = e.clientX-size/2+'px';
+    cursor.style.top = e.clientY-size/2+'px';
+});
+
+// Smooth follow function
+function lerp(start, end, amount) {
+    return (1-amount)*start+amount*end;
+}
+
+function cursorLoop() {
+    cursorX = lerp(cursorX, pageX, followSpeed);
+    cursorY = lerp(cursorY, pageY, followSpeed);
+    cursorF.style.top = cursorY - sizeF/2 + 'px';
+    cursorF.style.left = cursorX - sizeF/2 + 'px';
+    requestAnimationFrame(cursorLoop);
+}
+
+cursorLoop();
+
+// Click animations
+function mousedown() {
+    gsap.to(cursor, {scale: 4.5, duration: 0.3});
+    gsap.to(cursorF, {scale: 0.4, duration: 0.3});
+}
+
+function mouseup() {
+    gsap.to(cursor, {scale: 1, duration: 0.3});
+    gsap.to(cursorF, {scale: 1, duration: 0.3});
+}
+
+window.addEventListener('mousedown', mousedown, false);
+window.addEventListener('mouseup', mouseup, false);
+
+
 // Back to Top Button
 const backToTopBtn = document.querySelector('.back-to-top');
 
