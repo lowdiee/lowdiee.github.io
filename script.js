@@ -420,5 +420,24 @@ WebFont.load({
   }
 });
 
+// Animacja projektów
+function animateProjects() {
+    const projectItems = document.querySelectorAll('.project-item');
+    const windowHeight = window.innerHeight;
+    const triggerPoint = windowHeight * 0.8;
 
+    projectItems.forEach((item, index) => {
+        const itemTop = item.getBoundingClientRect().top;
+        
+        if (itemTop < triggerPoint) {
+            item.classList.add('animate');
+        } else {
+            item.classList.remove('animate'); // Reset animacji gdy projekt znika z widoku
+        }
+    });
+}
+
+// Obsługa scrollowania
+window.addEventListener('scroll', animateProjects);
+window.addEventListener('load', animateProjects); // Animacja przy pierwszym ładowaniu
 
