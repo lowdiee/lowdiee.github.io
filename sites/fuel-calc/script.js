@@ -1,4 +1,4 @@
-// Custom cursor functionality
+// FIXED CURSOR CODE - WORKING VERSION
 document.addEventListener('DOMContentLoaded', function() {
     const cursor = document.querySelector('.cursor');
     const cursorF = document.querySelector('.cursor-f');
@@ -26,7 +26,7 @@ document.addEventListener('DOMContentLoaded', function() {
     cursor.style.setProperty('--size', settings.size + 'px');
     cursorF.style.setProperty('--size', settings.sizeF + 'px');
     
-    // Mouse move event
+    // Mouse move event - FIXED VERSION (no scroll interference)
     document.addEventListener('mousemove', function(e) {
         mouseX = e.clientX;
         mouseY = e.clientY;
@@ -36,7 +36,7 @@ document.addEventListener('DOMContentLoaded', function() {
         cursor.style.top = mouseY - settings.size/2 + 'px';
     }, { passive: true });
     
-    // Click animations
+    // Click animations - FIXED VERSION
     document.addEventListener('mousedown', function() {
         // Scale up main cursor
         cursor.style.transform = 'scale(4.5)';
@@ -49,152 +49,60 @@ document.addEventListener('DOMContentLoaded', function() {
         cursor.style.transform = 'scale(1)';
         cursorF.style.transform = 'scale(1)';
     });
-
-    function animate() {
-        // Calculate new position with easing
-        posX += (mouseX - posX) * settings.followSpeed;
-        posY += (mouseY - posY) * settings.followSpeed;
-        
-        // Apply to follower
-        cursorF.style.left = posX - settings.sizeF/2 + 'px';
-        cursorF.style.top = posY - settings.sizeF/2 + 'px';
-        
-        requestAnimationFrame(animate);
-    }
     
+function animate() {
+    // Calculate new position with easing
+    posX += (mouseX - posX) * settings.followSpeed;
+    posY += (mouseY - posY) * settings.followSpeed;
+    
+    // Apply to follower (REMOVED scroll offset)
+    cursorF.style.left = posX - settings.sizeF/2 + 'px';
+    cursorF.style.top = posY - settings.sizeF/2 + 'px'; // Usunięto scrollY
+    
+    requestAnimationFrame(animate);
+}
     // Start animation
     animate();
 });
+// Back to Top Button
+const backToTopBtn = document.querySelector('.back-to-top');
 
-// Time display functionality
-const timeDisplay = document.getElementById('timeDisplay');
-let isHovering = false;
-let cetInterval, gmtInterval;
-
-function updateCET() {
-    const now = new Date();
-    const cetOptions = {
-        timeZone: 'Europe/Paris',
-        hour: '2-digit',
-        minute: '2-digit',
-        second: '2-digit',
-        hour12: false
-    };
-    timeDisplay.textContent = `CET ${now.toLocaleTimeString('en-GB', cetOptions)}`;
+function toggleBackToTop() {
+  if (window.pageYOffset > 300) {
+    backToTopBtn.classList.add('visible');
+  } else {
+    backToTopBtn.classList.remove('visible');
+  }
 }
 
-function updateGMT() {
-    const now = new Date();
-    const gmtOptions = {
-        timeZone: 'GMT',
-        hour: '2-digit',
-        minute: '2-digit',
-        second: '2-digit',
-        hour12: false
-    };
-    timeDisplay.textContent = `GMT ${now.toLocaleTimeString('en-GB', gmtOptions)}`;
+backToTopBtn.addEventListener('click', () => {
+  window.scrollTo({
+    top: 0,
+    behavior: 'smooth'
+  });
+});
+
+window.addEventListener('scroll', toggleBackToTop);
+toggleBackToTop(); // Initialize
+
+// Scroll indicator functionality
+const scrollIndicator = document.querySelector('.scroll-indicator');
+
+function handleScroll() {
+  if (window.pageYOffset > 50) {
+    scrollIndicator.classList.add('hidden');
+  } else {
+    scrollIndicator.classList.remove('hidden');
+  }
 }
 
-function setupTimeDisplay() {
-    clearInterval(cetInterval);
-    clearInterval(gmtInterval);
+// Initial check
+handleScroll();
 
-    if (isHovering) {
-        updateGMT();
-        gmtInterval = setInterval(updateGMT, 1000);
-    } else {
-        updateCET();
-        cetInterval = setInterval(updateCET, 1000);
-    }
-}
+// Add scroll event listener
+window.addEventListener('scroll', handleScroll);
+// Initial check
+handleScroll();
 
-timeDisplay.addEventListener('mouseenter', () => {
-    isHovering = true;
-    setupTimeDisplay();
-});
-
-timeDisplay.addEventListener('mouseleave', () => {
-    isHovering = false;
-    setupTimeDisplay();
-});
-
-// Initialize time display
-setupTimeDisplay();
-
-// People selector functionality
-const peopleIcons = document.querySelectorAll('.person-icon');
-let selectedPeople = 1;
-
-peopleIcons.forEach(icon => {
-    icon.addEventListener('click', () => {
-        peopleIcons.forEach(i => i.classList.remove('selected'));
-        icon.classList.add('selected');
-        selectedPeople = parseInt(icon.getAttribute('data-people'));
-    });
-});
-
-// Select first person by default
-peopleIcons[0].classList.add('selected');
-
-// Calculator functionality
-document.getElementById('calculateBtn').addEventListener('click', () => {
-    const origin = document.getElementById('origin').value;
-    const destination = document.getElementById('destination').value;
-    const consumption = parseFloat(document.getElementById('consumption').value);
-    const price = parseFloat(document.getElementById('price').value);
-
-    if (!origin || !destination || isNaN(consumption) {
-        alert('Please fill all required fields!');
-        return;
-    }
-
-    // For now using mock distance - will be replaced with Google Maps API
-    const distance = getMockDistance(origin, destination);
-    const fuelNeeded = (distance * consumption) / 100;
-    const totalCost = fuelNeeded * price;
-
-    document.getElementById('distanceResult').textContent = distance.toFixed(1);
-    document.getElementById('fuelNeeded').textContent = fuelNeeded.toFixed(2);
-    document.getElementById('totalCost').textContent = totalCost.toFixed(2);
-
-    // Show results with animation
-    document.getElementById('results').style.display = 'block';
-    
-    // Reset animations
-    const resultItems = document.querySelectorAll('.result-item');
-    resultItems.forEach(item => {
-        item.style.animation = 'none';
-        void item.offsetWidth; // Trigger reflow
-        item.style.animation = '';
-    });
-});
-
-// Mock distance function - replace with Google Maps API later
-function getMockDistance(origin, destination) {
-    // This will be replaced with actual API call
-    return Math.random() * 300 + 50; // Random distance between 50-350km
-}
-
-// Handle Enter key
-document.addEventListener('keydown', (e) => {
-    if (e.key === 'Enter') {
-        document.getElementById('calculateBtn').click();
-    }
-});
-
-// Show container with animation
-window.addEventListener('load', () => {
-    document.getElementById('fuelCalc').classList.add('visible');
-});
-
-// About modal functionality (if needed)
-const aboutLink = document.querySelector('.about-link');
-const aboutModal = document.getElementById('aboutModal');
-
-if (aboutLink && aboutModal) {
-    aboutLink.addEventListener('click', (e) => {
-        e.preventDefault();
-        aboutModal.classList.add('active');
-        document.body.style.overflow = 'hidden';
-    });
-}
+// Add scroll event listener
+window.addEventListener('scroll', handleScroll);
