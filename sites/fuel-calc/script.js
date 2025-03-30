@@ -157,3 +157,50 @@ document.addEventListener('DOMContentLoaded', function() {
     // Initialize with empty results
     document.getElementById('results').style.display = 'none';
 });
+
+
+// Passenger Selection
+let passengers = 1;
+document.querySelectorAll('.passenger-option').forEach((option, index) => {
+    option.addEventListener('click', function() {
+        // Remove active class from all options
+        document.querySelectorAll('.passenger-option').forEach(opt => {
+            opt.classList.remove('active');
+        });
+        
+        // Add active class to clicked option
+        this.classList.add('active');
+        
+        // Update passengers count
+        passengers = parseInt(this.dataset.passengers);
+    });
+    
+    // Set first option as active by default
+    if (index === 0) option.classList.add('active');
+});
+
+// Calculate button
+document.getElementById('calculate-btn').addEventListener('click', function() {
+    const distance = 300; // km - to be replaced with API calculation
+    const consumption = parseFloat(document.getElementById('fuel-consumption').value);
+    const fuelPrice = parseFloat(document.getElementById('fuel-price').value);
+    
+    // Calculations
+    const fuelNeeded = (distance * consumption) / 100;
+    const totalCost = fuelNeeded * fuelPrice;
+    const costPerPerson = totalCost / passengers;
+    
+    // Display results
+    document.getElementById('distance').textContent = distance.toFixed(0) + ' km';
+    document.getElementById('fuel-needed').textContent = fuelNeeded.toFixed(1) + ' l';
+    document.getElementById('total-cost').textContent = totalCost.toFixed(2) + ' PLN';
+    document.getElementById('cost-per-person').textContent = costPerPerson.toFixed(2) + ' PLN';
+    
+    // Show results with animation
+    const results = document.getElementById('results');
+    results.style.display = 'block';
+    setTimeout(() => {
+        results.style.opacity = '1';
+        results.style.transform = 'translateY(0)';
+    }, 10);
+});
