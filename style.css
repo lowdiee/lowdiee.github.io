@@ -168,9 +168,21 @@ nav a:hover {
 
 .projects-grid {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(3, 1fr); /* Zmiana z 2 na 3 kolumny */
     gap: 20px;
     margin-bottom: 20px;
+}
+
+@media (max-width: 1024px) {
+    .projects-grid {
+        grid-template-columns: repeat(2, 1fr); /* 2 kolumny na tabletach */
+    }
+}
+
+@media (max-width: 768px) {
+    .projects-grid {
+        grid-template-columns: 1fr; /* 1 kolumna na mobile */
+    }
 }
 
 .project-item {
