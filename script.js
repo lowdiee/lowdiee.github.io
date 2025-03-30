@@ -50,20 +50,17 @@ document.addEventListener('DOMContentLoaded', function() {
         cursorF.style.transform = 'scale(1)';
     });
     
-    // Animation loop - FIXED (proper scroll handling)
-    function animate() {
-        // Calculate new position with easing
-        posX += (mouseX - posX) * settings.followSpeed;
-        posY += (mouseY - posY) * settings.followSpeed;
-        
-        // Apply to follower (with scroll offset)
-        const scrollY = window.scrollY || window.pageYOffset;
-        cursorF.style.left = posX - settings.sizeF/2 + 'px';
-        cursorF.style.top = (posY + scrollY) - settings.sizeF/2 + 'px';
-        
-        requestAnimationFrame(animate);
-    }
+function animate() {
+    // Calculate new position with easing
+    posX += (mouseX - posX) * settings.followSpeed;
+    posY += (mouseY - posY) * settings.followSpeed;
     
+    // Apply to follower (REMOVED scroll offset)
+    cursorF.style.left = posX - settings.sizeF/2 + 'px';
+    cursorF.style.top = posY - settings.sizeF/2 + 'px'; // Usunięto scrollY
+    
+    requestAnimationFrame(animate);
+}
     // Start animation
     animate();
 });
