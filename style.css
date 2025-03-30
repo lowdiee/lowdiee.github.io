@@ -180,7 +180,7 @@ nav a:hover {
 .project-item {
     position: relative;
     width: 100%;
-    opacity: 0;
+    opacity: 1;
     transform: translateY(30px);
     transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
 }
