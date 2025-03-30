@@ -206,21 +206,22 @@ document.getElementById('calculate-btn').addEventListener('click', function() {
 });
 
 // Passenger selection
-document.querySelectorAll('.passenger-btn').forEach(btn => {
-    btn.addEventListener('click', function(e) {
-        e.preventDefault();
-        document.querySelectorAll('.passenger-btn').forEach(b => b.classList.remove('active'));
+document.querySelectorAll('.passenger-option').forEach(option => {
+    option.addEventListener('click', function() {
+        document.querySelectorAll('.passenger-option').forEach(opt => {
+            opt.classList.remove('active');
+        });
         this.classList.add('active');
     });
 });
 
-// Calculate button
-document.querySelector('.calc-submit-btn').addEventListener('click', function() {
+// Calculate function
+document.querySelector('.app-button').addEventListener('click', function() {
     // Example calculation
-    const distance = 300; // km
-    const consumption = parseFloat(document.querySelector('.calc-row .calc-input').value);
-    const price = parseFloat(document.querySelectorAll('.calc-row .calc-input')[1].value);
-    const passengers = parseInt(document.querySelector('.passenger-btn.active').textContent);
+    const distance = 250; // km
+    const consumption = parseFloat(document.querySelectorAll('.app-input')[2].value);
+    const price = parseFloat(document.querySelectorAll('.app-input')[3].value);
+    const passengers = document.querySelectorAll('.passenger-option.active').length;
     
     const fuelNeeded = (distance * consumption) / 100;
     const totalCost = fuelNeeded * price;
