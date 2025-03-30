@@ -10,7 +10,7 @@
     opacity: 0.7 !important; /* Wymuszamy wysoką widoczność */
     pointer-events: none;
     z-index: 9999;
-    mix-blend-mode: screen; /* Najlepszy tryb dla czarnego tła */
+    mix-blend-mode: normal;
     animation: grain 8s steps(10) infinite;
     will-change: transform;
 }
