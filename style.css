@@ -567,6 +567,7 @@ nav a:hover {
     pointer-events: none;
     mix-blend-mode: difference;
     transition: transform 0.3s ease;
+      z-index: 9999;
 }
 
 .cursor-f {
@@ -581,5 +582,6 @@ nav a:hover {
     pointer-events: none;
     opacity: .5;
     transition: transform 0.3s ease;
+      z-index: 9999;
 }
 
