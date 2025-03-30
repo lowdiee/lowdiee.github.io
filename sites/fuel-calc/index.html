@@ -1,1 +1,28 @@
-
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <title>Fuel Calculator | Twoje Portfolio</title>
+    <link rel="stylesheet" href="style.css"> <!-- Lokalne style -->
+</head>
+<body>
+    <div class="container">
+        <h1>Kalkulator Kosztów Paliwa</h1>
+        <label for="distance">Dystans (km):</label>
+        <input type="number" id="distance">
+        
+        <label for="consumption">Spalanie (l/100km):</label>
+        <input type="number" id="consumption">
+        
+        <label for="price">Cena paliwa (zł/l):</label>
+        <input type="number" id="price">
+        
+        <button id="calculate">Oblicz</button>
+        
+        <div id="result">
+            <p>Koszt: <span id="cost">0</span> zł</p>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
