@@ -104,19 +104,6 @@
         }
 
         
-       .hero-bg {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(
-        135deg, 
-        #0a0a0a 0%, 
-        #000000 100%
-    );
-    z-index: -1;
-}
         
   /* Shape Shifter Styles */
     .shape-shifter {
@@ -504,7 +491,13 @@
 </div>
 	
 <section class="hero">
-    <div class="hero-bg"></div>
+    <!-- Wideo w tle -->
+    <video class="hero-bg" autoplay muted loop playsinline>
+        <source src="media/carti.mp4" type="video/mp4">
+        <source src="media/carti.webm" type="video/webm">
+    </video>
+    
+    <!-- Canvas dla efektu shape shifter -->
     <canvas class="canvas"></canvas>
 </section>
     
