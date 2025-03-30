@@ -152,7 +152,6 @@ nav a:hover {
 .hero {
   position: relative;
   height: 100vh;
-  overflow: hidden;
 }
 
 .hero-bg {
