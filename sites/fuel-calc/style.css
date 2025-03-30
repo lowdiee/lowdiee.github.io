@@ -1,3 +1,5 @@
+/* ... istniejące style ... */
+
 nav {
     position: fixed;
     top: 0;
@@ -5,6 +7,35 @@ nav {
     width: 100%;
     z-index: 200;
     /* Dodaj swoje style nawigacji */
+}
+
+.receipt-style {
+    font-family: 'Fake Receipt', monospace;
+    color: #000 !important;
+    font-size: 16px;
+    letter-spacing: 1px;
+}
+
+.suggestions-container {
+    position: absolute;
+    background: rgba(30,30,30,0.95);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 8px;
+    width: calc(100% - 50px);
+    max-width: 350px;
+    z-index: 10;
+    display: none;
+    margin-top: -15px;
+}
+
+.suggestions-container div {
+    padding: 10px 15px;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.suggestions-container div:hover {
+    background: rgba(79,172,254,0.2);
 }
 
 /* Fuel Calculator Styles */
