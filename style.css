@@ -557,31 +557,46 @@ nav a:hover {
     cursor: none;
 }
 
+/* Custom Cursor Styles */
 .cursor {
     width: var(--size);
     height: var(--size);
     border-radius: 50%;
     background: white;
-    position: absolute;
-    z-index: 999;
+    position: fixed; /* Changed from absolute to fixed */
+    z-index: 9999;
     pointer-events: none;
     mix-blend-mode: difference;
-    transition: transform 0.3s ease;
-      z-index: 9999;
+    transition: transform 0.1s linear;
+    transform: translateZ(0);
+    will-change: transform;
 }
 
 .cursor-f {
     width: var(--size);
     height: var(--size);
-    position: absolute;
+    position: fixed; /* Changed from absolute to fixed */
     top: 0;
     left: 0;
+    z-index: 9998;
     background-image: url("data:image/svg+xml,%3Csvg width='47' height='47' viewBox='0 0 47 47' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M42.4202 42.4202C38.8403 46 33.3594 46 23.5 46C13.6406 46 8.15966 46 4.57983 42.4202C1 38.8403 1 33.3594 1 23.5C1 13.6406 1 8.15966 4.57983 4.57983C8.15966 1 13.6406 1 23.5 1C33.3594 1 38.8403 1 42.4202 4.57983C46 8.15966 46 13.6406 46 23.5C46 33.3594 46 38.8403 42.4202 42.4202Z' stroke='white'/%3E%3C/svg%3E%0A");
     background-size: cover;
     mix-blend-mode: difference;
     pointer-events: none;
     opacity: .5;
-    transition: transform 0.3s ease;
-      z-index: 9999;
+    transform: translateZ(0);
+    will-change: transform;
+}
+
+/* Ensure no conflicts with other elements */
+* {
+    cursor: none !important;
+}
+
+/* Fix for hero section */
+.hero {
+    position: relative;
+    height: 100vh;
+    /* Remove overflow: hidden if present */
 }
 
