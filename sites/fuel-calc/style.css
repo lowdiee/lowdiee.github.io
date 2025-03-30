@@ -1,83 +1,40 @@
-.noise-overlay {
+/* Fuel Calculator Styles */
+.fuel-app-container {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background-image: url('https://cdn.prod.website-files.com/651d15fb8f27f4a03c14ae88/651d15fb8f27f4a03c14afa4_5d8424ac4ffed73f4d72846e_5c06f51d6e75c933fe05c728_giphy.gif');
-    background-size: 480px;
-    background-attachment: fixed;
-    opacity: 0.02;
-    pointer-events: none;
-    z-index: 2147483647; /* maksymalny możliwy z-index */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    background: rgba(0,0,0,0.7);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
 }
 
-
-/*ZDJĘCIE W MODALU */
-.profile-image-container {
-  width: 120px;
-  height: 120px;
-  border-radius: 50%;
-  overflow: hidden;
-  margin: 0 auto 25px;
-  border: 3px solid rgba(255, 255, 255, 0.2);
-}
-
-.profile-image {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center;
-  display: block;
-}
-
-
-
-/* FUEL APP STYLES */
 .fuel-app {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
     width: 100%;
-    max-width: 380px;
-    z-index: 100;
-}
-
-.app-window {
-    background: rgba(20, 20, 20, 0.95);
+    max-width: 400px;
+    background: rgba(20,20,20,0.95);
     border-radius: 24px;
-    border: 1px solid rgba(255, 255, 255, 0.15);
-    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+    border: 1px solid rgba(255,255,255,0.1);
     overflow: hidden;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.5);
 }
 
 .app-header {
-    background: rgba(30, 30, 30, 0.8);
-    padding: 20px;
-    display: flex;
-    align-items: center;
-    gap: 15px;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-.app-icon {
-    font-size: 24px;
-    width: 40px;
-    height: 40px;
-    background: rgba(79, 172, 254, 0.2);
-    border-radius: 12px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    padding: 25px;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+    text-align: center;
 }
 
 .app-title {
     font-family: 'Fake Receipt', monospace;
     font-size: 16px;
-    letter-spacing: 2px;
-    color: #fff;
-    margin: 0;
+    letter-spacing: 3px;
+    color: #4facfe;
     text-transform: uppercase;
 }
 
@@ -85,124 +42,99 @@
     padding: 25px;
 }
 
-.app-input-group {
-    margin-bottom: 20px;
-}
-
-.app-row {
-    display: flex;
-    gap: 15px;
-}
-
-.app-label {
-    font-family: 'Fake Receipt', monospace;
-    font-size: 12px;
-    color: rgba(255, 255, 255, 0.6);
-    letter-spacing: 1px;
-    display: block;
-    margin-bottom: 8px;
-    text-transform: uppercase;
-}
-
 .app-input {
     width: 100%;
-    padding: 15px 20px;
-    background: rgba(40, 40, 40, 0.7);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 14px;
+    padding: 16px 20px;
+    margin-bottom: 20px;
+    background: rgba(30,30,30,0.7);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 12px;
     color: white;
     font-family: 'SF Pro Display', sans-serif;
     font-size: 16px;
     outline: none;
+    transition: all 0.3s;
 }
 
-.app-input-with-unit {
-    position: relative;
+.app-input:focus {
+    border-color: rgba(79,172,254,0.5);
+    box-shadow: 0 0 0 2px rgba(79,172,254,0.2);
 }
 
-.app-input-with-unit .app-input {
-    padding-right: 70px;
-}
-
-.app-unit {
-    position: absolute;
-    right: 20px;
-    top: 50%;
-    transform: translateY(-50%);
-    font-family: 'Fake Receipt', monospace;
-    font-size: 12px;
-    color: rgba(255, 255, 255, 0.5);
-}
-
-.app-passenger-selector {
+.passenger-selector {
     display: flex;
-    gap: 8px;
-    background: rgba(40, 40, 40, 0.7);
-    border-radius: 14px;
-    padding: 8px;
+    gap: 10px;
+    margin-bottom: 25px;
 }
 
-.passenger-option {
+.passenger-btn {
     flex: 1;
+    padding: 12px;
+    background: rgba(30,30,30,0.7);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 12px;
+    color: rgba(255,255,255,0.7);
+    font-family: 'SF Pro Display', sans-serif;
     text-align: center;
-    padding: 12px 0;
-    font-size: 18px;
-    color: rgba(255, 255, 255, 0.5);
-    background: transparent;
-    border-radius: 10px;
     cursor: pointer;
     transition: all 0.2s;
 }
 
-.passenger-option.active {
-    background: rgba(79, 172, 254, 0.3);
+.passenger-btn.active {
+    background: rgba(79,172,254,0.3);
     color: #4facfe;
+    border-color: rgba(79,172,254,0.5);
 }
 
-.app-button {
+.calculate-btn {
     width: 100%;
     padding: 16px;
     background: linear-gradient(45deg, #4facfe, #00f2fe);
     border: none;
-    border-radius: 14px;
+    border-radius: 12px;
     color: #000;
     font-family: 'Fake Receipt', monospace;
     font-size: 14px;
-    letter-spacing: 1px;
+    letter-spacing: 2px;
     text-transform: uppercase;
-    margin-top: 10px;
     cursor: pointer;
     transition: transform 0.2s;
 }
 
-.app-button:hover {
+.calculate-btn:hover {
     transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(79,172,254,0.4);
 }
 
 .app-results {
     padding: 20px 25px;
-    background: rgba(30, 30, 30, 0.5);
-    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    border-top: 1px solid rgba(255,255,255,0.1);
 }
 
-.result-line {
+.result-row {
     display: flex;
     justify-content: space-between;
+    margin-bottom: 12px;
     font-family: 'SF Pro Display', sans-serif;
     font-size: 15px;
-    padding: 10px 0;
-    color: rgba(255, 255, 255, 0.8);
+    color: rgba(255,255,255,0.8);
 }
 
-.result-line.highlight {
-    color: white;
-    font-weight: 500;
-}
-
-.result-line.highlight .result-value {
+.result-row.highlight {
     color: #4facfe;
+    font-weight: 600;
 }
 
-.result-value {
-    font-family: 'SF Pro Display', sans-serif;
+@media (max-width: 480px) {
+    .fuel-app {
+        max-width: 90%;
+    }
+    
+    .passenger-selector {
+        flex-wrap: wrap;
+    }
+    
+    .passenger-btn {
+        min-width: calc(20% - 8px);
+    }
 }
