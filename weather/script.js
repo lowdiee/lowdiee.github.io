@@ -1,8 +1,75 @@
-// Modal functionality
+// Cursor functionality
 document.addEventListener('DOMContentLoaded', function() {
+    // Custom cursor
+    const cursor = document.querySelector('.cursor');
+    const cursorF = document.querySelector('.cursor-f');
+    
+    if (cursor && cursorF) {
+        const settings = {
+            size: 8,
+            sizeF: 36,
+            followSpeed: 0.16
+        };
+        
+        let posX = 0, posY = 0;
+        let mouseX = 0, mouseY = 0;
+        
+        if ('ontouchstart' in window) {
+            cursor.style.display = 'none';
+            cursorF.style.display = 'none';
+        } else {
+            cursor.style.setProperty('--size', settings.size + 'px');
+            cursorF.style.setProperty('--size', settings.sizeF + 'px');
+            
+            document.addEventListener('mousemove', function(e) {
+                mouseX = e.clientX;
+                mouseY = e.clientY;
+                cursor.style.left = mouseX - settings.size/2 + 'px';
+                cursor.style.top = mouseY - settings.size/2 + 'px';
+            }, { passive: true });
+            
+            document.addEventListener('mousedown', function() {
+                cursor.style.transform = 'scale(4.5)';
+                cursorF.style.transform = 'scale(0.4)';
+            });
+            
+            document.addEventListener('mouseup', function() {
+                cursor.style.transform = 'scale(1)';
+                cursorF.style.transform = 'scale(1)';
+            });
+            
+            function animate() {
+                posX += (mouseX - posX) * settings.followSpeed;
+                posY += (mouseY - posY) * settings.followSpeed;
+                cursorF.style.left = posX - settings.sizeF/2 + 'px';
+                cursorF.style.top = posY - settings.sizeF/2 + 'px';
+                requestAnimationFrame(animate);
+            }
+            animate();
+        }
+    }
+
+    // Time display
+    const timeDisplay = document.getElementById('timeDisplay');
+    if (timeDisplay) {
+        function updateTime() {
+            const now = new Date();
+            timeDisplay.textContent = now.toLocaleTimeString('en-GB', {
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit',
+                hour12: false
+            });
+        }
+        updateTime();
+        setInterval(updateTime, 1000);
+    }
+
+    // Modal functionality
     const aboutLink = document.querySelector('.about-link');
     const aboutModal = document.getElementById('aboutModal');
     const closeModal = document.getElementById('closeModal');
+    const resumeButton = document.getElementById('resumeButton');
     
     if (aboutLink && aboutModal) {
         aboutLink.addEventListener('click', (e) => {
@@ -16,77 +83,90 @@ document.addEventListener('DOMContentLoaded', function() {
             document.body.style.overflow = 'auto';
         });
         
+        resumeButton.addEventListener('click', () => {
+            aboutModal.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        });
+        
         aboutModal.addEventListener('click', (e) => {
             if (e.target === aboutModal) {
                 aboutModal.classList.remove('active');
                 document.body.style.overflow = 'auto';
             }
         });
+        
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && aboutModal.classList.contains('active')) {
+                aboutModal.classList.remove('active');
+                document.body.style.overflow = 'auto';
+            }
+        });
     }
+
+    // IMGW API Integration
+    async function fetchWeatherData() {
+        try {
+            const response = await fetch('https://danepubliczne.imgw.pl/api/data/synop');
+            const allStations = await response.json();
+            
+            // Filter active stations with temperature data
+            const activeStations = allStations.filter(station => 
+                station.temperatura && !isNaN(station.temperatura)
+            );
+            
+            if (activeStations.length === 0) return null;
+            
+            // Find hottest and coldest
+            const hottest = activeStations.reduce((prev, current) => 
+                (+prev.temperatura > +current.temperatura) ? prev : current
+            );
+            
+            const coldest = activeStations.reduce((prev, current) => 
+                (+prev.temperatura < +current.temperatura) ? prev : current
+            );
+            
+            // Calculate average
+            const avgTemp = activeStations.reduce((sum, station) => 
+                sum + parseFloat(station.temperatura), 0) / activeStations.length;
+            
+            return {
+                hottestToday: {
+                    temp: hottest.temperatura,
+                    location: hottest.stacja
+                },
+                coldestToday: {
+                    temp: coldest.temperatura,
+                    location: coldest.stacja
+                },
+                avgTemp: avgTemp.toFixed(1)
+            };
+        } catch (error) {
+            console.error("Error fetching weather data:", error);
+            return null;
+        }
+    }
+
+    // Update weather panels
+    async function updateWeather() {
+        const weatherData = await fetchWeatherData();
+        if (weatherData) {
+            document.getElementById('hottestTodayTemp').textContent = `${weatherData.hottestToday.temp}°C`;
+            document.getElementById('hottestTodayCity').textContent = weatherData.hottestToday.location;
+            document.getElementById('coldestTodayTemp').textContent = `${weatherData.coldestToday.temp}°C`;
+            document.getElementById('coldestTodayCity').textContent = weatherData.coldestToday.location;
+            document.getElementById('avgTemp').textContent = `${weatherData.avgTemp}°C`;
+            
+            // For demo purposes - in real app you would compare with yesterday's data
+            const trend = (Math.random() * 4 - 2).toFixed(1);
+            const trendElement = document.getElementById('tempTrend');
+            trendElement.textContent = `${trend > 0 ? '+' : ''}${trend}°C`;
+            trendElement.style.color = trend > 0 ? '#ff6b6b' : '#4facfe';
+        }
+        
+        // Schedule next update in 1 hour
+        setTimeout(updateWeather, 3600000);
+    }
+
+    // Initial weather update
+    updateWeather();
 });
-
-// Weather data
-async function fetchWeatherData() {
-    // Simulate API call
-    return {
-        hottestToday: {
-            temp: Math.round(Math.random() * 10 + 20), // 20-30°C
-            location: ["Warszawa", "Kraków", "Wrocław", "Poznań", "Gdańsk"][Math.floor(Math.random() * 5)]
-        },
-        coldestToday: {
-            temp: Math.round(Math.random() * 10 - 5), // -5 to 5°C
-            location: ["Zakopane", "Suwałki", "Białystok", "Kasprowy Wierch", "Śnieżka"][Math.floor(Math.random() * 5)]
-        },
-        avgTemp: Math.round(Math.random() * 10 + 10), // 10-20°C
-        trend: Math.round(Math.random() * 4 - 2) // -2 to +2°C
-    };
-}
-
-function updateWeatherPanels(data) {
-    // Hottest today
-    document.querySelector('#hottestToday .temp').textContent = `${data.hottestToday.temp}°C`;
-    document.querySelector('#hottestToday .location').textContent = data.hottestToday.location;
-    
-    // Coldest today
-    document.querySelector('#coldestToday .temp').textContent = `${data.coldestToday.temp}°C`;
-    document.querySelector('#coldestToday .location').textContent = data.coldestToday.location;
-    
-    // Average temp
-    document.querySelector('#avgTemp .temp').textContent = `${data.avgTemp}°C`;
-    
-    // Trend
-    const trendElement = document.querySelector('#tempTrend .temp');
-    const trendIcon = document.querySelector('#tempTrend .trend-icon');
-    trendElement.textContent = `${Math.abs(data.trend)}°C`;
-    
-    if(data.trend > 0) {
-        trendElement.style.color = '#ff6b6b';
-        trendIcon.textContent = '↑';
-        trendIcon.style.color = '#ff6b6b';
-    } else if(data.trend < 0) {
-        trendElement.style.color = '#4facfe';
-        trendIcon.textContent = '↓';
-        trendIcon.style.color = '#4facfe';
-    } else {
-        trendElement.style.color = '#aaa';
-        trendIcon.textContent = '→';
-        trendIcon.style.color = '#aaa';
-    }
-}
-
-// Update weather data
-async function updateWeather() {
-    const data = await fetchWeatherData();
-    updateWeatherPanels(data);
-    
-    // Schedule next update in 1 hour
-    setTimeout(updateWeather, 3600000);
-    
-    // Show last update time
-    const now = new Date();
-    console.log(`Last update: ${now.toLocaleTimeString()}`);
-}
-
-// Initial load
-updateWeather();
-
