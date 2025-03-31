@@ -1,4 +1,58 @@
-/* Modal styles (identical to portfolio) */
+/* Weather Dashboard */
+.weather-dashboard {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    max-width: 800px;
+    margin: 30px auto;
+    padding: 0 20px;
+}
+
+.weather-column {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.weather-panel {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 12px;
+    padding: 20px;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    min-height: 120px;
+}
+
+.weather-panel h3 {
+    font-family: 'Fake Receipt', monospace;
+    color: #4facfe;
+    margin-bottom: 15px;
+    font-size: 16px;
+}
+
+.weather-value {
+    font-family: 'SF Pro Display', sans-serif;
+    display: flex;
+    flex-direction: column;
+}
+
+.weather-value .temp {
+    font-size: 24px;
+    font-weight: 600;
+    margin-bottom: 5px;
+}
+
+.weather-value .location {
+    font-size: 14px;
+    opacity: 0.8;
+}
+
+.trend-icon {
+    font-size: 20px;
+    margin-left: 10px;
+}
+
+/* Modal styles */
 .modal-overlay {
     position: fixed;
     top: 0;
@@ -31,7 +85,7 @@
     transform: translateY(30px);
     opacity: 0;
     transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1) 0.2s;
-    font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, sans-serif;
+    font-family: 'SF Pro Display', sans-serif;
 }
 
 .modal-overlay.active .card {
@@ -127,7 +181,7 @@
     border-radius: 10px;
     cursor: pointer;
     transition: all 0.3s ease;
-    font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, sans-serif;
+    font-family: 'SF Pro Display', sans-serif;
 }
 
 .modal-btn:hover {
@@ -148,75 +202,10 @@
     justify-content: center;
     cursor: pointer;
     transition: all 0.3s ease;
+    color: white;
+    font-size: 24px;
+    line-height: 1;
 }
 
 .close-btn:hover {
-    background: rgba(255, 255, 255, 0.2);
-}
-
-.close-btn:before, .close-btn:after {
-    content: '';
-    position: absolute;
-    width: 20px;
-    height: 2px;
-    background: #fff;
-}
-
-.close-btn:before {
-    transform: rotate(45deg);
-}
-
-.close-btn:after {
-    transform: rotate(-45deg);
-}
-
-.weather-dashboard {
-    display: flex;
-    gap: 20px;
-    max-width: 800px;
-    margin: 0 auto;
-}
-
-.weather-column {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-}
-
-.weather-panel {
-    background: rgba(255, 255, 255, 0.05);
-    border-radius: 12px;
-    padding: 20px;
-    backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-.weather-panel h3 {
-    font-family: 'Fake Receipt', monospace;
-    color: #4facfe;
-    margin-bottom: 15px;
-    font-size: 16px;
-}
-
-.weather-value {
-    font-family: 'SF Pro Display', sans-serif;
-    display: flex;
-    flex-direction: column;
-}
-
-.weather-value .temp {
-    font-size: 24px;
-    font-weight: 600;
-    margin-bottom: 5px;
-}
-
-.weather-value .location {
-    font-size: 14px;
-    opacity: 0.8;
-}
-
-.trend-icon {
-    font-size: 20px;
-    margin-left: 10px;
-}
+    background: rgba(255, 255, 255, 0
