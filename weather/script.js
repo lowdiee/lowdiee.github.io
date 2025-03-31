@@ -49,93 +49,79 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     animate();
     
-    fetchWeatherData();
+  fetchWeatherData();
 });
 
 async function fetchWeatherData() {
     try {
-        const response = await fetch('https://danepubliczne.imgw.pl/api/data/synop');
-        const allStations = await response.json();
+        const [synopResponse, meteoResponse] = await Promise.all([
+            fetch('https://danepubliczne.imgw.pl/api/data/synop'),
+            fetch('https://danepubliczne.imgw.pl/api/data/meteo')
+        ]);
+        
+        const synopData = await synopResponse.json();
+        const meteoData = await meteoResponse.json();
         
         // Przetwarzanie danych
-        const processedData = processWeatherData(allStations);
-        updateWeatherUI(processedData);
+        const hottestToday = findExtremeTemperature(synopData, 'max');
+        const coldestToday = findExtremeTemperature(synopData, 'min');
+        const windiest = findWindiestStation(synopData);
+        const groundTemp = calculateAverageGroundTemp(meteoData);
         
-        // Aktualizuj co godzinę
-        setTimeout(fetchWeatherData, 3600000);
+        // Aktualizacja UI
+        updatePanel('hottest-today-temp', `${hottestToday.temp}°C`);
+        updatePanel('hottest-today-location', hottestToday.station);
+        updatePanel('coldest-today-temp', `${coldestToday.temp}°C`);
+        updatePanel('coldest-today-location', coldestToday.station);
+        updatePanel('wind-speed', `${windiest.speed} km/h`);
+        updatePanel('wind-location', windiest.station);
+        updatePanel('ground-temp', `${groundTemp}°C`);
+
     } catch (error) {
-        console.error("Błąd pobierania danych:", error);
-        setTimeout(fetchWeatherData, 300000); // Ponów próbę po 5 minutach
+        console.error("Error fetching data:", error);
     }
 }
 
-function processWeatherData(stations) {
-    // Filtruj tylko stacje aktywne i z kompletem danych
-    const validStations = stations.filter(station => 
-        station.temperatura && station.stacja
-    );
-    
-    // Znajdź najwyższą i najniższą temperaturę
-    const hottest = validStations.reduce((max, station) => 
-        parseFloat(station.temperatura) > parseFloat(max.temperatura) ? station : max
-    );
-    
-    const coldest = validStations.reduce((min, station) => 
-        parseFloat(station.temperatura) < parseFloat(min.temperatura) ? station : min
-    );
-    
-    // Oblicz średnią temperaturę
-    const avgTemp = validStations.reduce((sum, station) => 
-        sum + parseFloat(station.temperatura), 0) / validStations.length;
-    
-    // Oblicz trend (uproszczone - porównanie z poprzednim dniem)
-    // UWAGA: To wymagałoby zapisywania poprzednich danych
-    const trend = {
-        change: 0, // Tymczasowo 0 - potrzebne byłoby przechowywanie historii
-        description: "Brak danych historycznych"
-    };
+function findExtremeTemperature(data, type) {
+    const filtered = data.filter(item => item.temperatura);
+    const extreme = filtered.reduce((res, item) => {
+        const temp = parseFloat(item.temperatura);
+        if (type === 'max') {
+            return temp > res.temp ? { temp, station: item.stacja } : res;
+        } else {
+            return temp < res.temp ? { temp, station: item.stacja } : res;
+        }
+    }, { temp: type === 'max' ? -Infinity : Infinity, station: '' });
     
     return {
-        hottestToday: {
-            temp: hottest.temperatura,
-            location: hottest.stacja,
-            time: new Date()
-        },
-        coldestToday: {
-            temp: coldest.temperatura,
-            location: coldest.stacja,
-            time: new Date()
-        },
-        trend: trend,
-        average: {
-            temp: avgTemp,
-            time: new Date()
-        }
+        temp: extreme.temp.toFixed(1),
+        station: extreme.station
     };
 }
 
-function updateWeatherUI(data) {
-    // Aktualizuj najcieplejsze miejsce
-    document.getElementById('hottest-today-temp').textContent = `${data.hottestToday.temp}°C`;
-    document.getElementById('hottest-today-location').textContent = data.hottestToday.location;
-    document.getElementById('hottest-today-time').textContent = `Updated: ${formatTime(data.hottestToday.time)}`;
+function findWindiestStation(data) {
+    const filtered = data.filter(item => item.predkosc_wiatru);
+    const windiest = filtered.reduce((max, item) => {
+        const speed = parseFloat(item.predkosc_wiatru);
+        return speed > max.speed ? { speed, station: item.stacja } : max;
+    }, { speed: -Infinity, station: '' });
     
-    // Aktualizuj najzimniejsze miejsce
-    document.getElementById('coldest-today-temp').textContent = `${data.coldestToday.temp}°C`;
-    document.getElementById('coldest-today-location').textContent = data.coldestToday.location;
-    document.getElementById('coldest-today-time').textContent = `Updated: ${formatTime(data.coldestToday.time)}`;
-    
-    // Aktualizuj trend
-    const trendElement = document.getElementById('trend-temp');
-    trendElement.innerHTML = `<span>${data.trend.change > 0 ? '+' : ''}${data.trend.change.toFixed(1)}°C</span>`;
-    document.getElementById('trend-description').textContent = data.trend.description;
-    document.getElementById('trend-time').textContent = `Updated: ${formatTime(data.trend.time)}`;
-    
-    // Aktualizuj średnią
-    document.getElementById('avg-temp').textContent = `${data.average.temp.toFixed(1)}°C`;
-    document.getElementById('avg-time').textContent = `Updated: ${formatTime(data.average.time)}`;
+    return {
+        speed: windiest.speed.toFixed(1),
+        station: windiest.station
+    };
 }
 
-function formatTime(date) {
-    return date.toLocaleTimeString('pl-PL', {hour: '2-digit', minute:'2-digit'});
+function calculateAverageGroundTemp(data) {
+    const groundTemps = data
+        .filter(item => item.temperatura_gruntu)
+        .map(item => parseFloat(item.temperatura_gruntu));
+    
+    const avg = groundTemps.reduce((sum, temp) => sum + temp, 0) / groundTemps.length;
+    return avg.toFixed(1);
+}
+
+function updatePanel(id, value) {
+    const element = document.getElementById(id);
+    if (element) element.textContent = value;
 }
