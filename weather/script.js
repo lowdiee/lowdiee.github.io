@@ -103,110 +103,55 @@ timeDisplay.addEventListener('mouseleave', () => {
     setupTimeDisplay();
 });
 
-// Initialize
-setupTimeDisplay();
-    // Modal functionality
-    const aboutLink = document.querySelector('.about-link');
-    const aboutModal = document.getElementById('aboutModal');
-    const closeModal = document.getElementById('closeModal');
-    const resumeButton = document.getElementById('resumeButton');
-    
-    if (aboutLink && aboutModal) {
-        aboutLink.addEventListener('click', (e) => {
-            e.preventDefault();
-            aboutModal.classList.add('active');
-            document.body.style.overflow = 'hidden';
-        });
-        
-        closeModal.addEventListener('click', () => {
-            aboutModal.classList.remove('active');
-            document.body.style.overflow = 'auto';
-        });
-        
-        resumeButton.addEventListener('click', () => {
-            aboutModal.classList.remove('active');
-            document.body.style.overflow = 'auto';
-        });
-        
-        aboutModal.addEventListener('click', (e) => {
-            if (e.target === aboutModal) {
-                aboutModal.classList.remove('active');
-                document.body.style.overflow = 'auto';
-            }
-        });
-        
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape' && aboutModal.classList.contains('active')) {
-                aboutModal.classList.remove('active');
-                document.body.style.overflow = 'auto';
-            }
-        });
-    }
+function displayWeather(data) {
+    const weatherContainer = document.getElementById('weatherContainer');
+    weatherContainer.innerHTML = '';
 
-    // IMGW API Integration
-    async function fetchWeatherData() {
-        try {
-            const response = await fetch('https://danepubliczne.imgw.pl/api/data/synop');
-            const allStations = await response.json();
-            
-            // Filter active stations with temperature data
-            const activeStations = allStations.filter(station => 
-                station.temperatura && !isNaN(station.temperatura)
-            );
-            
-            if (activeStations.length === 0) return null;
-            
-            // Find hottest and coldest
-            const hottest = activeStations.reduce((prev, current) => 
-                (+prev.temperatura > +current.temperatura) ? prev : current
-            );
-            
-            const coldest = activeStations.reduce((prev, current) => 
-                (+prev.temperatura < +current.temperatura) ? prev : current
-            );
-            
-            // Calculate average
-            const avgTemp = activeStations.reduce((sum, station) => 
-                sum + parseFloat(station.temperatura), 0) / activeStations.length;
-            
-            return {
-                hottestToday: {
-                    temp: hottest.temperatura,
-                    location: hottest.stacja
-                },
-                coldestToday: {
-                    temp: coldest.temperatura,
-                    location: coldest.stacja
-                },
-                avgTemp: avgTemp.toFixed(1)
-            };
-        } catch (error) {
-            console.error("Error fetching weather data:", error);
-            return null;
-        }
-    }
+    // Sort cities by temperature (descending)
+    const sortedData = [...data].sort((a, b) => b.main.temp - a.main.temp);
 
-    // Update weather panels
-    async function updateWeather() {
-        const weatherData = await fetchWeatherData();
-        if (weatherData) {
-            document.getElementById('hottestTodayTemp').textContent = `${weatherData.hottestToday.temp}°C`;
-            document.getElementById('hottestTodayCity').textContent = weatherData.hottestToday.location;
-            document.getElementById('coldestTodayTemp').textContent = `${weatherData.coldestToday.temp}°C`;
-            document.getElementById('coldestTodayCity').textContent = weatherData.coldestToday.location;
-            document.getElementById('avgTemp').textContent = `${weatherData.avgTemp}°C`;
-            
-            // For demo purposes - in real app you would compare with yesterday's data
-            const trend = (Math.random() * 4 - 2).toFixed(1);
-            const trendElement = document.getElementById('tempTrend');
-            trendElement.textContent = `${trend > 0 ? '+' : ''}${trend}°C`;
-            trendElement.style.color = trend > 0 ? '#ff6b6b' : '#4facfe';
-        }
-        
-        // Schedule next update in 1 hour
-        setTimeout(updateWeather, 3600000);
-    }
+    sortedData.forEach((cityData, index) => {
+        const isHottest = index === 0;
+        const isColdest = index === sortedData.length - 1;
 
-    // Initial weather update
-    updateWeather();
-});
+        const weatherCard = document.createElement('div');
+        weatherCard.className = 'weather-card';
+
+        const weatherIcon = `https://openweathermap.org/img/wn/${cityData.weather[0].icon}@2x.png`;
+
+        weatherCard.innerHTML = `
+            <div class="flex flex-col h-full">
+                ${isHottest ? '<div class="hottest-label">Hottest today</div>' : ''}
+                ${isColdest ? '<div class="coldest-label">Coldest today</div>' : ''}
+                
+                <div class="city-name">${cityData.name}, ${cityData.sys.country}</div>
+                
+                <div class="flex items-center justify-between mb-4">
+                    <div class="temperature">${Math.round(cityData.main.temp)}°C</div>
+                    <img src="${weatherIcon}" alt="${cityData.weather[0].description}" class="w-16 h-16">
+                </div>
+                
+                <div class="weather-details mt-auto">
+                    <div class="detail-item">
+                        <span>Feels like:</span>
+                        <span>${Math.round(cityData.main.feels_like)}°C</span>
+                    </div>
+                    <div class="detail-item">
+                        <span>Humidity:</span>
+                        <span>${cityData.main.humidity}%</span>
+                    </div>
+                    <div class="detail-item">
+                        <span>Wind:</span>
+                        <span>${cityData.wind.speed} m/s</span>
+                    </div>
+                    <div class="detail-item">
+                        <span>Pressure:</span>
+                        <span>${cityData.main.pressure} hPa</span>
+                    </div>
+                </div>
+            </div>
+        `;
+
+        weatherContainer.appendChild(weatherCard);
+    });
+}
