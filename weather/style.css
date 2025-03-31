@@ -1,3 +1,12 @@
+/* Font families */
+.font-fake-receipt {
+    font-family: 'Fake Receipt', monospace;
+}
+
+.font-sf-pro {
+    font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
 /* Noise overlay */
 .noise-overlay {
     position: fixed;
@@ -61,6 +70,7 @@ html, body, * {
     border: none;
     background: #fff;
     color: #000;
+    font-family: 'Fake Receipt', monospace;
 }
 
 .back-button > svg {
@@ -115,4 +125,9 @@ html, body, * {
 .border-purple-500 {
     border-color: rgba(191, 90, 242, 0.7);
     color: rgba(191, 90, 242, 0.7);
+}
+
+/* Tracking for Fake Receipt */
+.tracking-wider {
+    letter-spacing: 1px;
 }
