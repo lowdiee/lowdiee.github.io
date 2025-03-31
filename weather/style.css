@@ -88,8 +88,8 @@ html, body, * {
     flex-direction: column;
     justify-content: center;
     border: 1px solid;
-    min-height: 70px; /* Zmienione z 110px na 90px */
-    height: 80;
+/*  min-height: 70px; Zmienione z 110px na 90px */
+    height: 60;
 }
 
 .weather-panel:hover {
