@@ -1,3 +1,121 @@
+/*CZCIONKA*/
+/* Usuń stare @font-face dla Fake Receipt i zastąp tym: */
+@font-face {
+    font-family: 'Fake Receipt';
+    src: url('/fonts/fake-receipt.woff2') format('woff2'),
+         url('/fonts/fake-receipt.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap; /* Lepszego ładowanie czcionki */
+}
+
+/* Pozostaw resztę bez zmian */
+nav, nav *, .time-display {
+    font-family: 'Fake Receipt', monospace;
+}
+
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+/* Czcionki - usunięte stare definicje @font-face */
+
+/* Nawigacja */
+nav, nav *, .time-display {
+    font-family: 'Fake Receipt', -apple-system, BlinkMacSystemFont, sans-serif;
+}
+body {
+    background-color: #000;
+    color: #fff;
+    overflow-x: hidden;
+}
+
+/* Nawigacja */
+nav {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px 40px;
+    z-index: 100;
+    background: rgba(0,0,0,0.7);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+}
+
+.nav-links {
+    display: flex;
+    align-items: center;
+    margin-right: auto;
+}
+
+nav a {
+    color: #fff;
+    text-decoration: none;
+    margin: 0 25px;
+    font-size: 14px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    transition: all 0.3s ease;
+    position: relative;
+    font-family: 'Fake Receipt', -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+nav a:hover {
+    color: #4facfe;
+}
+
+.time-display {
+    font-family: 'Fake Receipt', -apple-system, BlinkMacSystemFont, sans-serif;
+    font-size: 14px;
+    letter-spacing: 1px;
+    cursor: default;
+    transition: all 0.3s ease;
+    margin-left: auto;
+}
+
+.time-display:hover {
+    color: #4facfe;
+}
+
+
+
+.canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+}
+
+.hero {
+  position: relative;
+  height: 100vh;
+}
+
+.hero-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: -2;
+    
+    /* Przyspieszenie renderowania */
+    transform: translateZ(0);
+    will-change: transform;
+}
+
+
+
 /* ... istniejące style ... */
 
 nav {
