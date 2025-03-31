@@ -1,37 +1,27 @@
-<script>
 // Modal functionality
-const aboutLink = document.querySelector('.about-link');
-const aboutModal = document.getElementById('aboutModal');
-const closeModal = document.getElementById('closeModal');
-const resumeButton = document.getElementById('resumeButton');
-
-aboutLink.addEventListener('click', (e) => {
-    e.preventDefault();
-    aboutModal.classList.add('active');
-    document.body.style.overflow = 'hidden';
-});
-
-closeModal.addEventListener('click', () => {
-    aboutModal.classList.remove('active');
-    document.body.style.overflow = 'auto';
-});
-
-resumeButton.addEventListener('click', () => {
-    aboutModal.classList.remove('active');
-    document.body.style.overflow = 'auto';
-});
-
-aboutModal.addEventListener('click', (e) => {
-    if (e.target === aboutModal) {
-        aboutModal.classList.remove('active');
-        document.body.style.overflow = 'auto';
-    }
-});
-
-document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && aboutModal.classList.contains('active')) {
-        aboutModal.classList.remove('active');
-        document.body.style.overflow = 'auto';
+document.addEventListener('DOMContentLoaded', function() {
+    const aboutLink = document.querySelector('.about-link');
+    const aboutModal = document.getElementById('aboutModal');
+    const closeModal = document.getElementById('closeModal');
+    
+    if (aboutLink && aboutModal) {
+        aboutLink.addEventListener('click', (e) => {
+            e.preventDefault();
+            aboutModal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        });
+        
+        closeModal.addEventListener('click', () => {
+            aboutModal.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        });
+        
+        aboutModal.addEventListener('click', (e) => {
+            if (e.target === aboutModal) {
+                aboutModal.classList.remove('active');
+                document.body.style.overflow = 'auto';
+            }
+        });
     }
 });
 
@@ -99,4 +89,4 @@ async function updateWeather() {
 
 // Initial load
 updateWeather();
-</script>
+
