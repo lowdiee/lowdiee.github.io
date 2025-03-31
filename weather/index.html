@@ -224,9 +224,63 @@
     <div class="time-display" id="timeDisplay"></div>
 </nav>
 
+<!-- Weather Dashboard -->
+<div class="weather-dashboard">
+    <div class="weather-column">
+        <div class="weather-panel">
+            <h3>Hottest today</h3>
+            <div class="weather-value" id="hottestToday">
+                <span class="temp">--°C</span>
+                <span class="location">--</span>
+            </div>
+        </div>
+        
+        <div class="weather-panel">
+            <h3>Hottest all time</h3>
+            <div class="weather-value">
+                <span class="temp">40.2°C</span>
+                <span class="location">Pruszków, 2022</span>
+            </div>
+        </div>
+        
+        <div class="weather-panel">
+            <h3>Trend vs yesterday</h3>
+            <div class="weather-value" id="tempTrend">
+                <span class="temp">--°C</span>
+                <span class="trend-icon">→</span>
+            </div>
+        </div>
+    </div>
+    
+    <div class="weather-column">
+        <div class="weather-panel">
+            <h3>Coldest today</h3>
+            <div class="weather-value" id="coldestToday">
+                <span class="temp">--°C</span>
+                <span class="location">--</span>
+            </div>
+        </div>
+        
+        <div class="weather-panel">
+            <h3>Coldest all time</h3>
+            <div class="weather-value">
+                <span class="temp">-41.0°C</span>
+                <span class="location">Siedlce, 1940</span>
+            </div>
+        </div>
+        
+        <div class="weather-panel">
+            <h3>Average today</h3>
+            <div class="weather-value" id="avgTemp">
+                <span class="temp">--°C</span>
+            </div>
+        </div>
+    </div>
+</div>
+
 <!-- About Me Modal -->
 <div class="modal-overlay" id="aboutModal">
-    <div class="close-btn" id="closeModal"></div>
+    <div class="close-btn" id="closeModal">×</div>
     <div class="card">
         <div class="profile-image-container">
             <img src="https://i.ibb.co/1fbH37gg/lowdweird.png" alt="LOWD" class="profile-image">
@@ -264,68 +318,6 @@
         <button id="resumeButton" class="modal-btn">Resume</button>
     </div>
 </div>
-    
-<div class="weather-dashboard">
-    <!-- Pierwsza kolumna -->
-    <div class="weather-column">
-        <!-- Najwyższa temp dzisiaj -->
-        <div class="weather-panel">
-            <h3>Hottest today</h3>
-            <div class="weather-value" id="hottestToday">
-                <span class="temp">--°C</span>
-                <span class="location">--</span>
-            </div>
-        </div>
-        
-        <!-- Najwyższa temp w historii -->
-        <div class="weather-panel">
-            <h3>Hottest all time</h3>
-            <div class="weather-value">
-                <span class="temp">40.2°C</span>
-                <span class="location">Pruszków, 2022</span>
-            </div>
-        </div>
-        
-        <!-- Trend zmian -->
-        <div class="weather-panel">
-            <h3>Trend vs yesterday</h3>
-            <div class="weather-value" id="tempTrend">
-                <span class="temp">--°C</span>
-                <span class="trend-icon">→</span>
-            </div>
-        </div>
-    </div>
-    
-    <!-- Druga kolumna -->
-    <div class="weather-column">
-        <!-- Najniższa temp dzisiaj -->
-        <div class="weather-panel">
-            <h3>Coldest today</h3>
-            <div class="weather-value" id="coldestToday">
-                <span class="temp">--°C</span>
-                <span class="location">--</span>
-            </div>
-        </div>
-        
-        <!-- Najniższa temp w historii -->
-        <div class="weather-panel">
-            <h3>Coldest all time</h3>
-            <div class="weather-value">
-                <span class="temp">-41.0°C</span>
-                <span class="location">Siedlce, 1940</span>
-            </div>
-        </div>
-        
-        <!-- Średnia temp -->
-        <div class="weather-panel">
-            <h3>Average today</h3>
-            <div class="weather-value" id="avgTemp">
-                <span class="temp">--°C</span>
-            </div>
-        </div>
-    </div>
-</div>
-
 
 <script src="/script.js"></script>
 <script>
