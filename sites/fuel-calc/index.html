@@ -1,15 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
+<!--DESIGNED AND DEVELOPED BY LOWDIEE 03.2025©-->
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Portfolio</title>
-    <link rel="stylesheet" href="/sites/fuel-calc/style.css">
+    <link rel="stylesheet" href="/style.css">
     <script src="https://ajax.googleapis.com/ajax/libs/webfont/1.6.26/webfont.js"></script>
     <link href="https://fonts.cdnfonts.com/css/sf-pro-display" rel="stylesheet">
     <link href="https://fonts.cdnfonts.com/css/fake-receipt" rel="stylesheet">
+    <title>Portfolio</title>
     <style>
-        /* Twoje istniejące style pozostają bez zmian */
         * {
             margin: 0;
             padding: 0;
@@ -17,28 +17,73 @@
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
         }
         
+        .wf-loading body {
+            visibility: hidden;
+        }
+        
+        .wf-active body, .wf-inactive body {
+            visibility: visible;
+        }
+        
+        body {
+            background-color: #000;
+            color: #fff;
+            overflow-x: hidden;
+            font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        }
+        
+        nav, nav *, .time-display {
+            font-family: 'Fake Receipt', 'Courier New', Courier, monospace;
+        }
     </style>
 </head>
 <body>
+<div class="noise-overlay" aria-hidden="true"></div>
+<div class="cursor"></div>
+<div class="cursor-f"></div>
 
-    <div class="noise-overlay" aria-hidden="true"></div>
-    <div class="cursor"></div>
-    <div class="cursor-f"></div>
-    
-    <nav>
-        <div class="nav-links">
-            <a href="#" class="projects-link">PROJECTS</a>
-            <a href="#" class="about-link">ABOUT ME</a>
-        </div>
-        <div class="time-display" id="timeDisplay"></div>
-    </nav>
+<!-- Back to Top Button -->
+<button class="back-to-top" style="font-family: 'Fake Receipt', monospace">
+  <div class="text" style="font-family: inherit">
+    <span style="font-family: inherit">BACK</span>
+    <span style="font-family: inherit">TO</span>
+    <span style="font-family: inherit">TOP</span>
+  </div>
+  <div class="clone" style="font-family: inherit">
+    <span style="font-family: inherit">BACK</span>
+    <span style="font-family: inherit">TO</span>
+    <span style="font-family: inherit">TOP</span>
+  </div>
+  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+    <path d="M5 15l7-7 7 7" stroke-linecap="round" stroke-linejoin="round"/>
+  </svg>
+</button>
+
+<nav>
+    <div class="nav-links">
+        <a href="#" class="projects-link">PROJECTS</a>
+        <a href="#" class="about-link">ABOUT ME</a>
+    </div>
+    <div class="time-display" id="timeDisplay"></div>
+</nav>
+
+<div class="scroll-indicator">
+  <div class="dots"></div>
+</div>
+
+<section class="hero">
+    <video class="hero-bg" autoplay muted loop playsinline>
+        <source src="https://cdn.videy.co/r73mqoqL1.mp4" type="video/mp4">
+    </video>
+    <canvas class="canvas"></canvas>
+</section>
+
 <!-- Weather Extremes Panel -->
 <div class="weather-extremes-container">
   <div class="weather-extremes-panel">
     <h2 class="weather-title fake-receipt">POLISH WEATHER EXTREMES</h2>
     
     <div class="weather-columns">
-      <!-- Left Column - Min Temp -->
       <div class="weather-column">
         <div class="weather-card cold-card">
           <div class="card-header sf-pro">LOWEST TODAY</div>
@@ -51,7 +96,6 @@
         </div>
       </div>
       
-      <!-- Right Column - Max Temp -->
       <div class="weather-column">
         <div class="weather-card hot-card">
           <div class="card-header sf-pro">HIGHEST TODAY</div>
@@ -71,21 +115,197 @@
     </div>
   </div>
 </div>
-    <script src="/sites/fuel-calc/script.js"></script>
-    <script>
-        // Inicjalizacja Web Font Loader
-        WebFont.load({
-            custom: {
-                families: ['SF Pro Display', 'Fake Receipt'],
-                urls: [
-                    'https://fonts.cdnfonts.com/css/sf-pro-display',
-                    'https://fonts.cdnfonts.com/css/fake-receipt'
-                ]
-            }
-        });
-        
-      
-    </script>
 
+<section class="projects-section" id="projects">
+    <div class="projects-grid">
+        <div class="project-item">
+            <img src="https://i.ibb.co/N23Sw7mf/bentley.jpg" alt="Project 1">
+            <div class="project-overlay">
+                <div class="project-title"></div>
+                <div class="project-category">Graphic Design</div>
+            </div>
+        </div>
+        
+        <div class="project-item">
+            <img src="https://i.ibb.co/tpzkqvss/bluzy.jpg" alt="Project 2">
+            <div class="project-overlay">
+                <div class="project-title"></div>
+                <div class="project-category">Clothing</div>
+            </div>
+        </div>
+        
+        <div class="project-item">
+            <img src="https://i.ibb.co/VY00FnTX/awp.jpg" alt="Project 3">
+            <div class="project-overlay">
+                <div class="project-title"></div>
+                <div class="project-category">3D Renders</div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="quote-section" id="quote1">
+        <div class="quote-content">
+            <p class="quote-text">
+                "Design is not just what it <span class="highlight">looks</span> like and feels like. Design is how it <span class="highlight">works</span>."
+            </p>
+            <p class="quote-author">— Steve Jobs</p>
+        </div>
+    </div>
+</section>
+
+<!-- About Me Modal -->
+<div class="modal-overlay" id="aboutModal">
+    <div class="close-btn" id="closeModal"></div>
+    <div class="card">
+        <div class="profile-image-container">
+            <img src="https://i.ibb.co/1fbH37gg/lowdweird.png" alt="LOWD" class="profile-image">
+        </div>
+        <p class="info">
+            Graphic design graduate (technical school) now studying information architecture.<br>
+            Multidisciplinary skills:
+            <div class="tags-container" style="display: block; margin-top: 5px;">
+                <span class="tag" style="display: inline-block; color: #4facfe; font-size: 15px; font-weight: 500; background: rgba(100,100,100,0.15); padding: 0 6px; border-radius: 10px; margin: 0 2px; white-space: nowrap;">music</span>
+                <span class="tag" style="display: inline-block; color: #4facfe; font-size: 15px; font-weight: 500; background: rgba(100,100,100,0.15); padding: 0 6px; border-radius: 10px; margin: 0 2px; white-space: nowrap;">code</span>
+                <span class="tag" style="display: inline-block; color: #4facfe; font-size: 15px; font-weight: 500; background: rgba(100,100,100,0.15); padding: 0 6px; border-radius: 10px; margin: 0 2px; white-space: nowrap;">design</span>
+            </div>
+        </p>
+        <div class="share">
+            <a href="https://x.com/saintlowdiee" target="_blank" rel="noopener noreferrer">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+                </svg>
+            </a>
+            <a href="https://instagram.com/eeidwol" target="_blank" rel="noopener noreferrer">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                    <path d="M8 0C5.829 0 5.556.01 4.703.048 3.85.088 3.269.222 2.76.42a3.917 3.917 0 0 0-1.417.923A3.927 3.927 0 0 0 .42 2.76C.222 3.268.087 3.85.048 4.7.01 5.555 0 5.827 0 8.001c0 2.172.01 2.444.048 3.297.04.852.174 1.433.372 1.942.205.526.478.972.923 1.417.444.445.89.719 1.416.923.51.198 1.09.333 1.942.372C5.555 15.99 5.827 16 8 16s2.444-.01 3.298-.048c.851-.04 1.434-.174 1.943-.372a3.916 3.916 0 0 0 1.416-.923c.445-.445.718-.891.923-1.417.197-.509.332-1.09.372-1.942C15.99 10.445 16 10.173 16 8s-.01-2.445-.048-3.299c-.04-.851-.175-1.433-.372-1.941a3.926 3.926 0 0 0-.923-1.417A3.911 3.911 0 0 0 13.24.42c-.51-.198-1.092-.333-1.943-.372C10.443.01 10.172 0 7.998 0h.003zm-.717 1.442h.718c2.136 0 2.389.007 3.232.046.78.035 1.204.166 1.486.275.373.145.64.319.92.599.28.28.453.546.598.92.11.281.24.705.275 1.485.039.843.047 1.096.047 3.231s-.008 2.389-.047 3.232c-.035.78-.166 1.203-.275 1.485a2.47 2.47 0 0 1-.599.919c-.28.28-.546.453-.92.598-.28.11-.704.24-1.485.276-.843.038-1.096.047-3.232.047s-2.39-.009-3.233-.047c-.78-.036-1.203-.166-1.485-.276a2.478 2.478 0 0 1-.92-.598 2.48 2.48 0 0 1-.6-.92c-.109-.281-.24-.705-.275-1.485-.038-.843-.046-1.096-.046-3.233 0-2.136.008-2.388.046-3.231.036-.78.166-1.204.276-1.486.145-.373.319-.64.599-.92.28-.28.546-.453.92-.598.282-.11.705-.24 1.485-.276.738-.034 1.024-.044 2.515-.045v.002zm4.988 1.328a.96.96 0 1 0 0 1.92.96.96 0 0 0 0-1.92zm-4.27 1.122a4.109 4.109 0 1 0 0 8.217 4.109 4.109 0 0 0 0-8.217zm0 1.441a2.667 2.667 0 1 1 0 5.334 2.667 2.667 0 0 1 0-5.334z"/>
+                </svg>
+            </a>
+        </div>
+        <button id="resumeButton">Resume</button>
+    </div>
+</div>
+
+<script src="/script.js"></script>
+<script>
+    WebFont.load({
+        custom: {
+            families: ['SF Pro Display', 'Fake Receipt'],
+            urls: [
+                'https://fonts.cdnfonts.com/css/sf-pro-display',
+                'https://fonts.cdnfonts.com/css/fake-receipt'
+            ]
+        }
+    });
+
+    // Modal functionality
+    const aboutLink = document.querySelector('.about-link');
+    const aboutModal = document.getElementById('aboutModal');
+    const closeModal = document.getElementById('closeModal');
+    const resumeButton = document.getElementById('resumeButton');
+    
+    aboutLink.addEventListener('click', (e) => {
+        e.preventDefault();
+        aboutModal.classList.add('active');
+        document.body.style.overflow = 'hidden';
+    });
+    
+    closeModal.addEventListener('click', () => {
+        aboutModal.classList.remove('active');
+        document.body.style.overflow = 'auto';
+    });
+    
+    resumeButton.addEventListener('click', () => {
+        aboutModal.classList.remove('active');
+        document.body.style.overflow = 'auto';
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
+    });
+    
+    aboutModal.addEventListener('click', (e) => {
+        if (e.target === aboutModal) {
+            aboutModal.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+    });
+    
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && aboutModal.classList.contains('active')) {
+            aboutModal.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+    });
+
+    // Time display functionality
+    const timeDisplay = document.getElementById('timeDisplay');
+    let isHovering = false;
+    let cetInterval, gmtInterval;
+
+    function updateCET() {
+        const now = new Date();
+        const cetOptions = {
+            timeZone: 'Europe/Paris',
+            hour: '2-digit',
+            minute: '2-digit',
+            second: '2-digit',
+            hour12: false
+        };
+        timeDisplay.textContent = `CET ${now.toLocaleTimeString('en-GB', cetOptions)}`;
+    }
+
+    function updateGMT() {
+        const now = new Date();
+        const gmtOptions = {
+            timeZone: 'GMT',
+            hour: '2-digit',
+            minute: '2-digit',
+            second: '2-digit',
+            hour12: false
+        };
+        timeDisplay.textContent = `GMT ${now.toLocaleTimeString('en-GB', gmtOptions)}`;
+    }
+
+    function setupTimeDisplay() {
+        clearInterval(cetInterval);
+        clearInterval(gmtInterval);
+
+        if (isHovering) {
+            updateGMT();
+            gmtInterval = setInterval(updateGMT, 1000);
+        } else {
+            updateCET();
+            cetInterval = setInterval(updateCET, 1000);
+        }
+    }
+
+    timeDisplay.addEventListener('mouseenter', () => {
+        isHovering = true;
+        setupTimeDisplay();
+    });
+
+    timeDisplay.addEventListener('mouseleave', () => {
+        isHovering = false;
+        setupTimeDisplay();
+    });
+
+    setupTimeDisplay();
+    
+    // Scroll reveal animation for projects section
+    const projectsSection = document.getElementById('projects');
+    
+    function checkScroll() {
+        const sectionTop = projectsSection.getBoundingClientRect().top;
+        const windowHeight = window.innerHeight;
+        
+        if (sectionTop < windowHeight * 0.75) {
+            projectsSection.classList.add('visible');
+            window.removeEventListener('scroll', checkScroll);
+        }
+    }
+    
+    window.addEventListener('scroll', checkScroll);
+    window.addEventListener('load', checkScroll);
+</script>
 </body>
 </html>
