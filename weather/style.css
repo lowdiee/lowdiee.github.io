@@ -12,32 +12,60 @@
     z-index: 2147483647;
 }
 
+/* Panel styles */
 .weather-panel {
-    border-radius: 16px;
+    background: rgba(28, 28, 30, 0.8);
+    backdrop-filter: blur(20px);
+    border-radius: 24px;
     padding: 24px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
     transition: all 0.3s ease;
     height: 100%;
     display: flex;
     flex-direction: column;
     position: relative;
     overflow: hidden;
-}
-
-.weather-panel:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
+    border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .weather-panel::before {
     content: '';
     position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 4px;
-    background: rgba(255, 255, 255, 0.2);
+    inset: 0;
+    border-radius: 24px;
+    padding: 1px;
+    background: linear-gradient(135deg, var(--glow-color), transparent 40%);
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
 }
+
+.weather-panel:hover {
+    transform: translateY(-5px);
+    background: rgba(38, 38, 40, 0.8);
+}
+
+/* Color variants */
+.weather-panel[data-color="red"] {
+    --glow-color: rgba(255, 69, 58, 0.4);
+}
+.weather-panel[data-color="blue"] {
+    --glow-color: rgba(10, 132, 255, 0.4);
+}
+.weather-panel[data-color="orange"] {
+    --glow-color: rgba(255, 159, 10, 0.4);
+}
+.weather-panel[data-color="cyan"] {
+    --glow-color: rgba(100, 210, 255, 0.4);
+}
+.weather-panel[data-color="purple"] {
+    --glow-color: rgba(191, 90, 242, 0.4);
+}
+.weather-panel[data-color="indigo"] {
+    --glow-color: rgba(94, 92, 230, 0.4);
+}
+
+/* Rest of your existing CSS... */
 
 /* Custom cursor styles */
 .cursor, .cursor-f {
