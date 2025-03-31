@@ -20,7 +20,7 @@
     </style>
 </head>
 <body>
-    <!-- Twoje istniejące elementy -->
+
     <div class="noise-overlay" aria-hidden="true"></div>
     <div class="cursor"></div>
     <div class="cursor-f"></div>
@@ -32,6 +32,42 @@
         </div>
         <div class="time-display" id="timeDisplay"></div>
     </nav>
+<!-- Add this to your index.html before </body> -->
+<div class="weather-container">
+  <div class="weather-widget macos-glass">
+    <h2 class="weather-title fake-receipt">TEMPERATURE EXTREMES</h2>
+    
+    <div class="weather-grid">
+      <div class="weather-card">
+        <div class="weather-label sf-pro">GLOBAL HIGH</div>
+        <div class="weather-value temp-high" id="global-high">--°C</div>
+        <div class="weather-location sf-pro" id="global-high-loc">Loading...</div>
+      </div>
+      
+      <div class="weather-card">
+        <div class="weather-label sf-pro">GLOBAL LOW</div>
+        <div class="weather-value temp-low" id="global-low">--°C</div>
+        <div class="weather-location sf-pro" id="global-low-loc">Loading...</div>
+      </div>
+      
+      <div class="weather-card">
+        <div class="weather-label sf-pro">POLAND HIGH</div>
+        <div class="weather-value temp-high" id="poland-high">--°C</div>
+        <div class="weather-location sf-pro" id="poland-high-loc">Loading...</div>
+      </div>
+      
+      <div class="weather-card">
+        <div class="weather-label sf-pro">POLAND LOW</div>
+        <div class="weather-value temp-low" id="poland-low">--°C</div>
+        <div class="weather-location sf-pro" id="poland-low-loc">Loading...</div>
+      </div>
+    </div>
+    
+    <div class="weather-footer sf-pro">
+      <span id="weather-date">Updated: --</span>
+    </div>
+  </div>
+</div>
     
     <script src="/script.js"></script>
     <script>
