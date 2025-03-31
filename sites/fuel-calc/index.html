@@ -32,54 +32,43 @@
         </div>
         <div class="time-display" id="timeDisplay"></div>
     </nav>
-<section class="weather-section">
-  <div class="weather-header">
-    <h2 class="weather-title fake-receipt">LIVE WEATHER EXTREMES</h2>
-    <p class="weather-subtitle sf-pro" id="weather-update-time">Loading data...</p>
-  </div>
-
-  <div class="weather-columns">
-    <!-- Left Column - Poland Data -->
-    <div class="weather-column">
-      <div class="weather-panel cold-panel" id="poland-low-panel">
-        <div class="panel-header sf-pro">POLAND MINIMUM</div>
-        <div class="panel-content">
-          <div class="temperature-display">
-            <span class="temp-value">--°C</span>
-            <span class="temp-location sf-pro">Loading...</span>
+<section class="weather-extremes">
+  <div class="container">
+    <h2 class="section-title fake-receipt">WEATHER EXTREMES</h2>
+    
+    <div class="columns">
+      <!-- Left Column - Cold Records -->
+      <div class="column">
+        <div class="weather-card cold">
+          <h3 class="card-title sf-pro">COLDEST IN POLAND</h3>
+          <div class="temp-display">
+            <span class="temperature">-41.0°C</span>
+            <span class="location sf-pro">Siedlce, 1940</span>
           </div>
-          <div class="temp-details sf-pro">
-            <p>• Last observation: --</p>
-            <p>• Station: --</p>
+          <div class="card-footer sf-pro">
+            <p>Record low temperature</p>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Right Column - Hot Records -->
+      <div class="column">
+        <div class="weather-card hot">
+          <h3 class="card-title sf-pro">HOTTEST IN POLAND</h3>
+          <div class="temp-display">
+            <span class="temperature">40.2°C</span>
+            <span class="location sf-pro">Pruszków, 2023</span>
+          </div>
+          <div class="card-footer sf-pro">
+            <p>Record high temperature</p>
           </div>
         </div>
       </div>
     </div>
-
-    <!-- Right Column - Global Data -->
-    <div class="weather-column">
-      <div class="weather-panel hot-panel" id="global-high-panel">
-        <div class="panel-header sf-pro">GLOBAL MAXIMUM</div>
-        <div class="panel-content">
-          <div class="temperature-display">
-            <span class="temp-value">--°C</span>
-            <span class="temp-location sf-pro">Loading...</span>
-          </div>
-          <div class="temp-details sf-pro">
-            <p>• Last observation: --</p>
-            <p>• Station: --</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="facts-panel sf-pro" id="current-weather-panel">
-    <div class="panel-header">CURRENT WEATHER IN WARSAW</div>
-    <div class="facts-content">
-      <p>• Temperature: --°C</p>
-      <p>• Condition: --</p>
-      <p>• Feels like: --°C</p>
+    
+    <div class="current-weather sf-pro">
+      <p>Current in Warsaw: <span id="current-temp">--°C</span></p>
+      <p id="update-time">Last updated: --</p>
     </div>
   </div>
 </section>
