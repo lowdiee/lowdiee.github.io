@@ -85,29 +85,43 @@ backToTopBtn.addEventListener('click', () => {
 });
 
 // Weather API Implementation
-const WEATHER_API_KEY = 'eda2e051b6a9474b90b152208253103';
-
-async function fetchWeatherData() {
+// IMGW API Implementation
+async function fetchIMGWData() {
   try {
-    // Fetch current Warsaw weather
-    const response = await fetch(`https://api.weatherapi.com/v1/current.json?key=${WEATHER_API_KEY}&q=Warsaw`);
+    // Pobierz dane z IMGW (API synoptyczne - ostatnia doba)
+    const response = await fetch('https://danepubliczne.imgw.pl/api/data/synop');
     const data = await response.json();
     
-    if (data.current) {
-      document.getElementById('current-temp').textContent = `${data.current.temp_c}°C`;
-      document.getElementById('update-time').textContent = 
-        `Last updated: ${new Date().toLocaleTimeString('en-US', {hour: '2-digit', minute:'2-digit'})}`;
-    }
+    // Znajdź ekstrema
+    const sortedByMin = [...data].sort((a, b) => a.temperatura - b.temperatura);
+    const sortedByMax = [...data].sort((a, b) => b.temperatura - a.temperatura);
+    
+    const minTemp = sortedByMin[0];
+    const maxTemp = sortedByMax[0];
+    
+    // Aktualizuj UI
+    document.getElementById('poland-min-temp').textContent = `${minTemp.temperatura}°C`;
+    document.getElementById('poland-min-loc').textContent = minTemp.stacja;
+    document.getElementById('poland-min-time').textContent = `• Godzina: ${minTemp.godzina_pomiaru}:00`;
+    
+    document.getElementById('poland-max-temp').textContent = `${maxTemp.temperatura}°C`;
+    document.getElementById('poland-max-loc').textContent = maxTemp.stacja;
+    document.getElementById('poland-max-time').textContent = `• Godzina: ${maxTemp.godzina_pomiaru}:00`;
+    
+    document.getElementById('update-time').textContent = new Date().toLocaleTimeString('pl-PL', { 
+      hour: '2-digit', 
+      minute: '2-digit' 
+    });
+    
   } catch (error) {
-    console.error('Error fetching weather data:', error);
-    document.getElementById('update-time').textContent = 'Error loading data';
+    console.error('IMGW API Error:', error);
+    document.getElementById('poland-min-loc').textContent = 'Błąd ładowania';
+    document.getElementById('poland-max-loc').textContent = 'Błąd ładowania';
   }
 }
 
-// Initialize weather data
+// Inicjalizacja
 document.addEventListener('DOMContentLoaded', function() {
-  fetchWeatherData();
-  
-  // Refresh every 30 minutes
-  setInterval(fetchWeatherData, 30 * 60 * 1000);
+  fetchIMGWData();
+  setInterval(fetchIMGWData, 60 * 60 * 1000); // Aktualizuj co godzinę (IMGW aktualizuje dane co 1-3h)
 });
