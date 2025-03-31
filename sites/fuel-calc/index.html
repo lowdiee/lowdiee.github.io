@@ -34,81 +34,52 @@
     </nav>
 <section class="weather-section">
   <div class="weather-header">
-    <h2 class="weather-title fake-receipt">TEMPERATURE RECORDS</h2>
-    <p class="weather-subtitle sf-pro">Historical extremes and interesting facts</p>
+    <h2 class="weather-title fake-receipt">LIVE WEATHER EXTREMES</h2>
+    <p class="weather-subtitle sf-pro" id="weather-update-time">Loading data...</p>
   </div>
 
   <div class="weather-columns">
-    <!-- Lewa kolumna - najniższe temperatury -->
+    <!-- Left Column - Poland Data -->
     <div class="weather-column">
-      <div class="weather-panel cold-panel">
-        <div class="panel-header sf-pro">LOWEST RECORDED</div>
+      <div class="weather-panel cold-panel" id="poland-low-panel">
+        <div class="panel-header sf-pro">POLAND MINIMUM</div>
         <div class="panel-content">
           <div class="temperature-display">
-            <span class="temp-value">-89.2°C</span>
-            <span class="temp-location sf-pro">Vostok Station, Antarctica</span>
+            <span class="temp-value">--°C</span>
+            <span class="temp-location sf-pro">Loading...</span>
           </div>
           <div class="temp-details sf-pro">
-            <p>• Recorded on July 21, 1983</p>
-            <p>• Coldest permanently inhabited place: Oymyakon, Russia (-67.7°C)</p>
-          </div>
-        </div>
-      </div>
-
-      <div class="weather-panel cold-panel">
-        <div class="panel-header sf-pro">POLAND LOWEST</div>
-        <div class="panel-content">
-          <div class="temperature-display">
-            <span class="temp-value">-41.0°C</span>
-            <span class="temp-location sf-pro">Siedlce, Poland</span>
-          </div>
-          <div class="temp-details sf-pro">
-            <p>• Recorded on January 11, 1940</p>
-            <p>• Winter 1928/29 was coldest in Polish history</p>
+            <p>• Last observation: --</p>
+            <p>• Station: --</p>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- Prawa kolumna - najwyższe temperatury -->
+    <!-- Right Column - Global Data -->
     <div class="weather-column">
-      <div class="weather-panel hot-panel">
-        <div class="panel-header sf-pro">HIGHEST RECORDED</div>
+      <div class="weather-panel hot-panel" id="global-high-panel">
+        <div class="panel-header sf-pro">GLOBAL MAXIMUM</div>
         <div class="panel-content">
           <div class="temperature-display">
-            <span class="temp-value">56.7°C</span>
-            <span class="temp-location sf-pro">Furnace Creek, USA</span>
+            <span class="temp-value">--°C</span>
+            <span class="temp-location sf-pro">Loading...</span>
           </div>
           <div class="temp-details sf-pro">
-            <p>• Recorded on July 10, 1913</p>
-            <p>• Death Valley averages 47°C in July</p>
-          </div>
-        </div>
-      </div>
-
-      <div class="weather-panel hot-panel">
-        <div class="panel-header sf-pro">POLAND HIGHEST</div>
-        <div class="panel-content">
-          <div class="temperature-display">
-            <span class="temp-value">40.2°C</span>
-            <span class="temp-location sf-pro">Pruszków, Poland</span>
-          </div>
-          <div class="temp-details sf-pro">
-            <p>• Recorded on July 19, 2023</p>
-            <p>• 2019 was hottest year in Polish history</p>
+            <p>• Last observation: --</p>
+            <p>• Station: --</p>
           </div>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- Panel z ciekawostkami -->
-  <div class="facts-panel">
-    <div class="panel-header sf-pro">DID YOU KNOW?</div>
-    <div class="facts-content sf-pro">
-      <p>• The fastest temperature rise: 27°C to -2°C in 15 minutes (Spearfish, USA)</p>
-      <p>• Poland's climate is getting warmer - average temp rose by 1.7°C since 1950</p>
-      <p>• Coldest capital city: Ulaanbaatar, Mongolia (avg. -1.3°C)</p>
+  <div class="facts-panel sf-pro" id="current-weather-panel">
+    <div class="panel-header">CURRENT WEATHER IN WARSAW</div>
+    <div class="facts-content">
+      <p>• Temperature: --°C</p>
+      <p>• Condition: --</p>
+      <p>• Feels like: --°C</p>
     </div>
   </div>
 </section>
