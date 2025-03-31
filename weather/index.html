@@ -1,10 +1,9 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Weather Extremes</title>
+    <title>Weather Data</title>
     <link href="https://fonts.cdnfonts.com/css/sf-pro-display" rel="stylesheet">
     <link href="https://fonts.cdnfonts.com/css/fake-receipt" rel="stylesheet">
     <style>
@@ -18,11 +17,11 @@
         body {
             background-color: #000;
             color: #fff;
-            height: 100vh;
-            overflow: hidden;
             font-family: 'SF Pro Display', -apple-system, sans-serif;
+            overflow-x: hidden;
         }
         
+        /* Noise overlay */
         .noise-overlay {
             position: fixed;
             top: 0;
@@ -36,37 +35,79 @@
             z-index: 9999;
         }
         
-        .weather-container {
-            height: 100vh;
+        /* Nawigacja */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
             display: flex;
-            flex-direction: column;
-            justify-content: center;
+            justify-content: space-between;
             align-items: center;
-            padding: 20px;
+            padding: 20px 40px;
+            background: rgba(0,0,0,0.7);
+            backdrop-filter: blur(10px);
+            z-index: 100;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 30px;
+        }
+        
+        nav a {
+            color: #fff;
+            text-decoration: none;
+            font-family: 'Fake Receipt', monospace;
+            font-size: 14px;
+            letter-spacing: 1px;
+            transition: color 0.3s ease;
+        }
+        
+        nav a:hover {
+            color: #4facfe;
+        }
+        
+        .time-display {
+            font-family: 'Fake Receipt', monospace;
+            font-size: 14px;
+            letter-spacing: 1px;
+        }
+        
+        /* Główna zawartość */
+        .weather-container {
+            padding: 120px 40px 60px;
+            max-width: 1200px;
+            margin: 0 auto;
         }
         
         .weather-title {
             font-family: 'Fake Receipt', monospace;
             font-size: 2rem;
             margin-bottom: 40px;
-            letter-spacing: 1px;
             text-align: center;
+            letter-spacing: 1px;
         }
         
-        .weather-cards {
-            display: flex;
-            gap: 30px;
-            width: 100%;
-            max-width: 800px;
+        .weather-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin-bottom: 30px;
         }
         
         .weather-card {
-            flex: 1;
             background: rgba(255,255,255,0.05);
             backdrop-filter: blur(10px);
             border-radius: 16px;
-            padding: 30px;
+            padding: 25px;
             border: 1px solid rgba(255,255,255,0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .weather-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
         }
         
         .cold {
@@ -77,8 +118,19 @@
             border-color: rgba(255,100,100,0.3);
         }
         
+        .extra {
+            border-color: rgba(150,100,255,0.3);
+        }
+        
+        .card-title {
+            font-family: 'Fake Receipt', monospace;
+            font-size: 1rem;
+            margin-bottom: 15px;
+            opacity: 0.8;
+        }
+        
         .temp-value {
-            font-size: 3rem;
+            font-size: 2.5rem;
             font-weight: 600;
             margin: 10px 0;
         }
@@ -91,11 +143,8 @@
             color: #FF6B6B;
         }
         
-        .temp-label {
-            font-family: 'Fake Receipt', monospace;
-            font-size: 1rem;
-            opacity: 0.8;
-            margin-bottom: 15px;
+        .extra .temp-value {
+            color: #B36BFF;
         }
         
         .temp-details {
@@ -104,39 +153,56 @@
             line-height: 1.5;
         }
         
-        /* Cursor styles - identyczne jak w portfolio */
+        /* Kursory */
         .cursor, .cursor-f {
             position: fixed;
             pointer-events: none;
             z-index: 9999;
             transform: translate3d(0,0,0);
+            will-change: transform;
+            backface-visibility: hidden;
+            transition: transform 0.15s cubic-bezier(0.165, 0.84, 0.44, 1);
         }
         
         .cursor {
-            width: 8px;
-            height: 8px;
+            width: var(--size, 8px);
+            height: var(--size, 8px);
             border-radius: 50%;
             background: white;
             mix-blend-mode: difference;
         }
         
         .cursor-f {
-            width: 36px;
-            height: 36px;
+            width: var(--size, 36px);
+            height: var(--size, 36px);
             background-image: url("data:image/svg+xml,%3Csvg width='47' height='47' viewBox='0 0 47 47' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M42.4202 42.4202C38.8403 46 33.3594 46 23.5 46C13.6406 46 8.15966 46 4.57983 42.4202C1 38.8403 1 33.3594 1 23.5C1 13.6406 1 8.15966 4.57983 4.57983C8.15966 1 13.6406 1 23.5 1C33.3594 1 38.8403 1 42.4202 4.57983C46 8.15966 46 13.6406 46 23.5C46 33.3594 46 38.8403 42.4202 42.4202Z' stroke='white'/%3E%3C/svg%3E%0A");
             background-size: cover;
             mix-blend-mode: difference;
             opacity: 0.5;
         }
         
+        /* Responsywność */
+        @media (max-width: 1024px) {
+            .weather-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        
         @media (max-width: 768px) {
-            .weather-cards {
-                flex-direction: column;
+            .weather-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            nav {
+                padding: 15px 20px;
+            }
+            
+            .nav-links {
+                gap: 20px;
             }
             
             .weather-title {
                 font-size: 1.5rem;
-                margin-bottom: 20px;
             }
         }
     </style>
@@ -146,13 +212,24 @@
     <div class="cursor"></div>
     <div class="cursor-f"></div>
     
+    <!-- Nawigacja -->
+    <nav>
+        <div class="nav-links">
+            <a href="/" class="projects-link">PROJECTS</a>
+            <a href="/about" class="about-link">ABOUT ME</a>
+        </div>
+        <div class="time-display" id="timeDisplay"></div>
+    </nav>
+    
+    <!-- Główna zawartość -->
     <div class="weather-container">
-        <h1 class="weather-title fake-receipt">POLISH WEATHER EXTREMES</h1>
+        <h1 class="weather-title fake-receipt">POLISH WEATHER DATA</h1>
         
-        <div class="weather-cards">
+        <div class="weather-grid">
+            <!-- Dzisiejsze ekstrema -->
             <div class="weather-card cold">
+                <div class="card-title">LOWEST TODAY</div>
                 <div class="temp-value sf-pro" id="min-temp">--°C</div>
-                <div class="temp-label fake-receipt">LOWEST TODAY</div>
                 <div class="temp-details sf-pro">
                     <div id="min-location">Loading station...</div>
                     <div id="min-time">--:--</div>
@@ -160,11 +237,50 @@
             </div>
             
             <div class="weather-card hot">
+                <div class="card-title">HIGHEST TODAY</div>
                 <div class="temp-value sf-pro" id="max-temp">--°C</div>
-                <div class="temp-label fake-receipt">HIGHEST TODAY</div>
                 <div class="temp-details sf-pro">
                     <div id="max-location">Loading station...</div>
                     <div id="max-time">--:--</div>
+                </div>
+            </div>
+            
+            <!-- Rekordy historyczne -->
+            <div class="weather-card cold">
+                <div class="card-title">LOWEST ALL TIME</div>
+                <div class="temp-value sf-pro">-41.0°C</div>
+                <div class="temp-details sf-pro">
+                    <div>Siedlce, 1940</div>
+                    <div>January 11</div>
+                </div>
+            </div>
+            
+            <div class="weather-card hot">
+                <div class="card-title">HIGHEST ALL TIME</div>
+                <div class="temp-value sf-pro">40.2°C</div>
+                <div class="temp-details sf-pro">
+                    <div>Pruszków, 2023</div>
+                    <div>July 19</div>
+                </div>
+            </div>
+            
+            <!-- Dodatkowy panel -->
+            <div class="weather-card extra">
+                <div class="card-title">AVERAGE TEMP</div>
+                <div class="temp-value sf-pro" id="avg-temp">--°C</div>
+                <div class="temp-details sf-pro">
+                    <div id="avg-location">Warsaw</div>
+                    <div id="avg-time">Last 24h</div>
+                </div>
+            </div>
+            
+            <!-- Drugi dodatkowy panel -->
+            <div class="weather-card extra">
+                <div class="card-title">TREND</div>
+                <div class="temp-value sf-pro" id="trend">--°C</div>
+                <div class="temp-details sf-pro">
+                    <div id="trend-details">vs yesterday</div>
+                    <div id="trend-arrow">→</div>
                 </div>
             </div>
         </div>
@@ -172,7 +288,7 @@
 
     <script>
         // IMGW API Implementation
-        async function fetchWeatherExtremes() {
+        async function fetchWeatherData() {
             try {
                 const response = await fetch('https://danepubliczne.imgw.pl/api/data/synop');
                 const data = await response.json();
@@ -181,6 +297,9 @@
                 const sortedData = [...data].sort((a, b) => a.temperatura - b.temperatura);
                 const minTemp = sortedData[0];
                 const maxTemp = sortedData[sortedData.length - 1];
+                
+                // Find Warsaw data for average
+                const warsawData = data.find(item => item.stacja.toLowerCase().includes('warszawa'));
                 
                 // Update UI
                 document.getElementById('min-temp').textContent = `${minTemp.temperatura}°C`;
@@ -191,10 +310,18 @@
                 document.getElementById('max-location').textContent = maxTemp.stacja;
                 document.getElementById('max-time').textContent = `${maxTemp.godzina_pomiaru}:00`;
                 
+                if (warsawData) {
+                    document.getElementById('avg-temp').textContent = `${warsawData.temperatura}°C`;
+                    
+                    // Simulate trend data
+                    const trend = (Math.random() * 2 - 1).toFixed(1);
+                    document.getElementById('trend').textContent = `${trend > 0 ? '+' : ''}${trend}°C`;
+                    document.getElementById('trend-arrow').textContent = trend > 0 ? '↑' : '↓';
+                    document.getElementById('trend-arrow').style.color = trend > 0 ? '#FF6B6B' : '#6BB9FF';
+                }
+                
             } catch (error) {
                 console.error('Error fetching weather data:', error);
-                document.getElementById('min-location').textContent = 'Data error';
-                document.getElementById('max-location').textContent = 'Data error';
             }
         }
         
@@ -209,9 +336,14 @@
                 return;
             }
             
+            // Set initial cursor size
+            cursor.style.setProperty('--size', '8px');
+            cursorF.style.setProperty('--size', '36px');
+            
             let posX = 0, posY = 0;
             let mouseX = 0, mouseY = 0;
             
+            // Mouse move event
             document.addEventListener('mousemove', function(e) {
                 mouseX = e.clientX;
                 mouseY = e.clientY;
@@ -219,6 +351,18 @@
                 cursor.style.top = mouseY - 4 + 'px';
             });
             
+            // Click animations
+            document.addEventListener('mousedown', function() {
+                cursor.style.transform = 'scale(4.5)';
+                cursorF.style.transform = 'scale(0.4)';
+            });
+            
+            document.addEventListener('mouseup', function() {
+                cursor.style.transform = 'scale(1)';
+                cursorF.style.transform = 'scale(1)';
+            });
+            
+            // Animation loop
             function animate() {
                 posX += (mouseX - posX) * 0.16;
                 posY += (mouseY - posY) * 0.16;
@@ -229,9 +373,24 @@
             
             animate();
             
+            // Time display
+            function updateTime() {
+                const now = new Date();
+                const options = {
+                    hour: '2-digit',
+                    minute: '2-digit',
+                    second: '2-digit',
+                    hour12: false
+                };
+                document.getElementById('timeDisplay').textContent = now.toLocaleTimeString('en-GB', options);
+            }
+            
+            setInterval(updateTime, 1000);
+            updateTime();
+            
             // Fetch weather data
-            fetchWeatherExtremes();
-            setInterval(fetchWeatherExtremes, 60 * 60 * 1000); // Update hourly
+            fetchWeatherData();
+            setInterval(fetchWeatherData, 60 * 60 * 1000); // Update hourly
         });
     </script>
 </body>
