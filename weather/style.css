@@ -50,46 +50,35 @@ html, body, * {
     cursor: none !important;
 }
 
-/* Nawigacja - spójna z główną stroną */
+/* Poprawiona nawigacja */
 nav {
     position: fixed;
     top: 0;
     width: 100%;
     display: flex;
     align-items: center;
-    justify-content: space-between;
     padding: 20px 40px;
     z-index: 100;
     background: rgba(0,0,0,0.7);
     backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
+    box-sizing: border-box; /* Dodaj to */
 }
 
+/* Kontener linków */
 .nav-links {
     display: flex;
-    align-items: center;
-    margin-right: auto;
+    gap: 25px; /* Zastępuje margin-right w linkach */
+    flex-grow: 1; /* Wypełnia dostępną przestrzeń */
 }
 
-nav a {
-    color: #fff;
-    text-decoration: none;
-    margin: 0 25px;
-    font-size: 12px;
-    letter-spacing: 1px;
-    text-transform: uppercase;
-    transition: all 0.3s ease;
-    position: relative;
-    font-family: 'Fake Receipt', -apple-system, BlinkMacSystemFont, sans-serif;
-}
-
+/* Wyświetlacz czasu */
 .time-display {
-    font-family: 'Fake Receipt', -apple-system, BlinkMacSystemFont, sans-serif;
+    font-family: 'Fake Receipt', monospace;
     font-size: 12px;
     letter-spacing: 1px;
-    cursor: default;
-    transition: all 0.3s ease;
-    margin-left: auto;
+    white-space: nowrap; /* Zapobiega złamaniu tekstu */
+    margin-left: auto; /* Wyrzuca czas do prawej krawędzi */
+    padding-left: 20px; /* Odstęp od linków */
 }
 /* Weather Dashboard */
 .weather-dashboard {
