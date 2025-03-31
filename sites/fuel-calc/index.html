@@ -32,42 +32,86 @@
         </div>
         <div class="time-display" id="timeDisplay"></div>
     </nav>
-<!-- Add this to your index.html before </body> -->
-<div class="weather-container">
-  <div class="weather-widget macos-glass">
-    <h2 class="weather-title fake-receipt">TEMPERATURE EXTREMES</h2>
-    
-    <div class="weather-grid">
-      <div class="weather-card">
-        <div class="weather-label sf-pro">GLOBAL HIGH</div>
-        <div class="weather-value temp-high" id="global-high">--°C</div>
-        <div class="weather-location sf-pro" id="global-high-loc">Loading...</div>
+<section class="weather-section">
+  <div class="weather-header">
+    <h2 class="weather-title fake-receipt">TEMPERATURE RECORDS</h2>
+    <p class="weather-subtitle sf-pro">Historical extremes and interesting facts</p>
+  </div>
+
+  <div class="weather-columns">
+    <!-- Lewa kolumna - najniższe temperatury -->
+    <div class="weather-column">
+      <div class="weather-panel cold-panel">
+        <div class="panel-header sf-pro">LOWEST RECORDED</div>
+        <div class="panel-content">
+          <div class="temperature-display">
+            <span class="temp-value">-89.2°C</span>
+            <span class="temp-location sf-pro">Vostok Station, Antarctica</span>
+          </div>
+          <div class="temp-details sf-pro">
+            <p>• Recorded on July 21, 1983</p>
+            <p>• Coldest permanently inhabited place: Oymyakon, Russia (-67.7°C)</p>
+          </div>
+        </div>
       </div>
-      
-      <div class="weather-card">
-        <div class="weather-label sf-pro">GLOBAL LOW</div>
-        <div class="weather-value temp-low" id="global-low">--°C</div>
-        <div class="weather-location sf-pro" id="global-low-loc">Loading...</div>
-      </div>
-      
-      <div class="weather-card">
-        <div class="weather-label sf-pro">POLAND HIGH</div>
-        <div class="weather-value temp-high" id="poland-high">--°C</div>
-        <div class="weather-location sf-pro" id="poland-high-loc">Loading...</div>
-      </div>
-      
-      <div class="weather-card">
-        <div class="weather-label sf-pro">POLAND LOW</div>
-        <div class="weather-value temp-low" id="poland-low">--°C</div>
-        <div class="weather-location sf-pro" id="poland-low-loc">Loading...</div>
+
+      <div class="weather-panel cold-panel">
+        <div class="panel-header sf-pro">POLAND LOWEST</div>
+        <div class="panel-content">
+          <div class="temperature-display">
+            <span class="temp-value">-41.0°C</span>
+            <span class="temp-location sf-pro">Siedlce, Poland</span>
+          </div>
+          <div class="temp-details sf-pro">
+            <p>• Recorded on January 11, 1940</p>
+            <p>• Winter 1928/29 was coldest in Polish history</p>
+          </div>
+        </div>
       </div>
     </div>
-    
-    <div class="weather-footer sf-pro">
-      <span id="weather-date">Updated: --</span>
+
+    <!-- Prawa kolumna - najwyższe temperatury -->
+    <div class="weather-column">
+      <div class="weather-panel hot-panel">
+        <div class="panel-header sf-pro">HIGHEST RECORDED</div>
+        <div class="panel-content">
+          <div class="temperature-display">
+            <span class="temp-value">56.7°C</span>
+            <span class="temp-location sf-pro">Furnace Creek, USA</span>
+          </div>
+          <div class="temp-details sf-pro">
+            <p>• Recorded on July 10, 1913</p>
+            <p>• Death Valley averages 47°C in July</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="weather-panel hot-panel">
+        <div class="panel-header sf-pro">POLAND HIGHEST</div>
+        <div class="panel-content">
+          <div class="temperature-display">
+            <span class="temp-value">40.2°C</span>
+            <span class="temp-location sf-pro">Pruszków, Poland</span>
+          </div>
+          <div class="temp-details sf-pro">
+            <p>• Recorded on July 19, 2023</p>
+            <p>• 2019 was hottest year in Polish history</p>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
-</div>
+
+  <!-- Panel z ciekawostkami -->
+  <div class="facts-panel">
+    <div class="panel-header sf-pro">DID YOU KNOW?</div>
+    <div class="facts-content sf-pro">
+      <p>• The fastest temperature rise: 27°C to -2°C in 15 minutes (Spearfish, USA)</p>
+      <p>• Poland's climate is getting warmer - average temp rose by 1.7°C since 1950</p>
+      <p>• Coldest capital city: Ulaanbaatar, Mongolia (avg. -1.3°C)</p>
+    </div>
+  </div>
+</section>
     
     <script src="/script.js"></script>
     <script>
