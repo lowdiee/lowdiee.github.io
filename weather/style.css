@@ -1,9 +1,7 @@
 body {
     background-color: #000;
     color: #fff;
-    min-height: 100vh;
-    margin: 0;
-    padding: 0;
+    overflow-x: hidden;
     font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, sans-serif;
 }
 /* Base styles from your portfolio */
