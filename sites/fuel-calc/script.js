@@ -84,6 +84,57 @@ backToTopBtn.addEventListener('click', () => {
     });
 });
 
+// Add this to your script.js
+document.addEventListener('DOMContentLoaded', function() {
+  // ... your existing code ...
+  
+  // Weather API Integration
+  const API_KEY = 'eda2e051b6a9474b90b152208253103';
+  
+  // Static data (weatherapi doesn't provide global extremes)
+  const weatherData = {
+    global: {
+      high: { temp: '56.7°C', location: 'Furnace Creek, USA', date: '1913-07-10' },
+      low: { temp: '-89.2°C', location: 'Vostok Station, Antarctica', date: '1983-07-21' }
+    },
+    poland: {
+      high: { temp: '40.2°C', location: 'Pruszków', date: '2023-07-19' },
+      low: { temp: '-41.0°C', location: 'Siedlce', date: '1940-01-11' }
+    }
+  };
+  
+  // Update weather widget
+  function updateWeatherWidget() {
+    document.getElementById('global-high').textContent = weatherData.global.high.temp;
+    document.getElementById('global-high-loc').textContent = weatherData.global.high.location;
+    document.getElementById('global-low').textContent = weatherData.global.low.temp;
+    document.getElementById('global-low-loc').textContent = weatherData.global.low.location;
+    
+    document.getElementById('poland-high').textContent = weatherData.poland.high.temp;
+    document.getElementById('poland-high-loc').textContent = weatherData.poland.high.location;
+    document.getElementById('poland-low').textContent = weatherData.poland.low.temp;
+    document.getElementById('poland-low-loc').textContent = weatherData.poland.low.location;
+    
+    const now = new Date();
+    document.getElementById('weather-date').textContent = `Updated: ${now.toLocaleDateString()} ${now.toLocaleTimeString()}`;
+  }
+  
+  // For actual API calls (example for Poland's current weather)
+  async function fetchPolandWeather() {
+    try {
+      const response = await fetch(`https://api.weatherapi.com/v1/current.json?key=${API_KEY}&q=Poland`);
+      const data = await response.json();
+      console.log('Current Poland weather:', data);
+      // You could update some elements here if needed
+    } catch (error) {
+      console.error('Error fetching weather:', error);
+    }
+  }
+  
+  // Initialize
+  updateWeatherWidget();
+  // fetchPolandWeather(); // Uncomment if you want live Poland data
+});
 window.addEventListener('scroll', toggleBackToTop);
 toggleBackToTop(); // Initialize
 
