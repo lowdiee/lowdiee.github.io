@@ -10,4 +10,80 @@ nav {
 }
 
 
+/* Add this to your style.css */
+.weather-container {
+  position: fixed;
+  bottom: 40px;
+  right: 40px;
+  z-index: 100;
+}
+
+.weather-widget {
+  width: 320px;
+  padding: 20px;
+  border-radius: 18px;
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+}
+
+.weather-title {
+  font-size: 18px;
+  margin-bottom: 16px;
+  color: white;
+  letter-spacing: 0.5px;
+}
+
+.weather-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.weather-card {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 12px;
+  padding: 12px;
+  transition: all 0.3s ease;
+}
+
+.weather-card:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.weather-label {
+  font-size: 12px;
+  opacity: 0.7;
+  color: white;
+}
+
+.weather-value {
+  font-size: 24px;
+  font-weight: 600;
+  margin: 4px 0;
+}
+
+.temp-high {
+  color: #FF6B6B;
+}
+
+.temp-low {
+  color: #6BB9FF;
+}
+
+.weather-location {
+  font-size: 11px;
+  opacity: 0.8;
+  color: white;
+}
+
+.weather-footer {
+  margin-top: 16px;
+  font-size: 11px;
+  opacity: 0.6;
+  color: white;
+  text-align: right;
+}
 
