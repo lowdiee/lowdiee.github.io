@@ -265,50 +265,64 @@
     </div>
 </div>
     
-<div class="weather-container">
-    <!-- Pierwsza linia -->
-    <div class="weather-panel hottest-today" id="hottest-today">
-        <div class="panel-title">HOTTEST TODAY (POLAND)</div>
-        <div class="temp-value loading">Loading...</div>
-        <div class="location loading">Loading...</div>
-        <div class="trend-indicator loading">Loading trend...</div>
+<div class="weather-dashboard">
+    <!-- Pierwsza kolumna -->
+    <div class="weather-column">
+        <!-- Najwyższa temp dzisiaj -->
+        <div class="weather-panel">
+            <h3>Hottest today</h3>
+            <div class="weather-value" id="hottestToday">
+                <span class="temp">--°C</span>
+                <span class="location">--</span>
+            </div>
+        </div>
+        
+        <!-- Najwyższa temp w historii -->
+        <div class="weather-panel">
+            <h3>Hottest all time</h3>
+            <div class="weather-value">
+                <span class="temp">40.2°C</span>
+                <span class="location">Pruszków, 2022</span>
+            </div>
+        </div>
+        
+        <!-- Trend zmian -->
+        <div class="weather-panel">
+            <h3>Trend vs yesterday</h3>
+            <div class="weather-value" id="tempTrend">
+                <span class="temp">--°C</span>
+                <span class="trend-icon">→</span>
+            </div>
+        </div>
     </div>
     
-    <div class="weather-panel coldest-today" id="coldest-today">
-        <div class="panel-title">COLDEST TODAY (POLAND)</div>
-        <div class="temp-value loading">Loading...</div>
-        <div class="location loading">Loading...</div>
-        <div class="trend-indicator loading">Loading trend...</div>
-    </div>
-    
-    <!-- Druga linia -->
-    <div class="weather-panel hottest-alltime" id="hottest-alltime">
-        <div class="panel-title">HOTTEST ALL TIME (POLAND)</div>
-        <div class="temp-value loading">Loading...</div>
-        <div class="location loading">Loading...</div>
-        <div class="trend-indicator">Record temperature</div>
-    </div>
-    
-    <div class="weather-panel coldest-alltime" id="coldest-alltime">
-        <div class="panel-title">COLDEST ALL TIME (POLAND)</div>
-        <div class="temp-value loading">Loading...</div>
-        <div class="location loading">Loading...</div>
-        <div class="trend-indicator">Record temperature</div>
-    </div>
-    
-    <!-- Trzecia linia -->
-    <div class="weather-panel trend" id="trend">
-        <div class="panel-title">TREND VS YESTERDAY</div>
-        <div class="temp-value loading">Loading...</div>
-        <div class="location">Poland average</div>
-        <div class="trend-indicator loading">Loading trend...</div>
-    </div>
-    
-    <div class="weather-panel average" id="average">
-        <div class="panel-title">AVERAGE TEMPERATURE TODAY</div>
-        <div class="temp-value loading">Loading...</div>
-        <div class="location">Poland average</div>
-        <div class="trend-indicator">Compared to seasonal norm</div>
+    <!-- Druga kolumna -->
+    <div class="weather-column">
+        <!-- Najniższa temp dzisiaj -->
+        <div class="weather-panel">
+            <h3>Coldest today</h3>
+            <div class="weather-value" id="coldestToday">
+                <span class="temp">--°C</span>
+                <span class="location">--</span>
+            </div>
+        </div>
+        
+        <!-- Najniższa temp w historii -->
+        <div class="weather-panel">
+            <h3>Coldest all time</h3>
+            <div class="weather-value">
+                <span class="temp">-41.0°C</span>
+                <span class="location">Siedlce, 1940</span>
+            </div>
+        </div>
+        
+        <!-- Średnia temp -->
+        <div class="weather-panel">
+            <h3>Average today</h3>
+            <div class="weather-value" id="avgTemp">
+                <span class="temp">--°C</span>
+            </div>
+        </div>
     </div>
 </div>
 
