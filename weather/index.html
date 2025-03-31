@@ -3,13 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Weather</title>
+    <title>Weather Data</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="style.css">
 </head>
-<body class="bg-[#1e1e1e] min-h-screen">
-        <div class="cursor"></div>
+<body class="bg-black text-white min-h-screen">
+    <!-- Noise overlay -->
+    <div class="noise-overlay" aria-hidden="true"></div>
+    
+    <!-- Custom cursor -->
+    <div class="cursor"></div>
     <div class="cursor-f"></div>
+    
+    <!-- Back button -->
     <div class="container mx-auto px-4 py-8">
         <a href="../index.html">
             <button
@@ -39,17 +45,66 @@
             </button>
         </a>
 
-        <h1 class="text-white text-4xl font-bold text-center mb-12">Weather App</h1>
+        <h1 class="text-white text-4xl font-bold text-center mb-12">Weather Data for Poland</h1>
         
-        <div class="flex flex-col items-center">
-            <div class="relative mb-8">
-                <input type="text" id="cityInput" placeholder="Enter city name" class="px-4 py-2 rounded-lg w-64 focus:outline-none">
-                <button id="searchBtn" class="bg-blue-500 text-white px-4 py-2 rounded-lg ml-2 hover:bg-blue-600 transition">Search</button>
+        <!-- Weather panels grid -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <!-- Hottest Today -->
+            <div class="weather-panel bg-gradient-to-br from-red-900 to-red-700">
+                <h2 class="text-2xl font-bold mb-4 text-red-300">HOTTEST TODAY</h2>
+                <div class="text-5xl font-bold mb-2">24°C</div>
+                <div class="text-lg">Wrocław</div>
+                <div class="text-sm opacity-80 mt-2">Updated: 14:30</div>
             </div>
             
-            <div id="weatherContainer" class="grid grid-cols-1 md:grid-cols-2 gap-6 w-full max-w-4xl">
-                <!-- Weather cards will be inserted here -->
+            <!-- Coldest Today -->
+            <div class="weather-panel bg-gradient-to-br from-blue-900 to-blue-700">
+                <h2 class="text-2xl font-bold mb-4 text-blue-300">COLDEST TODAY</h2>
+                <div class="text-5xl font-bold mb-2">8°C</div>
+                <div class="text-lg">Zakopane</div>
+                <div class="text-sm opacity-80 mt-2">Updated: 14:30</div>
             </div>
+            
+            <!-- Hottest All Time -->
+            <div class="weather-panel bg-gradient-to-br from-orange-900 to-orange-700">
+                <h2 class="text-2xl font-bold mb-4 text-orange-300">HOTTEST ALL TIME</h2>
+                <div class="text-5xl font-bold mb-2">40.2°C</div>
+                <div class="text-lg">Pruszków (2023)</div>
+                <div class="text-sm opacity-80 mt-2">Record</div>
+            </div>
+            
+            <!-- Coldest All Time -->
+            <div class="weather-panel bg-gradient-to-br from-cyan-900 to-cyan-700">
+                <h2 class="text-2xl font-bold mb-4 text-cyan-300">COLDEST ALL TIME</h2>
+                <div class="text-5xl font-bold mb-2">-41.0°C</div>
+                <div class="text-lg">Siedlce (1940)</div>
+                <div class="text-sm opacity-80 mt-2">Record</div>
+            </div>
+            
+            <!-- Trend vs Yesterday -->
+            <div class="weather-panel bg-gradient-to-br from-purple-900 to-purple-700">
+                <h2 class="text-2xl font-bold mb-4 text-purple-300">TREND (VS YESTERDAY)</h2>
+                <div class="text-5xl font-bold mb-2 flex items-center">
+                    <span>+3°C</span>
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18" />
+                    </svg>
+                </div>
+                <div class="text-lg">Warmer than yesterday</div>
+                <div class="text-sm opacity-80 mt-2">National average</div>
+            </div>
+            
+            <!-- Average Temperature -->
+            <div class="weather-panel bg-gradient-to-br from-indigo-900 to-indigo-700">
+                <h2 class="text-2xl font-bold mb-4 text-indigo-300">AVERAGE TEMPERATURE</h2>
+                <div class="text-5xl font-bold mb-2">15°C</div>
+                <div class="text-lg">Current national average</div>
+                <div class="text-sm opacity-80 mt-2">Updated: 14:30</div>
+            </div>
+        </div>
+        
+        <div class="text-center text-gray-500 mt-12">
+            <p>Data sourced from IMGW API | Updates hourly</p>
         </div>
     </div>
 
