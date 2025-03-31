@@ -59,6 +59,10 @@ async function fetchWeatherData() {
             fetch('https://danepubliczne.imgw.pl/api/data/meteo')
         ]);
         
+        if (!synopResponse.ok || !meteoResponse.ok) {
+            throw new Error('API request failed');
+        }
+
         const synopData = await synopResponse.json();
         const meteoData = await meteoResponse.json();
         
@@ -79,11 +83,14 @@ async function fetchWeatherData() {
 
     } catch (error) {
         console.error("Error fetching data:", error);
+        // Można dodać fallback/wyświetlenie błędu w UI
     }
 }
 
 function findExtremeTemperature(data, type) {
-    const filtered = data.filter(item => item.temperatura);
+    const filtered = data.filter(item => item.temperatura && !isNaN(parseFloat(item.temperatura)));
+    if (filtered.length === 0) return { temp: '--', station: '--' };
+    
     const extreme = filtered.reduce((res, item) => {
         const temp = parseFloat(item.temperatura);
         if (type === 'max') {
@@ -95,12 +102,14 @@ function findExtremeTemperature(data, type) {
     
     return {
         temp: extreme.temp.toFixed(1),
-        station: extreme.station
+        station: extreme.station || '--'
     };
 }
 
 function findWindiestStation(data) {
-    const filtered = data.filter(item => item.predkosc_wiatru);
+    const filtered = data.filter(item => item.predkosc_wiatru && !isNaN(parseFloat(item.predkosc_wiatru)));
+    if (filtered.length === 0) return { speed: '--', station: '--' };
+    
     const windiest = filtered.reduce((max, item) => {
         const speed = parseFloat(item.predkosc_wiatru);
         return speed > max.speed ? { speed, station: item.stacja } : max;
@@ -108,14 +117,16 @@ function findWindiestStation(data) {
     
     return {
         speed: windiest.speed.toFixed(1),
-        station: windiest.station
+        station: windiest.station || '--'
     };
 }
 
 function calculateAverageGroundTemp(data) {
     const groundTemps = data
-        .filter(item => item.temperatura_gruntu)
+        .filter(item => item.temperatura_gruntu && !isNaN(parseFloat(item.temperatura_gruntu)))
         .map(item => parseFloat(item.temperatura_gruntu));
+    
+    if (groundTemps.length === 0) return '--';
     
     const avg = groundTemps.reduce((sum, temp) => sum + temp, 0) / groundTemps.length;
     return avg.toFixed(1);
