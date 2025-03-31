@@ -58,20 +58,51 @@
             border-radius: 12px;
             padding: 20px;
             backdrop-filter: blur(10px);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .weather-panel::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #4facfe 0%, #00f2fe 100%);
         }
         
         .panel-title {
             font-family: 'Fake Receipt', monospace;
             font-size: 14px;
             margin-bottom: 15px;
+            position: relative;
+            padding-top: 10px;
         }
         
-        .hottest-panel .panel-title {
+        /* Kolory paneli */
+        .hottest-today .panel-title {
             color: #ff4d4d;
         }
         
-        .coldest-panel .panel-title {
+        .coldest-today .panel-title {
             color: #4facfe;
+        }
+        
+        .hottest-alltime .panel-title {
+            color: #ff7b7b;
+        }
+        
+        .coldest-alltime .panel-title {
+            color: #00f2fe;
+        }
+        
+        .trend .panel-title {
+            color: #a162e8;
+        }
+        
+        .average .panel-title {
+            color: #f6c;
         }
         
         .temp-value {
@@ -109,6 +140,75 @@
         .error {
             color: #ff4d4d;
         }
+        
+        /* Modal styles */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(10px);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        
+        .modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .card {
+            width: 100%;
+            max-width: 400px;
+            background: #1a1a1a;
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+            transform: translateY(30px);
+            opacity: 0;
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1) 0.2s;
+        }
+        
+        .modal-overlay.active .card {
+            transform: translateY(0);
+            opacity: 1;
+        }
+        
+        .profile-image-container {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            overflow: hidden;
+            margin: 0 auto 25px;
+            border: 3px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .profile-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+            display: block;
+        }
+        
+        .tag {
+            color: #4facfe;
+            font-size: 13px;
+            font-weight: 300;
+            background: rgba(100,100,100,0.15);
+            padding: 0 5px;
+            border-radius: 10px;
+            display: inline-block;
+            margin: 0 1px;
+            line-height: 1.5;
+        }
     </style>
 </head>
 <body>
@@ -125,18 +225,49 @@
 </nav>
 
 <div class="weather-container">
-    <div class="weather-panel hottest-panel" id="hottest-poland">
-        <div class="panel-title">HOTTEST IN POLAND</div>
+    <!-- Pierwsza linia -->
+    <div class="weather-panel hottest-today" id="hottest-today">
+        <div class="panel-title">HOTTEST TODAY (POLAND)</div>
         <div class="temp-value loading">Loading...</div>
         <div class="location loading">Loading...</div>
         <div class="trend-indicator loading">Loading trend...</div>
     </div>
     
-    <div class="weather-panel coldest-panel" id="coldest-poland">
-        <div class="panel-title">COLDEST IN POLAND</div>
+    <div class="weather-panel coldest-today" id="coldest-today">
+        <div class="panel-title">COLDEST TODAY (POLAND)</div>
         <div class="temp-value loading">Loading...</div>
         <div class="location loading">Loading...</div>
         <div class="trend-indicator loading">Loading trend...</div>
+    </div>
+    
+    <!-- Druga linia -->
+    <div class="weather-panel hottest-alltime" id="hottest-alltime">
+        <div class="panel-title">HOTTEST ALL TIME (POLAND)</div>
+        <div class="temp-value loading">Loading...</div>
+        <div class="location loading">Loading...</div>
+        <div class="trend-indicator">Record temperature</div>
+    </div>
+    
+    <div class="weather-panel coldest-alltime" id="coldest-alltime">
+        <div class="panel-title">COLDEST ALL TIME (POLAND)</div>
+        <div class="temp-value loading">Loading...</div>
+        <div class="location loading">Loading...</div>
+        <div class="trend-indicator">Record temperature</div>
+    </div>
+    
+    <!-- Trzecia linia -->
+    <div class="weather-panel trend" id="trend">
+        <div class="panel-title">TREND VS YESTERDAY</div>
+        <div class="temp-value loading">Loading...</div>
+        <div class="location">Poland average</div>
+        <div class="trend-indicator loading">Loading trend...</div>
+    </div>
+    
+    <div class="weather-panel average" id="average">
+        <div class="panel-title">AVERAGE TEMPERATURE TODAY</div>
+        <div class="temp-value loading">Loading...</div>
+        <div class="location">Poland average</div>
+        <div class="trend-indicator">Compared to seasonal norm</div>
     </div>
 </div>
 
@@ -147,11 +278,11 @@
         <div class="profile-image-container">
             <img src="https://i.ibb.co/1fbH37gg/lowdweird.png" alt="LOWD" class="profile-image">
         </div>
-        <span>LOWD</span>
+
         <p class="info">
             Graphic design graduate (technical school) now studying information architecture.<br>
             Multidisciplinary skills:
-        <div class="tags-container" style="display: block; margin-top: 5px;">
+     <div class="tags-container" style="display: block; margin-top: 5px;">
                     <span class="tag" style="display: inline-block; color: #4facfe; font-size: 15px; font-weight: 500; background: rgba(100,100,100,0.15); padding: 0 6px; border-radius: 10px; margin: 0 2px; white-space: nowrap;">music</span>
                     <span class="tag" style="display: inline-block; color: #4facfe; font-size: 15px; font-weight: 500; background: rgba(100,100,100,0.15); padding: 0 6px; border-radius: 10px; margin: 0 2px; white-space: nowrap;">code</span>
                     <span class="tag" style="display: inline-block; color: #4facfe; font-size: 15px; font-weight: 500; background: rgba(100,100,100,0.15); padding: 0 6px; border-radius: 10px; margin: 0 2px; white-space: nowrap;">design</span>
@@ -237,6 +368,7 @@
     const aboutLink = document.getElementById('aboutLink');
     const aboutModal = document.getElementById('aboutModal');
     const closeModal = document.getElementById('closeModal');
+    const resumeButton = document.getElementById('resumeButton');
     
     aboutLink.addEventListener('click', (e) => {
         e.preventDefault();
@@ -247,6 +379,12 @@
     closeModal.addEventListener('click', () => {
         aboutModal.classList.remove('active');
         document.body.style.overflow = 'auto';
+    });
+    
+    resumeButton.addEventListener('click', () => {
+        aboutModal.classList.remove('active');
+        document.body.style.overflow = 'auto';
+        window.scrollTo({ top: 0, behavior: 'smooth' });
     });
     
     aboutModal.addEventListener('click', (e) => {
@@ -263,63 +401,87 @@
         }
     });
 
-    // IMGW API Integration
+    // IMGW API Integration - TUTAJ PODŁĄCZ PRAWDZIWE API IMGW
     async function fetchWeatherData() {
         try {
-            // Pobierz dane z IMGW - to jest przykład, musisz użyć prawdziwego API
-            // const response = await fetch('https://api.imgw.pl/...');
-            // const data = await response.json();
-            
-            // Tymczasowe dane - zastąp prawdziwym API
+            // Przykładowe dane - zastąp prawdziwym API IMGW
             const mockData = {
-                hottest: {
-                    temp: "32°C",
+                hottestToday: {
+                    temp: "34°C",
                     location: "Wrocław",
                     trend: "+2°C vs yesterday"
                 },
-                coldest: {
+                coldestToday: {
                     temp: "-5°C",
                     location: "Suwałki",
                     trend: "-1°C vs yesterday"
+                },
+                hottestAllTime: {
+                    temp: "40.2°C",
+                    location: "Pruszków (1921)",
+                    trend: "Record"
+                },
+                coldestAllTime: {
+                    temp: "-41.0°C",
+                    location: "Siedlce (1940)",
+                    trend: "Record"
+                },
+                trend: {
+                    temp: "+1.5°C",
+                    trend: "Warmer than yesterday"
+                },
+                average: {
+                    temp: "18.4°C",
+                    trend: "0.5°C above norm"
                 }
             };
             
-            // Update hottest panel
-            const hottestPanel = document.getElementById('hottest-poland');
-            hottestPanel.querySelector('.temp-value').textContent = mockData.hottest.temp;
-            hottestPanel.querySelector('.temp-value').classList.remove('loading');
-            hottestPanel.querySelector('.location').textContent = mockData.hottest.location;
-            hottestPanel.querySelector('.location').classList.remove('loading');
-            hottestPanel.querySelector('.trend-indicator').innerHTML = `
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#ff4d4d" stroke-width="2" style="margin-right: 5px;">
-                    <path d="M12 19V5M5 12l7-7 7 7"/>
-                </svg>
-                ${mockData.hottest.trend}
-            `;
-            hottestPanel.querySelector('.trend-indicator').classList.remove('loading');
-            hottestPanel.querySelector('.trend-indicator').classList.add('trend-up');
+            // Update panels
+            updatePanel('hottest-today', mockData.hottestToday, true);
+            updatePanel('coldest-today', mockData.coldestToday, false);
+            updatePanel('hottest-alltime', mockData.hottestAllTime);
+            updatePanel('coldest-alltime', mockData.coldestAllTime);
             
-            // Update coldest panel
-            const coldestPanel = document.getElementById('coldest-poland');
-            coldestPanel.querySelector('.temp-value').textContent = mockData.coldest.temp;
-            coldestPanel.querySelector('.temp-value').classList.remove('loading');
-            coldestPanel.querySelector('.location').textContent = mockData.coldest.location;
-            coldestPanel.querySelector('.location').classList.remove('loading');
-            coldestPanel.querySelector('.trend-indicator').innerHTML = `
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#4facfe" stroke-width="2" style="margin-right: 5px;">
-                    <path d="M12 5v14M19 12l-7 7-7-7"/>
-                </svg>
-                ${mockData.coldest.trend}
-            `;
-            coldestPanel.querySelector('.trend-indicator').classList.remove('loading');
-            coldestPanel.querySelector('.trend-indicator').classList.add('trend-down');
+            document.getElementById('trend').querySelector('.temp-value').textContent = mockData.trend.temp;
+            document.getElementById('trend').querySelector('.temp-value').classList.remove('loading');
+            document.getElementById('trend').querySelector('.trend-indicator').textContent = mockData.trend.trend;
+            document.getElementById('trend').querySelector('.trend-indicator').classList.remove('loading');
+            
+            document.getElementById('average').querySelector('.temp-value').textContent = mockData.average.temp;
+            document.getElementById('average').querySelector('.temp-value').classList.remove('loading');
+            document.getElementById('average').querySelector('.trend-indicator').textContent = mockData.average.trend;
+            document.getElementById('average').querySelector('.trend-indicator').classList.remove('loading');
             
         } catch (error) {
             console.error('Error fetching weather data:', error);
-            document.getElementById('hottest-poland').querySelector('.temp-value').textContent = "Error";
-            document.getElementById('hottest-poland').querySelector('.temp-value').classList.add('error');
-            document.getElementById('coldest-poland').querySelector('.temp-value').textContent = "Error";
-            document.getElementById('coldest-poland').querySelector('.temp-value').classList.add('error');
+            document.querySelectorAll('.temp-value').forEach(el => {
+                el.textContent = "Error";
+                el.classList.add('error');
+            });
+        }
+    }
+
+    function updatePanel(panelId, data, isUpTrend = null) {
+        const panel = document.getElementById(panelId);
+        panel.querySelector('.temp-value').textContent = data.temp;
+        panel.querySelector('.temp-value').classList.remove('loading');
+        panel.querySelector('.location').textContent = data.location;
+        panel.querySelector('.location').classList.remove('loading');
+        
+        if (isUpTrend !== null) {
+            const trend = panel.querySelector('.trend-indicator');
+            trend.innerHTML = isUpTrend ? 
+                `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#ff4d4d" stroke-width="2" style="margin-right: 5px;">
+                    <path d="M12 19V5M5 12l7-7 7 7"/>
+                </svg> ${data.trend}` :
+                `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#4facfe" stroke-width="2" style="margin-right: 5px;">
+                    <path d="M12 5v14M19 12l-7 7-7-7"/>
+                </svg> ${data.trend}`;
+            trend.classList.remove('loading');
+            trend.classList.add(isUpTrend ? 'trend-up' : 'trend-down');
+        } else {
+            panel.querySelector('.trend-indicator').textContent = data.trend;
+            panel.querySelector('.trend-indicator').classList.remove('loading');
         }
     }
 
