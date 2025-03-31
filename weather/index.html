@@ -3,503 +3,117 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Polish Weather</title>
-    <link rel="stylesheet" href="/style.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/webfont/1.6.26/webfont.js"></script>
-    <link href="https://fonts.cdnfonts.com/css/sf-pro-display" rel="stylesheet">
-    <link href="https://fonts.cdnfonts.com/css/fake-receipt" rel="stylesheet">
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, sans-serif;
-        }
-        
-        body {
-            background-color: #000;
-            color: #fff;
-            overflow-x: hidden;
-        }
-        
-        nav, nav *, .time-display {
-            font-family: 'Fake Receipt', 'Courier New', Courier, monospace;
-            font-size: 12px !important;
-        }
-        
-        .time-display {
-            font-size: 12px !important;
-            letter-spacing: 1px;
-            cursor: default;
-            transition: all 0.9s ease;
-            margin-left: auto;
-        }
-        
-        .time-display:hover {
-            color: #4facfe;
-        }
-        
-        .weather-container {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 20px;
-            padding: 100px 40px;
-        }
-        
-        @media (max-width: 768px) {
-            .weather-container {
-                grid-template-columns: 1fr;
-                padding: 100px 20px;
-            }
-        }
-        
-        .weather-panel {
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 12px;
-            padding: 20px;
-            backdrop-filter: blur(10px);
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .weather-panel::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 4px;
-            background: linear-gradient(90deg, #4facfe 0%, #00f2fe 100%);
-        }
-        
-        .panel-title {
-            font-family: 'Fake Receipt', monospace;
-            font-size: 14px;
-            margin-bottom: 15px;
-            position: relative;
-            padding-top: 10px;
-        }
-        
-        /* Kolory paneli */
-        .hottest-today .panel-title {
-            color: #ff4d4d;
-        }
-        
-        .coldest-today .panel-title {
-            color: #4facfe;
-        }
-        
-        .hottest-alltime .panel-title {
-            color: #ff7b7b;
-        }
-        
-        .coldest-alltime .panel-title {
-            color: #00f2fe;
-        }
-        
-        .trend .panel-title {
-            color: #a162e8;
-        }
-        
-        .average .panel-title {
-            color: #f6c;
-        }
-        
-        .temp-value {
-            font-size: 32px;
-            font-weight: 600;
-            margin: 10px 0;
-        }
-        
-        .location {
-            font-size: 16px;
-            opacity: 0.8;
-            margin-bottom: 10px;
-        }
-        
-        .trend-indicator {
-            display: flex;
-            align-items: center;
-            font-size: 14px;
-            margin-top: 10px;
-        }
-        
-        .trend-up {
-            color: #ff4d4d;
-        }
-        
-        .trend-down {
-            color: #4facfe;
-        }
-        
-        .loading {
-            color: #aaa;
-            font-style: italic;
-        }
-        
-        .error {
-            color: #ff4d4d;
-        }
-        
-        /* Modal styles */
-        .modal-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(0, 0, 0, 0.8);
-            backdrop-filter: blur(10px);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 1000;
-            opacity: 0;
-            visibility: hidden;
-            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-        
-        .modal-overlay.active {
-            opacity: 1;
-            visibility: visible;
-        }
-        
-        .card {
-            width: 100%;
-            max-width: 400px;
-            background: #1a1a1a;
-            border-radius: 12px;
-            padding: 30px;
-            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
-            transform: translateY(30px);
-            opacity: 0;
-            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1) 0.2s;
-        }
-        
-        .modal-overlay.active .card {
-            transform: translateY(0);
-            opacity: 1;
-        }
-        
-        .profile-image-container {
-            width: 120px;
-            height: 120px;
-            border-radius: 50%;
-            overflow: hidden;
-            margin: 0 auto 25px;
-            border: 3px solid rgba(255, 255, 255, 0.2);
-        }
-        
-        .profile-image {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            object-position: center;
-            display: block;
-        }
-        
-        .tag {
-            color: #4facfe;
-            font-size: 13px;
-            font-weight: 300;
-            background: rgba(100,100,100,0.15);
-            padding: 0 5px;
-            border-radius: 10px;
-            display: inline-block;
-            margin: 0 1px;
-            line-height: 1.5;
-        }
-    </style>
+    <title>Weather Data</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-<div class="noise-overlay" aria-hidden="true"></div>
-<div class="cursor"></div>
-<div class="cursor-f"></div>
+    <div class="noise-overlay" aria-hidden="true"></div>
+    <div class="cursor"></div>
+    <div class="cursor-f"></div>
 
-<nav>
-    <div class="nav-links">
-        <a href="/" class="projects-link">PROJECTS</a>
-        <a href="#" class="about-link" id="aboutLink">ABOUT ME</a>
-    </div>
-    <div class="time-display" id="timeDisplay"></div>
-</nav>
+    <nav>
+        <div class="nav-links">
+            <a href="#" class="projects-link">PROJECTS</a>
+            <a href="#" class="about-link">ABOUT ME</a>
+        </div>
+        <div class="time-display" id="timeDisplay"></div>
+    </nav>
 
-<!-- Weather Dashboard -->
-<div class="weather-dashboard">
-    <div class="weather-column">
-        <div class="weather-panel">
-            <h3>Hottest today</h3>
-            <div class="weather-value" id="hottestToday">
-                <span class="temp">--°C</span>
-                <span class="location">--</span>
+    <div class="weather-dashboard">
+        <!-- First Column -->
+        <div class="weather-column">
+            <div class="weather-panel">
+                <h3>Hottest today</h3>
+                <div class="weather-value">
+                    <span id="hottestTodayTemp" class="temp">--°C</span>
+                    <span id="hottestTodayCity" class="location">--</span>
+                </div>
             </div>
-        </div>
-        
-        <div class="weather-panel">
-            <h3>Hottest all time</h3>
-            <div class="weather-value">
-                <span class="temp">40.2°C</span>
-                <span class="location">Pruszków, 2022</span>
-            </div>
-        </div>
-        
-        <div class="weather-panel">
-            <h3>Trend vs yesterday</h3>
-            <div class="weather-value" id="tempTrend">
-                <span class="temp">--°C</span>
-                <span class="trend-icon">→</span>
-            </div>
-        </div>
-    </div>
-    
-    <div class="weather-column">
-        <div class="weather-panel">
-            <h3>Coldest today</h3>
-            <div class="weather-value" id="coldestToday">
-                <span class="temp">--°C</span>
-                <span class="location">--</span>
-            </div>
-        </div>
-        
-        <div class="weather-panel">
-            <h3>Coldest all time</h3>
-            <div class="weather-value">
-                <span class="temp">-41.0°C</span>
-                <span class="location">Siedlce, 1940</span>
-            </div>
-        </div>
-        
-        <div class="weather-panel">
-            <h3>Average today</h3>
-            <div class="weather-value" id="avgTemp">
-                <span class="temp">--°C</span>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- About Me Modal -->
-<div class="modal-overlay" id="aboutModal">
-    <div class="close-btn" id="closeModal">×</div>
-    <div class="card">
-        <div class="profile-image-container">
-            <img src="https://i.ibb.co/1fbH37gg/lowdweird.png" alt="LOWD" class="profile-image">
-        </div>
-        <span>LOWD</span>
-        <p class="info">
-            Graphic design graduate (technical school) now studying information architecture.<br>
-            Multidisciplinary skills:
-            <div class="tags-container">
-                <span class="tag">music</span>
-                <span class="tag">code</span>
-                <span class="tag">design</span>
-                <span class="tag">3D</span>
-                <span class="tag">video</span>
-                <span class="tag">UI/UX</span>
-            </div>
-        </p>
-        <div class="share">
-            <a href="https://x.com/saintlowdiee" target="_blank" rel="noopener noreferrer">
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-                    <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
-                </svg>
-            </a>
-            <a href="https://instagram.com/eeidwol" target="_blank" rel="noopener noreferrer">
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
-                    <path d="M8 0C5.829 0 5.556.01 4.703.048 3.85.088 3.269.222 2.76.42a3.917 3.917 0 0 0-1.417.923A3.927 3.927 0 0 0 .42 2.76C.222 3.268.087 3.85.048 4.7.01 5.555 0 5.827 0 8.001c0 2.172.01 2.444.048 3.297.04.852.174 1.433.372 1.942.205.526.478.972.923 1.417.444.445.89.719 1.416.923.51.198 1.09.333 1.942.372C5.555 15.99 5.827 16 8 16s2.444-.01 3.298-.048c.851-.04 1.434-.174 1.943-.372a3.916 3.916 0 0 0 1.416-.923c.445-.445.718-.891.923-1.417.197-.509.332-1.09.372-1.942C15.99 10.445 16 10.173 16 8s-.01-2.445-.048-3.299c-.04-.851-.175-1.433-.372-1.941a3.926 3.926 0 0 0-.923-1.417A3.911 3.911 0 0 0 13.24.42c-.51-.198-1.092-.333-1.943-.372C10.443.01 10.172 0 7.998 0h.003zm-.717 1.442h.718c2.136 0 2.389.007 3.232.046.78.035 1.204.166 1.486.275.373.145.64.319.92.599.28.28.453.546.598.92.11.281.24.705.275 1.485.039.843.047 1.096.047 3.231s-.008 2.389-.047 3.232c-.035.78-.166 1.203-.275 1.485a2.47 2.47 0 0 1-.599.919c-.28.28-.546.453-.92.598-.28.11-.704.24-1.485.276-.843.038-1.096.047-3.232.047s-2.39-.009-3.233-.047c-.78-.036-1.203-.166-1.485-.276a2.478 2.478 0 0 1-.92-.598 2.48 2.48 0 0 1-.6-.92c-.109-.281-.24-.705-.275-1.485-.038-.843-.046-1.096-.046-3.233 0-2.136.008-2.388.046-3.231.036-.78.166-1.204.276-1.486.145-.373.319-.64.599-.92.28-.28.546-.453.92-.598.282-.11.705-.24 1.485-.276.738-.034 1.024-.044 2.515-.045v.002zm4.988 1.328a.96.96 0 1 0 0 1.92.96.96 0 0 0 0-1.92zm-4.27 1.122a4.109 4.109 0 1 0 0 8.217 4.109 4.109 0 0 0 0-8.217zm0 1.441a2.667 2.667 0 1 1 0 5.334 2.667 2.667 0 0 1 0-5.334z"/>
-                </svg>
-            </a>
-            <a href="https://youtube.com/c/lowdiee" target="_blank" rel="noopener noreferrer">
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
-                    <path d="M8.051 1.999h.089c.822.003 4.987.033 6.11.335a2.01 2.01 0 0 1 1.415 1.42c.101.38.172.883.22 1.402l.01.104.022.26.008.104c.065.914.073 1.77.074 1.957v.075c-.001.194-.01 1.108-.082 2.06l-.008.105-.009.104c-.05.572-.124 1.14-.235 1.558a2.007 2.007 0 0 1-1.415 1.42c-1.16.312-5.569.334-6.18.335h-.142c-.309 0-1.587-.006-2.927-.052l-.17-.006-.087-.004-.171-.007-.171-.007c-1.11-.049-2.167-.128-2.654-.26a2.007 2.007 0 0 1-1.415-1.419c-.111-.417-.185-.986-.235-1.558L.09 9.82l-.008-.104A31.4 31.4 0 0 1 0 7.68v-.123c.002-.215.01-.958.064-1.778l.007-.103.003-.052.008-.104.022-.26.01-.104c.048-.519.119-1.023.22-1.402a2.007 2.007 0 0 1 1.415-1.42c.487-.13 1.544-.21 2.654-.26l.17-.007.172-.006.086-.003.171-.007A99.788 99.788 0 0 1 7.858 2h.193zM6.4 5.209v4.818l4.157-2.408L6.4 5.209z"/>
-                </svg>
-            </a>
-        </div>
-        <button id="resumeButton" class="modal-btn">Resume</button>
-    </div>
-</div>
-
-<script src="/script.js"></script>
-<script>
-    // Time display
-    const timeDisplay = document.getElementById('timeDisplay');
-    let isHovering = false;
-    let cetInterval, gmtInterval;
-
-    function updateCET() {
-        const now = new Date();
-        const cetOptions = {
-            timeZone: 'Europe/Paris',
-            hour: '2-digit',
-            minute: '2-digit',
-            second: '2-digit',
-            hour12: false
-        };
-        timeDisplay.textContent = `CET ${now.toLocaleTimeString('en-GB', cetOptions)}`;
-    }
-
-    function updateGMT() {
-        const now = new Date();
-        const gmtOptions = {
-            timeZone: 'GMT',
-            hour: '2-digit',
-            minute: '2-digit',
-            second: '2-digit',
-            hour12: false
-        };
-        timeDisplay.textContent = `GMT ${now.toLocaleTimeString('en-GB', gmtOptions)}`;
-    }
-
-    function setupTimeDisplay() {
-        clearInterval(cetInterval);
-        clearInterval(gmtInterval);
-
-        if (isHovering) {
-            updateGMT();
-            gmtInterval = setInterval(updateGMT, 1000);
-        } else {
-            updateCET();
-            cetInterval = setInterval(updateCET, 1000);
-        }
-    }
-
-    timeDisplay.addEventListener('mouseenter', () => {
-        isHovering = true;
-        setupTimeDisplay();
-    });
-
-    timeDisplay.addEventListener('mouseleave', () => {
-        isHovering = false;
-        setupTimeDisplay();
-    });
-
-    setupTimeDisplay();
-    
-    // Modal functionality
-    const aboutLink = document.getElementById('aboutLink');
-    const aboutModal = document.getElementById('aboutModal');
-    const closeModal = document.getElementById('closeModal');
-    const resumeButton = document.getElementById('resumeButton');
-    
-    aboutLink.addEventListener('click', (e) => {
-        e.preventDefault();
-        aboutModal.classList.add('active');
-        document.body.style.overflow = 'hidden';
-    });
-    
-    closeModal.addEventListener('click', () => {
-        aboutModal.classList.remove('active');
-        document.body.style.overflow = 'auto';
-    });
-    
-    resumeButton.addEventListener('click', () => {
-        aboutModal.classList.remove('active');
-        document.body.style.overflow = 'auto';
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-    });
-    
-    aboutModal.addEventListener('click', (e) => {
-        if (e.target === aboutModal) {
-            aboutModal.classList.remove('active');
-            document.body.style.overflow = 'auto';
-        }
-    });
-    
-    document.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape' && aboutModal.classList.contains('active')) {
-            aboutModal.classList.remove('active');
-            document.body.style.overflow = 'auto';
-        }
-    });
-
-    // IMGW API Integration - TUTAJ PODŁĄCZ PRAWDZIWE API IMGW
-    async function fetchWeatherData() {
-        try {
-            // Przykładowe dane - zastąp prawdziwym API IMGW
-            const mockData = {
-                hottestToday: {
-                    temp: "34°C",
-                    location: "Wrocław",
-                    trend: "+2°C vs yesterday"
-                },
-                coldestToday: {
-                    temp: "-5°C",
-                    location: "Suwałki",
-                    trend: "-1°C vs yesterday"
-                },
-                hottestAllTime: {
-                    temp: "40.2°C",
-                    location: "Pruszków (1921)",
-                    trend: "Record"
-                },
-                coldestAllTime: {
-                    temp: "-41.0°C",
-                    location: "Siedlce (1940)",
-                    trend: "Record"
-                },
-                trend: {
-                    temp: "+1.5°C",
-                    trend: "Warmer than yesterday"
-                },
-                average: {
-                    temp: "18.4°C",
-                    trend: "0.5°C above norm"
-                }
-            };
             
-            // Update panels
-            updatePanel('hottest-today', mockData.hottestToday, true);
-            updatePanel('coldest-today', mockData.coldestToday, false);
-            updatePanel('hottest-alltime', mockData.hottestAllTime);
-            updatePanel('coldest-alltime', mockData.coldestAllTime);
+            <div class="weather-panel">
+                <h3>Hottest all time</h3>
+                <div class="weather-value">
+                    <span class="temp">40.2°C</span>
+                    <span class="location">Pruszków, 2022</span>
+                </div>
+            </div>
             
-            document.getElementById('trend').querySelector('.temp-value').textContent = mockData.trend.temp;
-            document.getElementById('trend').querySelector('.temp-value').classList.remove('loading');
-            document.getElementById('trend').querySelector('.trend-indicator').textContent = mockData.trend.trend;
-            document.getElementById('trend').querySelector('.trend-indicator').classList.remove('loading');
-            
-            document.getElementById('average').querySelector('.temp-value').textContent = mockData.average.temp;
-            document.getElementById('average').querySelector('.temp-value').classList.remove('loading');
-            document.getElementById('average').querySelector('.trend-indicator').textContent = mockData.average.trend;
-            document.getElementById('average').querySelector('.trend-indicator').classList.remove('loading');
-            
-        } catch (error) {
-            console.error('Error fetching weather data:', error);
-            document.querySelectorAll('.temp-value').forEach(el => {
-                el.textContent = "Error";
-                el.classList.add('error');
-            });
-        }
-    }
-
-    function updatePanel(panelId, data, isUpTrend = null) {
-        const panel = document.getElementById(panelId);
-        panel.querySelector('.temp-value').textContent = data.temp;
-        panel.querySelector('.temp-value').classList.remove('loading');
-        panel.querySelector('.location').textContent = data.location;
-        panel.querySelector('.location').classList.remove('loading');
+            <div class="weather-panel">
+                <h3>Trend vs yesterday</h3>
+                <div class="weather-value">
+                    <span id="tempTrend" class="temp">--°C</span>
+                </div>
+            </div>
+        </div>
         
-        if (isUpTrend !== null) {
-            const trend = panel.querySelector('.trend-indicator');
-            trend.innerHTML = isUpTrend ? 
-                `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#ff4d4d" stroke-width="2" style="margin-right: 5px;">
-                    <path d="M12 19V5M5 12l7-7 7 7"/>
-                </svg> ${data.trend}` :
-                `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#4facfe" stroke-width="2" style="margin-right: 5px;">
-                    <path d="M12 5v14M19 12l-7 7-7-7"/>
-                </svg> ${data.trend}`;
-            trend.classList.remove('loading');
-            trend.classList.add(isUpTrend ? 'trend-up' : 'trend-down');
-        } else {
-            panel.querySelector('.trend-indicator').textContent = data.trend;
-            panel.querySelector('.trend-indicator').classList.remove('loading');
-        }
-    }
+        <!-- Second Column -->
+        <div class="weather-column">
+            <div class="weather-panel">
+                <h3>Coldest today</h3>
+                <div class="weather-value">
+                    <span id="coldestTodayTemp" class="temp">--°C</span>
+                    <span id="coldestTodayCity" class="location">--</span>
+                </div>
+            </div>
+            
+            <div class="weather-panel">
+                <h3>Coldest all time</h3>
+                <div class="weather-value">
+                    <span class="temp">-41.0°C</span>
+                    <span class="location">Siedlce, 1940</span>
+                </div>
+            </div>
+            
+            <div class="weather-panel">
+                <h3>Average today</h3>
+                <div class="weather-value">
+                    <span id="avgTemp" class="temp">--°C</span>
+                </div>
+            </div>
+        </div>
+    </div>
 
-    // Load weather data
-    fetchWeatherData();
-    // Refresh every 30 minutes
-    setInterval(fetchWeatherData, 30 * 60 * 1000);
-</script>
+    <!-- About Me Modal -->
+    <div class="modal-overlay" id="aboutModal">
+        <div class="close-btn" id="closeModal"></div>
+        <div class="card">
+            <div class="profile-image-container">
+                <img src="https://i.ibb.co/1fbH37gg/lowdweird.png" alt="LOWD" class="profile-image">
+            </div>
+            <span>LOWD</span>
+            <p class="info">
+                Graphic design graduate (technical school) now studying information architecture.<br>
+                Multidisciplinary skills:
+                <div class="tags-container">
+                    <span class="tag">music</span>
+                    <span class="tag">code</span>
+                    <span class="tag">design</span>
+                    <span class="tag">3D</span>
+                    <span class="tag">video</span>
+                    <span class="tag">UI/UX</span>
+                </div>
+            </p>
+            <div class="share">
+                <a href="https://x.com/saintlowdiee" target="_blank" rel="noopener noreferrer">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+                    </svg>
+                </a>
+                <a href="https://instagram.com/eeidwol" target="_blank" rel="noopener noreferrer">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                        <path d="M8 0C5.829 0 5.556.01 4.703.048 3.85.088 3.269.222 2.76.42a3.917 3.917 0 0 0-1.417.923A3.927 3.927 0 0 0 .42 2.76C.222 3.268.087 3.85.048 4.7.01 5.555 0 5.827 0 8.001c0 2.172.01 2.444.048 3.297.04.852.174 1.433.372 1.942.205.526.478.972.923 1.417.444.445.89.719 1.416.923.51.198 1.09.333 1.942.372C5.555 15.99 5.827 16 8 16s2.444-.01 3.298-.048c.851-.04 1.434-.174 1.943-.372a3.916 3.916 0 0 0 1.416-.923c.445-.445.718-.891.923-1.417.197-.509.332-1.09.372-1.942C15.99 10.445 16 10.173 16 8s-.01-2.445-.048-3.299c-.04-.851-.175-1.433-.372-1.941a3.926 3.926 0 0 0-.923-1.417A3.911 3.911 0 0 0 13.24.42c-.51-.198-1.092-.333-1.943-.372C10.443.01 10.172 0 7.998 0h.003zm-.717 1.442h.718c2.136 0 2.389.007 3.232.046.78.035 1.204.166 1.486.275.373.145.64.319.92.599.28.28.453.546.598.92.11.281.24.705.275 1.485.039.843.047 1.096.047 3.231s-.008 2.389-.047 3.232c-.035.78-.166 1.203-.275 1.485a2.47 2.47 0 0 1-.599.919c-.28.28-.546.453-.92.598-.28.11-.704.24-1.485.276-.843.038-1.096.047-3.232.047s-2.39-.009-3.233-.047c-.78-.036-1.203-.166-1.485-.276a2.478 2.478 0 0 1-.92-.598 2.48 2.48 0 0 1-.6-.92c-.109-.281-.24-.705-.275-1.485-.038-.843-.046-1.096-.046-3.233 0-2.136.008-2.388.046-3.231.036-.78.166-1.204.276-1.486.145-.373.319-.64.599-.92.28-.28.546-.453.92-.598.282-.11.705-.24 1.485-.276.738-.034 1.024-.044 2.515-.045v.002zm4.988 1.328a.96.96 0 1 0 0 1.92.96.96 0 0 0 0-1.92zm-4.27 1.122a4.109 4.109 0 1 0 0 8.217 4.109 4.109 0 0 0 0-8.217zm0 1.441a2.667 2.667 0 1 1 0 5.334 2.667 2.667 0 0 1 0-5.334z"/>
+                    </svg>
+                </a>
+                <a href="https://youtube.com/c/lowdiee" target="_blank" rel="noopener noreferrer">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                        <path d="M8.051 1.999h.089c.822.003 4.987.033 6.11.335a2.01 2.01 0 0 1 1.415 1.42c.101.38.172.883.22 1.402l.01.104.022.26.008.104c.065.914.073 1.77.074 1.957v.075c-.001.194-.01 1.108-.082 2.06l-.008.105-.009.104c-.05.572-.124 1.14-.235 1.558a2.007 2.007 0 0 1-1.415 1.42c-1.16.312-5.569.334-6.18.335h-.142c-.309 0-1.587-.006-2.927-.052l-.17-.006-.087-.004-.171-.007-.171-.007c-1.11-.049-2.167-.128-2.654-.26a2.007 2.007 0 0 1-1.415-1.419c-.111-.417-.185-.986-.235-1.558L.09 9.82l-.008-.104A31.4 31.4 0 0 1 0 7.68v-.123c.002-.215.01-.958.064-1.778l.007-.103.003-.052.008-.104.022-.26.01-.104c.048-.519.119-1.023.22-1.402a2.007 2.007 0 0 1 1.415-1.42c.487-.13 1.544-.21 2.654-.26l.17-.007.172-.006.086-.003.171-.007A99.788 99.788 0 0 1 7.858 2h.193zM6.4 5.209v4.818l4.157-2.408L6.4 5.209z"/>
+                    </svg>
+                </a>
+            </div>
+            <button id="resumeButton" class="modal-btn">Resume</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
 </body>
 </html>
