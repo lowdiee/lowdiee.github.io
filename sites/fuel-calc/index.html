@@ -32,41 +32,45 @@
         </div>
         <div class="time-display" id="timeDisplay"></div>
     </nav>
-<div class="ios-weather-panel">
-  <h2 class="panel-title fake-receipt">POLISH EXTREMES (LAST 24H)</h2>
-  
-  <div class="ios-columns">
-    <!-- Najniższa temperatura -->
-    <div class="ios-column">
-      <div class="ios-card cold">
-        <div class="ios-card-header sf-pro">LOWEST TODAY</div>
-        <div class="ios-card-content">
-          <div class="ios-temp" id="poland-min-temp">--°C</div>
-          <div class="ios-location sf-pro" id="poland-min-loc">Loading...</div>
-          <div class="ios-details sf-pro" id="poland-min-time">• Station: --</div>
+<!-- Weather Extremes Panel -->
+<div class="weather-extremes-container">
+  <div class="weather-extremes-panel">
+    <h2 class="weather-title fake-receipt">POLISH WEATHER EXTREMES</h2>
+    
+    <div class="weather-columns">
+      <!-- Left Column - Min Temp -->
+      <div class="weather-column">
+        <div class="weather-card cold-card">
+          <div class="card-header sf-pro">LOWEST TODAY</div>
+          <div class="temp-value" id="min-temp">--°C</div>
+          <div class="location sf-pro" id="min-location">Loading...</div>
+          <div class="details sf-pro">
+            <span id="min-time">--:--</span>
+            <span id="min-station">Station: --</span>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Right Column - Max Temp -->
+      <div class="weather-column">
+        <div class="weather-card hot-card">
+          <div class="card-header sf-pro">HIGHEST TODAY</div>
+          <div class="temp-value" id="max-temp">--°C</div>
+          <div class="location sf-pro" id="max-location">Loading...</div>
+          <div class="details sf-pro">
+            <span id="max-time">--:--</span>
+            <span id="max-station">Station: --</span>
+          </div>
         </div>
       </div>
     </div>
     
-    <!-- Najwyższa temperatura -->
-    <div class="ios-column">
-      <div class="ios-card hot">
-        <div class="ios-card-header sf-pro">HIGHEST TODAY</div>
-        <div class="ios-card-content">
-          <div class="ios-temp" id="poland-max-temp">--°C</div>
-          <div class="ios-location sf-pro" id="poland-max-loc">Loading...</div>
-          <div class="ios-details sf-pro" id="poland-max-time">• Station: --</div>
-        </div>
-      </div>
+    <div class="weather-footer sf-pro">
+      <span>Source: IMGW-PIB</span>
+      <span id="update-time">Updated: --:--</span>
     </div>
-  </div>
-  
-  <div class="ios-live-data sf-pro">
-    <span>Data source: <strong>IMGW-PIB</strong></span>
-    <span class="update-time">Updated: <span id="update-time">--:--</span></span>
   </div>
 </div>
-    
     <script src="/sites/fuel-calc/script.js"></script>
     <script>
         // Inicjalizacja Web Font Loader
