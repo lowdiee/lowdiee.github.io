@@ -89,7 +89,7 @@ html, body, * {
     justify-content: center;
     border: 1px solid;
     min-height: 70px; /* Zmienione z 110px na 90px */
-    height: auto;
+    height: 80;
 }
 
 .weather-panel:hover {
