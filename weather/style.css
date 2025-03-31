@@ -82,21 +82,31 @@ html, body, * {
     background: rgba(28, 28, 30, 0.8);
     backdrop-filter: blur(20px);
     border-radius: 14px;
-    padding: 12px 16px;
+    padding: 10px 14px; /* Zmniejszone paddingi */
     transition: all 0.3s ease;
     display: flex;
     flex-direction: column;
     justify-content: center;
     border: 1px solid;
-/*  min-height: 70px; Zmienione z 110px na 90px */
-    height: 60;
+    min-height: 80px; /* Jeszcze mniejsza wysokość */
+    height: auto;
 }
 
-.weather-panel:hover {
-    transform: translateY(-2px);
-    background: rgba(38, 38, 40, 0.8);
+/* Zmniejsz rozmiar czcionek w panelach */
+.weather-panel h2 {
+    font-size: 0.75rem; /* 12px */
+    margin-bottom: 0.25rem;
 }
 
+.weather-panel .text-3xl {
+    font-size: 1.5rem; /* 24px */
+    line-height: 1.2;
+}
+
+.weather-panel .text-sm {
+    font-size: 0.75rem; /* 12px */
+    margin-top: 0.25rem;
+}
 /* Color classes */
 .border-red-500 {
     border-color: rgba(255, 69, 58, 0.5);
