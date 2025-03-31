@@ -25,63 +25,64 @@
                     </svg>
                     <span>Back</span>
                 </button>
-        </a>
+            </a>
+        </div>
 
-        <h1 class="text-white text-4xl font-bold text-center mb-12">Weather Data for Poland</h1>
+        <h1 class="text-white text-4xl font-bold text-center mb-12 pt-12">Weather Data for Poland</h1>
         
         <!-- Weather panels grid -->
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
             <!-- Hottest Today -->
-            <div class="weather-panel bg-gradient-to-br from-red-900 to-red-700">
-                <h2 class="text-2xl font-bold mb-4 text-red-300">HOTTEST TODAY</h2>
+            <div class="weather-panel" data-color="red">
+                <h2 class="text-2xl font-bold mb-4">HOTTEST TODAY</h2>
                 <div class="text-5xl font-bold mb-2">24°C</div>
-                <div class="text-lg">Wrocław</div>
-                <div class="text-sm opacity-80 mt-2">Updated: 14:30</div>
+                <div class="text-lg opacity-90">Wrocław</div>
+                <div class="text-sm opacity-70 mt-2">Updated: 14:30</div>
             </div>
             
             <!-- Coldest Today -->
-            <div class="weather-panel bg-gradient-to-br from-blue-900 to-blue-700">
-                <h2 class="text-2xl font-bold mb-4 text-blue-300">COLDEST TODAY</h2>
+            <div class="weather-panel" data-color="blue">
+                <h2 class="text-2xl font-bold mb-4">COLDEST TODAY</h2>
                 <div class="text-5xl font-bold mb-2">8°C</div>
-                <div class="text-lg">Zakopane</div>
-                <div class="text-sm opacity-80 mt-2">Updated: 14:30</div>
+                <div class="text-lg opacity-90">Zakopane</div>
+                <div class="text-sm opacity-70 mt-2">Updated: 14:30</div>
             </div>
             
             <!-- Hottest All Time -->
-            <div class="weather-panel bg-gradient-to-br from-orange-900 to-orange-700">
-                <h2 class="text-2xl font-bold mb-4 text-orange-300">HOTTEST ALL TIME</h2>
+            <div class="weather-panel" data-color="orange">
+                <h2 class="text-2xl font-bold mb-4">HOTTEST ALL TIME</h2>
                 <div class="text-5xl font-bold mb-2">40.2°C</div>
-                <div class="text-lg">Pruszków (2023)</div>
-                <div class="text-sm opacity-80 mt-2">Record</div>
+                <div class="text-lg opacity-90">Pruszków (2023)</div>
+                <div class="text-sm opacity-70 mt-2">Record</div>
             </div>
             
             <!-- Coldest All Time -->
-            <div class="weather-panel bg-gradient-to-br from-cyan-900 to-cyan-700">
-                <h2 class="text-2xl font-bold mb-4 text-cyan-300">COLDEST ALL TIME</h2>
+            <div class="weather-panel" data-color="cyan">
+                <h2 class="text-2xl font-bold mb-4">COLDEST ALL TIME</h2>
                 <div class="text-5xl font-bold mb-2">-41.0°C</div>
-                <div class="text-lg">Siedlce (1940)</div>
-                <div class="text-sm opacity-80 mt-2">Record</div>
+                <div class="text-lg opacity-90">Siedlce (1940)</div>
+                <div class="text-sm opacity-70 mt-2">Record</div>
             </div>
             
             <!-- Trend vs Yesterday -->
-            <div class="weather-panel bg-gradient-to-br from-purple-900 to-purple-700">
-                <h2 class="text-2xl font-bold mb-4 text-purple-300">TREND (VS YESTERDAY)</h2>
+            <div class="weather-panel" data-color="purple">
+                <h2 class="text-2xl font-bold mb-4">TREND (VS YESTERDAY)</h2>
                 <div class="text-5xl font-bold mb-2 flex items-center">
                     <span>+3°C</span>
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18" />
                     </svg>
                 </div>
-                <div class="text-lg">Warmer than yesterday</div>
-                <div class="text-sm opacity-80 mt-2">National average</div>
+                <div class="text-lg opacity-90">Warmer than yesterday</div>
+                <div class="text-sm opacity-70 mt-2">National average</div>
             </div>
             
             <!-- Average Temperature -->
-            <div class="weather-panel bg-gradient-to-br from-indigo-900 to-indigo-700">
-                <h2 class="text-2xl font-bold mb-4 text-indigo-300">AVERAGE TEMPERATURE</h2>
+            <div class="weather-panel" data-color="indigo">
+                <h2 class="text-2xl font-bold mb-4">AVERAGE TEMPERATURE</h2>
                 <div class="text-5xl font-bold mb-2">15°C</div>
-                <div class="text-lg">Current national average</div>
-                <div class="text-sm opacity-80 mt-2">Updated: 14:30</div>
+                <div class="text-lg opacity-90">Current national average</div>
+                <div class="text-sm opacity-70 mt-2">Updated: 14:30</div>
             </div>
         </div>
         
