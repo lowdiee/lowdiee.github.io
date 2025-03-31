@@ -1,12 +1,3 @@
-/* Font families */
-.font-fake-receipt {
-    font-family: 'Fake Receipt', monospace;
-}
-
-.font-sf-pro {
-    font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, sans-serif;
-}
-
 /* Noise overlay */
 .noise-overlay {
     position: fixed;
@@ -55,39 +46,39 @@ html, body, * {
     cursor: none !important;
 }
 
-/* Back button styles */
+/* Back button styles - subtelny efekt */
 .back-button {
     display: flex;
     height: 3em;
     width: 100px;
     align-items: center;
     justify-content: center;
-    background-color: #eeeeee4b;
+    background-color: rgba(255, 255, 255, 0.1);
     border-radius: 3px;
     letter-spacing: 1px;
-    transition: all 0.2s linear;
+    transition: all 0.2s ease;
     cursor: pointer;
     border: none;
-    background: #fff;
-    color: #000;
+    color: white;
     font-family: 'Fake Receipt', monospace;
+    border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
 .back-button > svg {
     margin-right: 5px;
     margin-left: 5px;
     font-size: 20px;
-    transition: all 0.4s ease-in;
+    transition: all 0.4s ease;
+    fill: white;
 }
 
 .back-button:hover > svg {
-    font-size: 1.2em;
-    transform: translateX(-5px);
+    transform: translateX(-3px);
 }
 
 .back-button:hover {
-    box-shadow: 9px 9px 33px #d1d1d1, -9px -9px 33px #ffffff;
-    transform: translateY(-2px);
+    background-color: rgba(255, 255, 255, 0.15);
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
 }
 
 /* Panel styles */
@@ -102,28 +93,28 @@ html, body, * {
     flex-direction: column;
     position: relative;
     overflow: hidden;
-    border: 2px solid;
-    box-shadow: 0 0 15px currentColor;
+    border: 1px solid;
+    box-shadow: 0 0 10px currentColor;
 }
 
 .weather-panel:hover {
-    transform: translateY(-5px);
+    transform: translateY(-3px);
     background: rgba(38, 38, 40, 0.8);
 }
 
 /* Color classes */
 .border-red-500 {
-    border-color: rgba(255, 69, 58, 0.7);
+    border-color: rgba(255, 69, 58, 0.5);
     color: rgba(255, 69, 58, 0.7);
 }
 
 .border-blue-500 {
-    border-color: rgba(10, 132, 255, 0.7);
+    border-color: rgba(10, 132, 255, 0.5);
     color: rgba(10, 132, 255, 0.7);
 }
 
 .border-purple-500 {
-    border-color: rgba(191, 90, 242, 0.7);
+    border-color: rgba(191, 90, 242, 0.5);
     color: rgba(191, 90, 242, 0.7);
 }
 
