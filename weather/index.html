@@ -1,18 +1,13 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Weather Data</title>
+    <title>Weather Data Poland</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="style.css">
-    <!-- Fonts -->
     <link href="https://fonts.cdnfonts.com/css/sf-pro-display" rel="stylesheet">
     <link href="https://fonts.cdnfonts.com/css/fake-receipt" rel="stylesheet">
-    <style>
-        @import url('https://fonts.cdnfonts.com/css/sf-pro-display');
-        @import url('https://fonts.cdnfonts.com/css/fake-receipt');
-    </style>
 </head>
 <body class="bg-black text-white min-h-screen overflow-x-hidden" style="font-family: 'Fake Receipt', monospace">
     <!-- Noise overlay -->
@@ -35,65 +30,62 @@
     </div>
 
     <div class="container mx-auto px-4 py-8 min-h-screen flex flex-col">
-        <h1 class="text-white text-4xl font-bold text-center mb-12 pt-16 tracking-wider">Weather Data for Poland</h1>
+        <h1 class="text-white text-3xl font-bold text-center mb-12 pt-16 tracking-wider">Weather Data for Poland</h1>
         
         <!-- Weather panels grid -->
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 w-full max-w-4xl mx-auto flex-grow">
-            <!-- Hottest Today - RED -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 w-full max-w-4xl mx-auto flex-grow">
+            <!-- Hottest Today - will be updated from API -->
             <div class="weather-panel border-red-500">
-                <h2 class="text-2xl font-bold mb-4 tracking-wider">HOTTEST TODAY</h2>
-                <div class="text-5xl font-bold mb-2" style="font-family: 'SF Pro Display', sans-serif">24°C</div>
-                <div class="text-lg opacity-90 tracking-wider">Wrocław</div>
-                <div class="text-sm opacity-70 mt-2 tracking-wider">Updated: 14:30</div>
+                <h2 class="text-xl font-bold mb-3 text-red-500 tracking-wider">HOTTEST TODAY</h2>
+                <div class="text-5xl font-bold mb-2 text-white temperature" style="font-family: 'SF Pro Display', sans-serif" id="hottest-today-temp">--°C</div>
+                <div class="text-lg text-white opacity-90 location" id="hottest-today-location">Loading...</div>
+                <div class="text-sm text-white opacity-70 mt-2 timestamp" id="hottest-today-time">Updated: --:--</div>
             </div>
             
-            <!-- Coldest Today - BLUE -->
+            <!-- Coldest Today - will be updated from API -->
             <div class="weather-panel border-blue-500">
-                <h2 class="text-2xl font-bold mb-4 tracking-wider">COLDEST TODAY</h2>
-                <div class="text-5xl font-bold mb-2" style="font-family: 'SF Pro Display', sans-serif">8°C</div>
-                <div class="text-lg opacity-90 tracking-wider">Zakopane</div>
-                <div class="text-sm opacity-70 mt-2 tracking-wider">Updated: 14:30</div>
+                <h2 class="text-xl font-bold mb-3 text-blue-500 tracking-wider">COLDEST TODAY</h2>
+                <div class="text-5xl font-bold mb-2 text-white temperature" style="font-family: 'SF Pro Display', sans-serif" id="coldest-today-temp">--°C</div>
+                <div class="text-lg text-white opacity-90 location" id="coldest-today-location">Loading...</div>
+                <div class="text-sm text-white opacity-70 mt-2 timestamp" id="coldest-today-time">Updated: --:--</div>
             </div>
             
-            <!-- Hottest All Time - RED -->
+            <!-- Hottest All Time - STATIC -->
             <div class="weather-panel border-red-500">
-                <h2 class="text-2xl font-bold mb-4 tracking-wider">HOTTEST ALL TIME</h2>
-                <div class="text-5xl font-bold mb-2" style="font-family: 'SF Pro Display', sans-serif">40.2°C</div>
-                <div class="text-lg opacity-90 tracking-wider">Pruszków (2023)</div>
-                <div class="text-sm opacity-70 mt-2 tracking-wider">Record</div>
+                <h2 class="text-xl font-bold mb-3 text-red-500 tracking-wider">HOTTEST ALL TIME</h2>
+                <div class="text-5xl font-bold mb-2 text-white" style="font-family: 'SF Pro Display', sans-serif">40.2°C</div>
+                <div class="text-lg text-white opacity-90">Pruszków (2023)</div>
+                <div class="text-sm text-white opacity-70 mt-2">Record</div>
             </div>
             
-            <!-- Coldest All Time - BLUE -->
+            <!-- Coldest All Time - STATIC -->
             <div class="weather-panel border-blue-500">
-                <h2 class="text-2xl font-bold mb-4 tracking-wider">COLDEST ALL TIME</h2>
-                <div class="text-5xl font-bold mb-2" style="font-family: 'SF Pro Display', sans-serif">-41.0°C</div>
-                <div class="text-lg opacity-90 tracking-wider">Siedlce (1940)</div>
-                <div class="text-sm opacity-70 mt-2 tracking-wider">Record</div>
+                <h2 class="text-xl font-bold mb-3 text-blue-500 tracking-wider">COLDEST ALL TIME</h2>
+                <div class="text-5xl font-bold mb-2 text-white" style="font-family: 'SF Pro Display', sans-serif">-41.0°C</div>
+                <div class="text-lg text-white opacity-90">Siedlce (1940)</div>
+                <div class="text-sm text-white opacity-70 mt-2">Record</div>
             </div>
             
-            <!-- Trend vs Yesterday - PURPLE -->
+            <!-- Trend vs Yesterday - will be updated from API -->
             <div class="weather-panel border-purple-500">
-                <h2 class="text-2xl font-bold mb-4 tracking-wider">TREND (VS YESTERDAY)</h2>
-                <div class="text-5xl font-bold mb-2 flex items-center" style="font-family: 'SF Pro Display', sans-serif">
-                    <span>+3°C</span>
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18" />
-                    </svg>
+                <h2 class="text-xl font-bold mb-3 text-purple-500 tracking-wider">TREND (VS YESTERDAY)</h2>
+                <div class="text-5xl font-bold mb-2 text-white flex items-center" style="font-family: 'SF Pro Display', sans-serif" id="trend-temp">
+                    <span>--°C</span>
                 </div>
-                <div class="text-lg opacity-90 tracking-wider">Warmer than yesterday</div>
-                <div class="text-sm opacity-70 mt-2 tracking-wider">National average</div>
+                <div class="text-lg text-white opacity-90" id="trend-description">Loading...</div>
+                <div class="text-sm text-white opacity-70 mt-2 timestamp" id="trend-time">Updated: --:--</div>
             </div>
             
-            <!-- Average Temperature - PURPLE -->
+            <!-- Average Temperature - will be updated from API -->
             <div class="weather-panel border-purple-500">
-                <h2 class="text-2xl font-bold mb-4 tracking-wider">AVERAGE TEMPERATURE</h2>
-                <div class="text-5xl font-bold mb-2" style="font-family: 'SF Pro Display', sans-serif">15°C</div>
-                <div class="text-lg opacity-90 tracking-wider">Current national average</div>
-                <div class="text-sm opacity-70 mt-2 tracking-wider">Updated: 14:30</div>
+                <h2 class="text-xl font-bold mb-3 text-purple-500 tracking-wider">AVERAGE TEMPERATURE</h2>
+                <div class="text-5xl font-bold mb-2 text-white" style="font-family: 'SF Pro Display', sans-serif" id="avg-temp">--°C</div>
+                <div class="text-lg text-white opacity-90">Current national average</div>
+                <div class="text-sm text-white opacity-70 mt-2 timestamp" id="avg-time">Updated: --:--</div>
             </div>
         </div>
         
-        <div class="text-center text-gray-500 mt-12 pb-8 tracking-wider">
+        <div class="text-center text-gray-400 mt-12 pb-8 text-sm">
             <p>Data sourced from IMGW API | Updates hourly</p>
         </div>
     </div>
