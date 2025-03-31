@@ -128,6 +128,14 @@ nav a {
     font-size: 16px;
 }
 
+.weather-panel h4 {
+    font-family: 'Fake Receipt', monospace;
+    color: #fe4f55;
+    margin-bottom: 15px;
+    font-size: 16px;
+}
+
+
 .weather-value {
     font-family: 'SF Pro Display', sans-serif;
 }
