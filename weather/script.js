@@ -49,22 +49,62 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-    // Time display
-    const timeDisplay = document.getElementById('timeDisplay');
-    if (timeDisplay) {
-        function updateTime() {
-            const now = new Date();
-            timeDisplay.textContent = now.toLocaleTimeString('en-GB', {
-                hour: '2-digit',
-                minute: '2-digit',
-                second: '2-digit',
-                hour12: false
-            });
-        }
-        updateTime();
-        setInterval(updateTime, 1000);
-    }
+  // Time display functionality
+const timeDisplay = document.getElementById('timeDisplay');
+let isHovering = false;
+let cetInterval, gmtInterval;
 
+function updateCET() {
+    const now = new Date();
+    const cetOptions = {
+        timeZone: 'Europe/Paris',
+        hour: '2-digit',
+        minute: '2-digit',
+        second: '2-digit',
+        hour12: false
+    };
+    timeDisplay.textContent = `CET ${now.toLocaleTimeString('en-GB', cetOptions)}`;
+}
+
+function updateGMT() {
+    const now = new Date();
+    const gmtOptions = {
+        timeZone: 'GMT',
+        hour: '2-digit',
+        minute: '2-digit',
+        second: '2-digit',
+        hour12: false
+    };
+    timeDisplay.textContent = `GMT ${now.toLocaleTimeString('en-GB', gmtOptions)}`;
+}
+
+// Initial setup
+function setupTimeDisplay() {
+    clearInterval(cetInterval);
+    clearInterval(gmtInterval);
+
+    if (isHovering) {
+        updateGMT();
+        gmtInterval = setInterval(updateGMT, 1000);
+    } else {
+        updateCET();
+        cetInterval = setInterval(updateCET, 1000);
+    }
+}
+
+// Hover effects
+timeDisplay.addEventListener('mouseenter', () => {
+    isHovering = true;
+    setupTimeDisplay();
+});
+
+timeDisplay.addEventListener('mouseleave', () => {
+    isHovering = false;
+    setupTimeDisplay();
+});
+
+// Initialize
+setupTimeDisplay();
     // Modal functionality
     const aboutLink = document.querySelector('.about-link');
     const aboutModal = document.getElementById('aboutModal');
