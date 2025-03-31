@@ -109,74 +109,85 @@ window.addEventListener('click', (e) => {
   }
 });
 
-// Funkcja do obliczania odległości
-function calculateDistance(origin, destination, callback) {
-    const service = new google.maps.DistanceMatrixService();
-    service.getDistanceMatrix({
-        origins: [origin],
-        destinations: [destination],
-        travelMode: 'DRIVING',
-        unitSystem: google.maps.UnitSystem.METRIC
-    }, (response, status) => {
-        if (status === 'OK') {
-            const distance = response.rows[0].elements[0].distance.value / 1000; // w km
-            callback(distance);
-        } else {
-            console.error('Error calculating distance:', status);
-            callback(null);
-        }
-    });
-}
+// 👇 PODMIEN SWÓJ KLUCZ API Z GEOAPIFY
+const GEOAPIFY_API_KEY = "twój_klucz_api";
 
-// Inicjalizacja Google Maps API
-function initGoogleMaps() {
-    const startInput = document.getElementById('start-point');
-    const destInput = document.getElementById('destination');
-    const calculateBtn = document.getElementById('calculate-btn');
-    
-    const startAutocomplete = new google.maps.places.Autocomplete(startInput, {
-        types: ['geocode']
-    });
-    
-    const destAutocomplete = new google.maps.places.Autocomplete(destInput, {
-        types: ['geocode']
-    });
-    
-    calculateBtn.addEventListener('click', function() {
-        const startPlace = startInput.value;
-        const destPlace = destInput.value;
+// Autouzupełnianie miejscowości
+function setupAutocomplete(inputId) {
+  const input = document.getElementById(inputId);
+  
+  input.addEventListener("input", function() {
+    const query = input.value.trim();
+    if (query.length < 3) return; // Minimalna długość zapytania
+
+    fetch(`https://api.geoapify.com/v1/geocode/autocomplete?text=${encodeURIComponent(query)}&apiKey=${GEOAPIFY_API_KEY}`)
+      .then(res => res.json())
+      .then(data => {
+        if (!data.features) return;
         
-        if (!startPlace || !destPlace) {
-            alert('Please enter both start and destination locations');
-            return;
-        }
-        
-        calculateDistance(startPlace, destPlace, (distance) => {
-            if (distance !== null) {
-                const consumption = parseFloat(document.getElementById('fuel-consumption').value);
-                const price = parseFloat(document.getElementById('fuel-price').value);
-                const passengers = parseInt(document.querySelector('.passenger-btn.active').dataset.passengers);
-                
-                const fuelNeeded = (distance * consumption) / 100;
-                const totalCost = fuelNeeded * price;
-                
-                document.getElementById('distance').textContent = distance.toFixed(1) + ' km';
-                document.getElementById('fuel-needed').textContent = fuelNeeded.toFixed(1) + ' l';
-                document.getElementById('total-cost').textContent = totalCost.toFixed(2) + ' PLN';
-            } else {
-                alert('Could not calculate distance between locations');
-            }
-        });
+        // Wyświetl sugestie (np. w dropdown)
+        console.log("Sugestie dla", inputId, data.features.map(f => f.properties.formatted));
+        // Tutaj możesz dodać UI do wyboru sugestii (np. kliknięcie ustawia wartość inputa)
+      })
+      .catch(err => console.error("Błąd autouzupełniania:", err));
+  });
+}
+
+// Oblicz odległość między punktami (w km)
+function calculateDistance(startPlace, endPlace, callback) {
+  fetch(`https://api.geoapify.com/v1/routing?waypoints=${encodeURIComponent(startPlace)}|${encodeURIComponent(endPlace)}&apiKey=${GEOAPIFY_API_KEY}`)
+    .then(res => res.json())
+    .then(data => {
+      if (!data.features || data.features.length === 0) {
+        console.error("Nie znaleziono trasy!");
+        callback(null);
+        return;
+      }
+      
+      const distanceKm = data.features[0].properties.distance / 1000; // Konwersja na km
+      callback(distanceKm);
+    })
+    .catch(err => {
+      console.error("Błąd obliczania trasy:", err);
+      callback(null);
     });
 }
 
-// Dodaj skrypt Google Maps API
-function loadGoogleMaps() {
-    const script = document.createElement('script');
-    script.src = `https://maps.googleapis.com/maps/api/js?key=TWÓJ_KLUCZ_API&libraries=places&callback=initGoogleMaps`;
-    script.async = true;
-    script.defer = true;
-    document.head.appendChild(script);
-}
+// 👇 INTEGRACJA Z TWOIM KALKULATOREM PALIWA
+document.addEventListener("DOMContentLoaded", function() {
+  // Inicjalizacja autouzupełniania dla pól "start" i "end"
+  setupAutocomplete("miasto-start"); // Zmień ID na swoje
+  setupAutocomplete("miasto-end");   // Zmień ID na swoje
 
-loadGoogleMaps();
+  // Po kliknięciu przycisku "Oblicz" (dostosuj do swojego HTML)
+  document.getElementById("oblicz-button").addEventListener("click", function() {
+    const start = document.getElementById("miasto-start").value;
+    const end = document.getElementById("miasto-end").value;
+
+    if (!start || !end) {
+      alert("Wpisz miejsca startowe i docelowe!");
+      return;
+    }
+
+    calculateDistance(start, end, function(distanceKm) {
+      if (!distanceKm) {
+        alert("Nie udało się obliczyć odległości. Sprawdź nazwy miejscowości.");
+        return;
+      }
+
+      console.log("Odległość:", distanceKm, "km");
+      
+      // 👇 Tutaj wstaw swoje obliczenia kosztu paliwa
+      const spalanieNa100km = 8; // Przykładowe spalanie (l/100km)
+      const cenaPaliwa = 6.50;   // Przykładowa cena (PLN/l)
+      const koszt = (distanceKm / 100) * spalanieNa100km * cenaPaliwa;
+
+      // Wyświetl wynik (dostosuj do swojego HTML)
+      document.getElementById("wynik").innerHTML = `
+        <strong>Trasa:</strong> ${start} → ${end}<br>
+        <strong>Odległość:</strong> ${distanceKm.toFixed(1)} km<br>
+        <strong>Koszt paliwa:</strong> ${koszt.toFixed(2)} PLN
+      `;
+    });
+  });
+});
