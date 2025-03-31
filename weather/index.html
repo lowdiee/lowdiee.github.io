@@ -32,51 +32,50 @@
     <div class="container mx-auto px-4 py-6 min-h-screen flex flex-col">
         <h1 class="text-white text-2xl font-bold text-center mb-8 pt-12 tracking-wider">Weather Data for Poland</h1>
         
-        <!-- Weather panels grid -->
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-5 w-full max-w-3xl mx-auto flex-grow">
-            <!-- Hottest Today -->
-            <div class="weather-panel border-red-500">
-                <h2 class="text-lg font-bold mb-2 text-red-500 tracking-wider">HOTTEST TODAY</h2>
-                <div class="text-4xl font-bold mb-1 text-white" style="font-family: 'SF Pro Display', sans-serif" id="hottest-today-temp">--°C</div>
-                <div class="text-md text-white opacity-90" id="hottest-today-location">--</div>
-            </div>
-            
-            <!-- Coldest Today -->
-            <div class="weather-panel border-blue-500">
-                <h2 class="text-lg font-bold mb-2 text-blue-500 tracking-wider">COLDEST TODAY</h2>
-                <div class="text-4xl font-bold mb-1 text-white" style="font-family: 'SF Pro Display', sans-serif" id="coldest-today-temp">--°C</div>
-                <div class="text-md text-white opacity-90" id="coldest-today-location">--</div>
-            </div>
-            
-            <!-- Hottest All Time -->
-            <div class="weather-panel border-red-500">
-                <h2 class="text-lg font-bold mb-2 text-red-500 tracking-wider">HOTTEST ALL TIME</h2>
-                <div class="text-4xl font-bold mb-1 text-white" style="font-family: 'SF Pro Display', sans-serif">40.2°C</div>
-                <div class="text-md text-white opacity-90">Pruszków (2023)</div>
-            </div>
-            
-            <!-- Coldest All Time -->
-            <div class="weather-panel border-blue-500">
-                <h2 class="text-lg font-bold mb-2 text-blue-500 tracking-wider">COLDEST ALL TIME</h2>
-                <div class="text-4xl font-bold mb-1 text-white" style="font-family: 'SF Pro Display', sans-serif">-41.0°C</div>
-                <div class="text-md text-white opacity-90">Siedlce (1940)</div>
-            </div>
-            
-            <!-- Strongest Wind -->
-            <div class="weather-panel border-purple-500">
-                <h2 class="text-lg font-bold mb-2 text-purple-500 tracking-wider">STRONGEST WIND</h2>
-                <div class="text-4xl font-bold mb-1 text-white" style="font-family: 'SF Pro Display', sans-serif" id="wind-speed">-- km/h</div>
-                <div class="text-md text-white opacity-90" id="wind-location">--</div>
-            </div>
-            
-            <!-- Ground Temperature -->
-            <div class="weather-panel border-amber-500">
-                <h2 class="text-lg font-bold mb-2 text-amber-500 tracking-wider">GROUND TEMP</h2>
-                <div class="text-4xl font-bold mb-1 text-white" style="font-family: 'SF Pro Display', sans-serif" id="ground-temp">--°C</div>
-                <div class="text-md text-white opacity-90">At surface level</div>
-            </div>
-        </div>
+       <!-- Weather panels grid -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4 w-full max-w-3xl mx-auto flex-grow">
+    <!-- Hottest Today -->
+    <div class="weather-panel border-red-500">
+        <h2 class="text-base font-bold mb-1 text-red-500 tracking-wider">HOTTEST TODAY</h2>
+        <div class="text-3xl font-bold text-white" style="font-family: 'SF Pro Display', sans-serif" id="hottest-today-temp">--°C</div>
+        <div class="text-sm text-white opacity-90 mt-1" id="hottest-today-location">--</div>
     </div>
+    
+    <!-- Coldest Today -->
+    <div class="weather-panel border-blue-500">
+        <h2 class="text-base font-bold mb-1 text-blue-500 tracking-wider">COLDEST TODAY</h2>
+        <div class="text-3xl font-bold text-white" style="font-family: 'SF Pro Display', sans-serif" id="coldest-today-temp">--°C</div>
+        <div class="text-sm text-white opacity-90 mt-1" id="coldest-today-location">--</div>
+    </div>
+    
+    <!-- Hottest All Time -->
+    <div class="weather-panel border-red-500">
+        <h2 class="text-base font-bold mb-1 text-red-500 tracking-wider">HOTTEST ALL TIME</h2>
+        <div class="text-3xl font-bold text-white" style="font-family: 'SF Pro Display', sans-serif">40.2°C</div>
+        <div class="text-sm text-white opacity-90 mt-1">Pruszków (2023)</div>
+    </div>
+    
+    <!-- Coldest All Time -->
+    <div class="weather-panel border-blue-500">
+        <h2 class="text-base font-bold mb-1 text-blue-500 tracking-wider">COLDEST ALL TIME</h2>
+        <div class="text-3xl font-bold text-white" style="font-family: 'SF Pro Display', sans-serif">-41.0°C</div>
+        <div class="text-sm text-white opacity-90 mt-1">Siedlce (1940)</div>
+    </div>
+    
+    <!-- Strongest Wind -->
+    <div class="weather-panel border-purple-500">
+        <h2 class="text-base font-bold mb-1 text-purple-500 tracking-wider">STRONGEST WIND</h2>
+        <div class="text-3xl font-bold text-white" style="font-family: 'SF Pro Display', sans-serif" id="wind-speed">-- km/h</div>
+        <div class="text-sm text-white opacity-90 mt-1" id="wind-location">--</div>
+    </div>
+    
+    <!-- Ground Temperature -->
+    <div class="weather-panel border-amber-500">
+        <h2 class="text-base font-bold mb-1 text-amber-500 tracking-wider">GROUND TEMP</h2>
+        <div class="text-3xl font-bold text-white" style="font-family: 'SF Pro Display', sans-serif" id="ground-temp">--°C</div>
+        <div class="text-sm text-white opacity-90 mt-1">At surface</div>
+    </div>
+</div>
 
     <script src="script.js"></script>
 </body>
