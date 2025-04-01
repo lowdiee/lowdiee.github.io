@@ -98,7 +98,7 @@
             border-top: 1px solid var(--border);
             border-bottom: 1px solid var(--border);
             padding: 30px 0;
-            margin: 30px 0;
+            margin: 30px 0 0 0;
         }
         
         .quote-text {
@@ -114,23 +114,7 @@
             color: var(--accent);
             font-weight: 400;
         }
-        
-        .refresh-info {
-            font-size: 0.8rem;
-            color: var(--secondary);
-            margin-top: 20px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 5px;
-        }
-        
-        #countdown {
-            font-family: 'SF Mono', monospace;
-            color: var(--accent);
-            letter-spacing: 1px;
-        }
-        
+
         /* Animations */
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(10px); }
@@ -143,7 +127,6 @@
         
         .holiday-container { animation-delay: 0.2s; }
         .quote-box { animation-delay: 0.4s; }
-        .refresh-info { animation-delay: 0.6s; }
         
         @media (max-width: 600px) {
             .card {
@@ -173,13 +156,6 @@
             <p class="quote-text" id="quote-text">"Simplicity is the ultimate sophistication."</p>
             <p class="quote-author" id="quote-author">– Leonardo da Vinci</p>
         </div>
-        
-        <p class="refresh-info">
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"></path>
-            </svg>
-            QUOTE REFRESH IN: <span id="countdown">60:00</span>
-        </p>
     </div>
 
     <script>
@@ -189,8 +165,31 @@
         // Quote database
         const quotes = [
             { text: "The only limits are the ones you set yourself.", author: "Anonymous" },
-            { text: "Design is not just what it looks like. Design is how it works.", author: "Steve Jobs" }
+            { text: "Design is not just what it looks like. Design is how it works.", author: "Steve Jobs" },
+            { text: "The darkest hour is just before the dawn.", author: "Thomas Fuller" },
+            { text: "White space is like the silence between musical notes.", author: "Massimo Vignelli" },
+            { text: "Less is more.", author: "Ludwig Mies van der Rohe" },
+            { text: "Technology should be invisible.", author: "Dieter Rams" },
+            { text: "Simplicity is the ultimate sophistication.", author: "Leonardo da Vinci" },
+            { text: "True minimalism is never boring.", author: "Jony Ive" }
         ];
+
+        // Functions
+        function getRandomQuote() {
+            return quotes[Math.floor(Math.random() * quotes.length)];
+        }
+
+        function updateQuote() {
+            const quote = getRandomQuote();
+            document.getElementById('quote-text').textContent = `"${quote.text}"`;
+            document.getElementById('quote-author').textContent = `– ${quote.author}`;
+            
+            // Animation
+            const quoteBox = document.querySelector('.quote-box');
+            quoteBox.style.animation = 'none';
+            void quoteBox.offsetWidth; // Trigger reflow
+            quoteBox.style.animation = 'fadeIn 0.6s ease-out';
+        }
 
         async function checkHoliday() {
             const today = new Date();
@@ -224,49 +223,13 @@
             }
         }
 
-        // [Rest of the JavaScript remains the same as previous version]
-        function getRandomQuote() {
-            return quotes[Math.floor(Math.random() * quotes.length)];
-        }
-
-        function updateQuote() {
-            const quote = getRandomQuote();
-            document.getElementById('quote-text').textContent = `"${quote.text}"`;
-            document.getElementById('quote-author').textContent = `– ${quote.author}`;
-            
-            const quoteBox = document.querySelector('.quote-box');
-            quoteBox.style.animation = 'none';
-            void quoteBox.offsetWidth;
-            quoteBox.style.animation = 'fadeIn 0.6s ease-out';
-        }
-
-        function startCountdown() {
-            let minutes = 60;
-            let seconds = 0;
-            
-            const timer = setInterval(() => {
-                if (seconds === 0) {
-                    if (minutes === 0) {
-                        clearInterval(timer);
-                        updateQuote();
-                        startCountdown();
-                        return;
-                    }
-                    minutes--;
-                    seconds = 59;
-                } else {
-                    seconds--;
-                }
-                
-                document.getElementById('countdown').textContent = 
-                    `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
-            }, 1000);
-        }
-
+        // Initialize
         document.addEventListener('DOMContentLoaded', () => {
             checkHoliday();
             updateQuote();
-            startCountdown();
+            
+            // Update quote every hour
+            setInterval(updateQuote, 60 * 60 * 1000);
         });
     </script>
 </body>
