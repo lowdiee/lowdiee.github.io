@@ -15,6 +15,23 @@
             --text: #e0e0e0;
             --glass: rgba(20, 20, 20, 0.7);
             --border: rgba(255, 255, 255, 0.1);
+      }  
+        
+        .noise-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('https://cdn.prod.website-files.com/651d15fb8f27f4a03c14ae88/651d15fb8f27f4a03c14afa4_5d8424ac4ffed73f4d72846e_5c06f51d6e75c933fe05c728_giphy.gif');
+    background-size: 480px;
+    background-attachment: fixed;
+    opacity: 0.03;
+    pointer-events: none;
+    z-index: 2147483647; /* maksymalny możliwy z-index */
+}
+        
+        
         }
         
         body {
