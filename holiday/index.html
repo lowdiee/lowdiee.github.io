@@ -332,7 +332,7 @@ html, body, * {
         function updateQuote() {
             const quote = getRandomQuote();
             document.getElementById('quote-text').textContent = `"${quote.text}"`;
-            document.getElementById('quote-author').textContent = `– ${quote.author}`;
+            document.getElementById('quote-author').textContent = `${quote.author}`;
             
             // Animation
             const quoteBox = document.querySelector('.quote-box');
