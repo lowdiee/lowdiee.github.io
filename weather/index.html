@@ -3,11 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/style.css">
     <link href="https://fonts.cdnfonts.com/css/sf-pro-display" rel="stylesheet">
-    <link href="https://fonts.cdnchars.com/css/fake-receipt" rel="stylesheet">
-    <script src="https://cdn.tailwindcss.com"></script>
-    <title>Temperatury w Polsce</title>
+    <title>Temperatury w Polsce - IMGW</title>
     <style>
         body {
             font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, sans-serif;
@@ -23,7 +20,7 @@
         h1 {
             color: #333;
             margin-bottom: 30px;
-            font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, sans-serif;
+            font-weight: 600;
         }
 
         .container {
@@ -33,7 +30,6 @@
             gap: 20px;
             width: 100%;
             max-width: 1200px;
-            font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, sans-serif;
         }
 
         .card {
@@ -47,10 +43,8 @@
             overflow: hidden;
             transition: 100ms ease;
             box-shadow: rgba(0, 0, 0, 0.15) 2px 3px 4px;
-            font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, sans-serif;
         }
 
-        /* ---------- Info section ---------- */
         .info-section {
             position: relative;
             display: flex;
@@ -59,7 +53,6 @@
             width: 100%;
             height: 100%;
             color: white;
-            font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, sans-serif;
         }
 
         .left-side {
@@ -69,14 +62,6 @@
             height: 100%;
             z-index: 1;
             padding-left: 18px;
-            font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, sans-serif;
-        }
-
-        button {
-            display: block;
-            border: none;
-            background: transparent;
-            font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, sans-serif;
         }
 
         .weather {
@@ -84,30 +69,13 @@
             align-items: center;
             justify-content: flex-start;
             gap: 5px;
-            font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, sans-serif;
-        }
-
-        .weather div {
-            display: flex;
-            align-items: center;
-            font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, sans-serif;
-        }
-
-        .weather div:nth-child(1) {
-            width: 40%;
-            height: auto;
+            font-size: 14px;
         }
 
         .temperature {
             font-size: 34pt;
             font-weight: 500;
-            line-height: 8%;
-            font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, sans-serif;
-        }
-
-        .range {
-            font-size: 12pt;
-            font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, sans-serif;
+            line-height: 1;
         }
 
         .right-side {
@@ -118,22 +86,17 @@
             height: 100%;
             padding-right: 18px;
             z-index: 1;
-            font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, sans-serif;
-        }
-
-        .right-side > div {
-            display: flex;
-            flex-direction: column;
-            align-items: flex-end;
-            font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, sans-serif;
         }
 
         .date {
             font-size: 15px;
-            font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, sans-serif;
         }
 
-        /* ---------- Background ---------- */
+        .city {
+            font-weight: 500;
+            font-size: 16px;
+        }
+
         .background-design {
             position: absolute;
             height: 100%;
@@ -142,11 +105,11 @@
         }
 
         .circle {
-            background-color: #efc745; /* Domyślny żółty kolor */
+            background-color: #efc745;
         }
 
         .circle.cold {
-            background-color: #5dade2; /* Niebieski kolor dla niskich temperatur */
+            background-color: #5dade2;
         }
 
         .circle:nth-child(1) {
@@ -179,7 +142,6 @@
             border-radius: 50%;
         }
 
-        /* Colors for different cards */
         .max-temp .background-design {
             background-color: #ec7263;
         }
@@ -192,24 +154,37 @@
             margin-top: 20px;
             color: #666;
             font-size: 14px;
-            font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+
+        .api-status {
+            margin-top: 10px;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 13px;
         }
 
         .loading {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100px;
-            font-size: 18px;
-            color: #666;
-            font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, sans-serif;
+            background-color: #f8f9fa;
+            color: #6c757d;
+        }
+
+        .success {
+            background-color: #d4edda;
+            color: #155724;
+        }
+
+        .error {
+            background-color: #f8d7da;
+            color: #721c24;
+        }
+
+        svg {
+            width: 20px;
+            height: 20px;
         }
     </style>
 </head>
 <body>
-    <div class="noise-overlay" aria-hidden="true"></div>
-    <div class="cursor"></div>
-    <div class="cursor-f"></div>
     <h1>Temperatury w Polsce</h1>
     <div class="container">
         <div class="card max-temp">
@@ -223,11 +198,7 @@
                     <div class="weather">
                         <div>
                             <svg stroke="#ffffff" fill="#ffffff" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024">
-                                <g stroke-width="0" id="SVGRepo_bgCarrier"></g>
-                                <g stroke-linejoin="round" stroke-linecap="round" id="SVGRepo_tracerCarrier"></g>
-                                <g id="SVGRepo_iconCarrier">
-                                    <path d="M512 704a192 192 0 1 0 0-384 192 192 0 0 0 0 384zm0 64a256 256 0 1 1 0-512 256 256 0 0 1 0 512zm0-704a32 32 0 0 1 32 32v64a32 32 0 0 1-64 0V96a32 32 0 0 1 32-32zm0 768a32 32 0 0 1 32 32v64a32 32 0 1 1-64 0v-64a32 32 0 0 1 32-32zM195.2 195.2a32 32 0 0 1 45.248 0l45.248 45.248a32 32 0 1 1-45.248 45.248L195.2 240.448a32 32 0 0 1 0-45.248zm543.104 543.104a32 32 0 0 1 45.248 0l45.248 45.248a32 32 0 0 1-45.248 45.248l-45.248-45.248a32 32 0 0 1 0-45.248zM64 512a32 32 0 0 1 32-32h64a32 32 0 0 1 0 64H96a32 32 0 0 1-32-32zm768 0a32 32 0 0 1 32-32h64a32 32 0 1 1 0 64h-64a32 32 0 0 1-32-32zM195.2 828.8a32 32 0 0 1 0-45.248l45.248-45.248a32 32 0 0 1 45.248 45.248L240.448 828.8a32 32 0 0 1-45.248 0zm543.104-543.104a32 32 0 0 1 0-45.248l45.248-45.248a32 32 0 0 1 45.248 45.248l-45.248 45.248a32 32 0 0 1-45.248 0z" fill="#ffffff"></path>
-                                </g>
+                                <path d="M512 704a192 192 0 1 0 0-384 192 192 0 0 0 0 384zm0 64a256 256 0 1 1 0-512 256 256 0 0 1 0 512zm0-704a32 32 0 0 1 32 32v64a32 32 0 0 1-64 0V96a32 32 0 0 1 32-32zm0 768a32 32 0 0 1 32 32v64a32 32 0 1 1-64 0v-64a32 32 0 0 1 32-32zM195.2 195.2a32 32 0 0 1 45.248 0l45.248 45.248a32 32 0 1 1-45.248 45.248L195.2 240.448a32 32 0 0 1 0-45.248zm543.104 543.104a32 32 0 0 1 45.248 0l45.248 45.248a32 32 0 0 1-45.248 45.248l-45.248-45.248a32 32 0 0 1 0-45.248zM64 512a32 32 0 0 1 32-32h64a32 32 0 0 1 0 64H96a32 32 0 0 1-32-32zm768 0a32 32 0 0 1 32-32h64a32 32 0 1 1 0 64h-64a32 32 0 0 1-32-32zM195.2 828.8a32 32 0 0 1 0-45.248l45.248-45.248a32 32 0 0 1 45.248 45.248L240.448 828.8a32 32 0 0 1-45.248 0zm543.104-543.104a32 32 0 0 1 0-45.248l45.248-45.248a32 32 0 0 1 45.248 45.248l-45.248 45.248a32 32 0 0 1-45.248 0z" fill="#ffffff"></path>
                             </svg>
                         </div>
                         <div id="max-weather">Sunny</div>
@@ -252,11 +223,7 @@
                     <div class="weather">
                         <div>
                             <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="#ffffff">
-                                <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
-                                <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
-                                <g id="SVGRepo_iconCarrier">
-                                    <path d="M16 18.5L15 21M8 18.5L7 21M12 18.5L11 21M7 15C4.23858 15 2 12.7614 2 10C2 7.23858 4.23858 5 7 5C7.03315 5 7.06622 5.00032 7.09922 5.00097C8.0094 3.2196 9.86227 2 12 2C14.5192 2 16.6429 3.69375 17.2943 6.00462C17.3625 6.00155 17.4311 6 17.5 6C19.9853 6 22 8.01472 22 10.5C22 12.9853 19.9853 15 17.5 15C13.7434 15 11.2352 15 7 15Z" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
-                                </g>
+                                <path d="M16 18.5L15 21M8 18.5L7 21M12 18.5L11 21M7 15C4.23858 15 2 12.7614 2 10C2 7.23858 4.23858 5 7 5C7.03315 5 7.06622 5.00032 7.09922 5.00097C8.0094 3.2196 9.86227 2 12 2C14.5192 2 16.6429 3.69375 17.2943 6.00462C17.3625 6.00155 17.4311 6 17.5 6C19.9853 6 22 8.01472 22 10.5C22 12.9853 19.9853 15 17.5 15C13.7434 15 11.2352 15 7 15Z" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
                             </svg>
                         </div>
                         <div id="min-weather">Cloudy</div>
@@ -271,46 +238,95 @@
         </div>
     </div>
     <div class="last-update" id="last-update">Ostatnia aktualizacja: --:--</div>
+    <div class="api-status loading" id="api-status">Ładowanie danych z IMGW...</div>
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            // Pobierz dane pogodowe przy załadowaniu strony
             fetchWeatherData();
-            
-            // Aktualizuj dane co godzinę
             setInterval(fetchWeatherData, 3600000);
         });
 
-        function fetchWeatherData() {
-            // Użyj proxy CORS aby ominąć problemy z dostępem na GitHub Pages
-            const proxyUrl = 'https://cors-anywhere.herokuapp.com/';
-            const targetUrl = 'https://danepubliczne.imgw.pl/api/data/synop/';
-            
-            fetch(proxyUrl + targetUrl, {
-                headers: {
-                    'X-Requested-With': 'XMLHttpRequest'
-                }
-            })
-            .then(response => {
-                if (!response.ok) throw new Error('Network response was not ok');
-                return response.json();
-            })
-            .then(data => {
+        async function fetchWeatherData() {
+            const statusElement = document.getElementById('api-status');
+            statusElement.className = 'api-status loading';
+            statusElement.textContent = "Ładowanie danych z IMGW...";
+
+            try {
+                // Próbujemy różnych proxy CORS
+                const response = await tryMultipleProxies(
+                    'https://danepubliczne.imgw.pl/api/data/synop/',
+                    [
+                        'https://api.allorigins.win/raw?url=',
+                        'https://corsproxy.io/?',
+                        'https://proxy.cors.sh/'
+                    ]
+                );
+
+                if (!response.ok) throw new Error(`Błąd HTTP: ${response.status}`);
+                
+                const data = await response.json();
                 processWeatherData(data);
                 updateLastUpdateTime();
-            })
-            .catch(error => {
-                console.error('Błąd podczas pobierania danych:', error);
-                document.getElementById('last-update').textContent = 'Błąd pobierania danych';
-            });
+                
+                statusElement.className = 'api-status success';
+                statusElement.textContent = "Dane załadowane: " + new Date().toLocaleTimeString();
+            } catch (error) {
+                console.error('Błąd pobierania danych:', error);
+                statusElement.className = 'api-status error';
+                statusElement.textContent = `Błąd: ${error.message}. Odśwież stronę.`;
+                
+                // Dane testowe na wypadek błędu
+                const testData = generateTestData();
+                processWeatherData(testData);
+            }
+        }
+
+        async function tryMultipleProxies(url, proxies) {
+            for (const proxy of proxies) {
+                try {
+                    const proxyUrl = proxy + encodeURIComponent(url);
+                    const response = await fetch(proxyUrl, {
+                        headers: {
+                            'X-Requested-With': 'XMLHttpRequest'
+                        }
+                    });
+                    
+                    if (response.ok) return response;
+                } catch (error) {
+                    console.warn(`Proxy ${proxy} nie działa:`, error);
+                    continue;
+                }
+            }
+            
+            // Jeśli wszystkie proxy zawiodą, próbujemy bezpośrednio
+            return await fetch(url);
+        }
+
+        function generateTestData() {
+            const date = new Date().toISOString().split('T')[0];
+            return [
+                {
+                    "stacja": "Warszawa",
+                    "temperatura": (15 + Math.floor(Math.random() * 10)).toString(),
+                    "temperatura_max": (18 + Math.floor(Math.random() * 10)).toString(),
+                    "temperatura_min": (10 + Math.floor(Math.random() * 5)).toString(),
+                    "suma_opadu": (Math.random() > 0.7 ? (0.1 + Math.random() * 5).toFixed(1) : "0"),
+                    "data_pomiaru": date
+                },
+                {
+                    "stacja": "Kraków",
+                    "temperatura": (14 + Math.floor(Math.random() * 8)).toString(),
+                    "temperatura_max": (17 + Math.floor(Math.random() * 8)).toString(),
+                    "temperatura_min": (9 + Math.floor(Math.random() * 5)).toString(),
+                    "suma_opadu": (Math.random() > 0.6 ? (0.1 + Math.random() * 3).toFixed(1) : "0"),
+                    "data_pomiaru": date
+                }
+            ];
         }
 
         function processWeatherData(weatherData) {
-            // Znajdź najwyższą i najniższą temperaturę
             let maxTemp = -Infinity;
             let minTemp = Infinity;
-            let maxTempCity = '';
-            let minTempCity = '';
             let maxTempData = null;
             let minTempData = null;
 
@@ -319,45 +335,38 @@
                 if (!isNaN(temp)) {
                     if (temp > maxTemp) {
                         maxTemp = temp;
-                        maxTempCity = station.stacja;
                         maxTempData = station;
                     }
                     if (temp < minTemp) {
                         minTemp = temp;
-                        minTempCity = station.stacja;
                         minTempData = station;
                     }
                 }
             });
 
-            // Aktualizuj UI dla najwyższej temperatury
             if (maxTempData) {
-                document.getElementById('max-temp').textContent = `${Math.round(maxTemp)}°`;
-                document.getElementById('max-city').textContent = maxTempCity;
-                document.getElementById('max-weather').textContent = getWeatherDescription(maxTempData.suma_opadu);
-                
-                const dateTime = formatDateTime(maxTempData.data_pomiaru);
-                document.getElementById('max-date').textContent = dateTime.date;
-                
-                setCircleColors('max-temp', maxTemp);
+                updateWeatherCard('max', maxTempData, maxTemp);
             }
 
-            // Aktualizuj UI dla najniższej temperatury
             if (minTempData) {
-                document.getElementById('min-temp').textContent = `${Math.round(minTemp)}°`;
-                document.getElementById('min-city').textContent = minTempCity;
-                document.getElementById('min-weather').textContent = getWeatherDescription(minTempData.suma_opadu);
-                
-                const dateTime = formatDateTime(minTempData.data_pomiaru);
-                document.getElementById('min-date').textContent = dateTime.date;
-                
-                setCircleColors('min-temp', minTemp);
+                updateWeatherCard('min', minTempData, minTemp);
             }
+        }
+
+        function updateWeatherCard(type, data, temp) {
+            document.getElementById(`${type}-temp`).textContent = `${Math.round(temp)}°`;
+            document.getElementById(`${type}-city`).textContent = data.stacja;
+            document.getElementById(`${type}-weather`).textContent = getWeatherDescription(data.suma_opadu);
+            
+            const dateTime = formatDateTime(data.data_pomiaru);
+            document.getElementById(`${type}-date`).textContent = dateTime.date;
+            
+            setCircleColors(`${type}-temp`, temp);
         }
 
         function setCircleColors(cardClass, temperature) {
             const isCold = temperature < 10;
-            document.querySelectorAll(`.${cardClass} .circle`).forEach(circle => {
+            document.querySelectorAll(`.${cardClass.split('-')[0]}-temp .circle`).forEach(circle => {
                 circle.classList.toggle('cold', isCold);
             });
         }
@@ -391,6 +400,5 @@
             document.getElementById('last-update').textContent = `Ostatnia aktualizacja: ${hours}:${minutes}`;
         }
     </script>
-    <script src="/script.js"></script>
 </body>
 </html>
