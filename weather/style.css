@@ -135,3 +135,15 @@ html, body, * {
 .border-amber-500 {
     border-color: rgba(245, 158, 11, 0.5);
 }
+
+
+/*marginesy*/
+.weather-panel h2 {
+    margin: 4px 8px 0 8px;
+}
+.weather-panel .text-3xl {
+    margin: 0 8px;
+}
+.weather-panel .text-sm {
+    margin: 0 8px 4px 8px;
+}
