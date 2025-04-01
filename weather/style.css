@@ -81,32 +81,40 @@ html, body, * {
 .weather-panel {
     background: rgba(28, 28, 30, 0.8);
     backdrop-filter: blur(20px);
-    border-radius: 10px; /* Mniejsze zaokrąglenie */
-    padding: 8px 12px;  /* Znacznie mniejsze paddingi */
-    transition: all 0.3s ease;
+    border-radius: 8px;
+    padding: 6px 10px;
     border: 1px solid;
-    height: auto;       /* Usuwamy min-height */
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
+    display: block; /* Zmiana z flex na block */
+    height: auto;
+    min-height: 0 !important; /* Wymuszenie */
 }
 
 .weather-panel h2 {
-    font-size: 0.7rem;  /* 11.2px */
-    margin-bottom: 0;
+    font-size: 11px;
+    margin: 0;
+    padding: 0;
     line-height: 1.2;
 }
 
 .weather-panel .text-3xl {
-    font-size: 1.25rem; /* 20px */
-    line-height: 1.2;
+    font-size: 18px;
     margin: 2px 0;
+    padding: 0;
+    line-height: 1;
 }
 
 .weather-panel .text-sm {
-    font-size: 0.65rem; /* 10.4px */
+    font-size: 10px;
+    margin: 0;
+    padding: 0;
     line-height: 1.2;
-    margin-top: 0;
+}
+
+/* Reset dla wszystkich elementów w panelu */
+.weather-panel * {
+    margin: 0;
+    padding: 0;
+    line-height: 1;
 }
 /* Color classes */
 .border-red-500 {
