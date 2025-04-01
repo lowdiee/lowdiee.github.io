@@ -3,14 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" href="/style.css">
+    <link rel="stylesheet" href="/style.css">
     <link href="https://fonts.cdnfonts.com/css/sf-pro-display" rel="stylesheet">
     <link href="https://fonts.cdnchars.com/css/fake-receipt" rel="stylesheet">
-       <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
     <title>Temperatury w Polsce</title>
     <style>
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, sans-serif;
             background-color: #f5f5f5;
             display: flex;
             flex-direction: column;
@@ -23,6 +23,7 @@
         h1 {
             color: #333;
             margin-bottom: 30px;
+            font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, sans-serif;
         }
 
         .container {
@@ -32,6 +33,7 @@
             gap: 20px;
             width: 100%;
             max-width: 1200px;
+            font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, sans-serif;
         }
 
         .card {
@@ -45,6 +47,7 @@
             overflow: hidden;
             transition: 100ms ease;
             box-shadow: rgba(0, 0, 0, 0.15) 2px 3px 4px;
+            font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, sans-serif;
         }
 
         /* ---------- Info section ---------- */
@@ -56,6 +59,7 @@
             width: 100%;
             height: 100%;
             color: white;
+            font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, sans-serif;
         }
 
         .left-side {
@@ -65,12 +69,14 @@
             height: 100%;
             z-index: 1;
             padding-left: 18px;
+            font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, sans-serif;
         }
 
         button {
             display: block;
             border: none;
             background: transparent;
+            font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, sans-serif;
         }
 
         .weather {
@@ -78,11 +84,13 @@
             align-items: center;
             justify-content: flex-start;
             gap: 5px;
+            font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, sans-serif;
         }
 
         .weather div {
             display: flex;
             align-items: center;
+            font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, sans-serif;
         }
 
         .weather div:nth-child(1) {
@@ -94,10 +102,12 @@
             font-size: 34pt;
             font-weight: 500;
             line-height: 8%;
+            font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, sans-serif;
         }
 
         .range {
             font-size: 12pt;
+            font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, sans-serif;
         }
 
         .right-side {
@@ -108,16 +118,19 @@
             height: 100%;
             padding-right: 18px;
             z-index: 1;
+            font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, sans-serif;
         }
 
         .right-side > div {
             display: flex;
             flex-direction: column;
             align-items: flex-end;
+            font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, sans-serif;
         }
 
         .date {
             font-size: 15px;
+            font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, sans-serif;
         }
 
         /* ---------- Background ---------- */
@@ -179,6 +192,7 @@
             margin-top: 20px;
             color: #666;
             font-size: 14px;
+            font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, sans-serif;
         }
 
         .loading {
@@ -188,13 +202,14 @@
             height: 100px;
             font-size: 18px;
             color: #666;
+            font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, sans-serif;
         }
     </style>
 </head>
 <body>
     <div class="noise-overlay" aria-hidden="true"></div>
-	<div class="cursor"></div>
-<div class="cursor-f"></div>
+    <div class="cursor"></div>
+    <div class="cursor-f"></div>
     <h1>Temperatury w Polsce</h1>
     <div class="container">
         <div class="card max-temp">
@@ -218,7 +233,6 @@
                         <div id="max-weather">Sunny</div>
                     </div>
                     <div class="temperature" id="max-temp">--°</div>
-                   
                 </div>
                 <div class="right-side">
                     <div class="date" id="max-date">--- --</div>
@@ -248,7 +262,6 @@
                         <div id="min-weather">Cloudy</div>
                     </div>
                     <div class="temperature" id="min-temp">--°</div>
-                    
                 </div>
                 <div class="right-side">
                     <div class="date" id="min-date">--- --</div>
@@ -269,15 +282,27 @@
         });
 
         function fetchWeatherData() {
-            fetch('https://danepubliczne.imgw.pl/api/data/synop/')
-                .then(response => response.json())
-                .then(data => {
-                    processWeatherData(data);
-                    updateLastUpdateTime();
-                })
-                .catch(error => {
-                    console.error('Błąd podczas pobierania danych:', error);
-                });
+            // Użyj proxy CORS aby ominąć problemy z dostępem na GitHub Pages
+            const proxyUrl = 'https://cors-anywhere.herokuapp.com/';
+            const targetUrl = 'https://danepubliczne.imgw.pl/api/data/synop/';
+            
+            fetch(proxyUrl + targetUrl, {
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest'
+                }
+            })
+            .then(response => {
+                if (!response.ok) throw new Error('Network response was not ok');
+                return response.json();
+            })
+            .then(data => {
+                processWeatherData(data);
+                updateLastUpdateTime();
+            })
+            .catch(error => {
+                console.error('Błąd podczas pobierania danych:', error);
+                document.getElementById('last-update').textContent = 'Błąd pobierania danych';
+            });
         }
 
         function processWeatherData(weatherData) {
@@ -309,13 +334,11 @@
             if (maxTempData) {
                 document.getElementById('max-temp').textContent = `${Math.round(maxTemp)}°`;
                 document.getElementById('max-city').textContent = maxTempCity;
-                document.getElementById('max-range').textContent = `${Math.round(maxTempData.temperatura_max)}°/${Math.round(maxTempData.temperatura_min)}°`;
                 document.getElementById('max-weather').textContent = getWeatherDescription(maxTempData.suma_opadu);
                 
                 const dateTime = formatDateTime(maxTempData.data_pomiaru);
                 document.getElementById('max-date').textContent = dateTime.date;
                 
-                // Ustaw żółte kółka dla wysokich temperatur
                 setCircleColors('max-temp', maxTemp);
             }
 
@@ -323,27 +346,19 @@
             if (minTempData) {
                 document.getElementById('min-temp').textContent = `${Math.round(minTemp)}°`;
                 document.getElementById('min-city').textContent = minTempCity;
-                document.getElementById('min-range').textContent = `${Math.round(minTempData.temperatura_max)}°/${Math.round(minTempData.temperatura_min)}°`;
                 document.getElementById('min-weather').textContent = getWeatherDescription(minTempData.suma_opadu);
                 
                 const dateTime = formatDateTime(minTempData.data_pomiaru);
                 document.getElementById('min-date').textContent = dateTime.date;
                 
-                // Ustaw niebieskie kółka dla niskich temperatur
                 setCircleColors('min-temp', minTemp);
             }
         }
 
         function setCircleColors(cardClass, temperature) {
-            const circles = document.querySelector(`.${cardClass} .circle`);
-            const isCold = temperature < 10; // Ustawienie progu dla "niskiej" temperatury
-            
+            const isCold = temperature < 10;
             document.querySelectorAll(`.${cardClass} .circle`).forEach(circle => {
-                if (isCold) {
-                    circle.classList.add('cold');
-                } else {
-                    circle.classList.remove('cold');
-                }
+                circle.classList.toggle('cold', isCold);
             });
         }
 
