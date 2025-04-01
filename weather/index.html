@@ -7,6 +7,23 @@
     <link href="https://fonts.cdnfonts.com/css/sf-pro-display" rel="stylesheet">
     <link href="https://fonts.cdnfonts.com/css/fake-receipt" rel="stylesheet">
     <style>
+         /* Dodaj te style do istniejącego CSS */
+        html, body {
+            overflow: hidden;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+        
+        body {
+            touch-action: none; /* Blokuje scroll na mobile */
+            overscroll-behavior: none; /* Blokuje "przeciąganie" poza granice */
+        }
+        
+        .card {
+            max-height: 100vh; /* Ogranicza do wysokości ekranu */
+            overflow: hidden;
+        }
         :root {
             --primary: #ffffff;
             --secondary: #a0a0a0;
