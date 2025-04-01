@@ -2,52 +2,49 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Is Today a Holiday?</title>
     <link href="https://fonts.cdnfonts.com/css/sf-pro-display" rel="stylesheet">
     <link href="https://fonts.cdnfonts.com/css/fake-receipt" rel="stylesheet">
     <style>
-         /* Dodaj te style do istniejącego CSS */
-        html, body {
-            overflow: hidden;
-            height: 100%;
-            margin: 0;
-            padding: 0;
-        }
-        
-        body {
-            touch-action: none; /* Blokuje scroll na mobile */
-            overscroll-behavior: none; /* Blokuje "przeciąganie" poza granice */
-        }
-        
-        .card {
-            max-height: 100vh; /* Ogranicza do wysokości ekranu */
-            overflow: hidden;
-        }
         :root {
             --primary: #ffffff;
             --secondary: #a0a0a0;
             --accent: #6C63FF;
-            --bg: #0a0a0a;
             --text: #e0e0e0;
             --glass: rgba(20, 20, 20, 0.7);
             --border: rgba(255, 255, 255, 0.1);
         }
         
+        /* Disable scrolling */
+        html, body {
+            overflow: hidden;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            touch-action: none;
+            overscroll-behavior: none;
+        }
+        
+        /* Video background */
+        .video-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: -1;
+        }
+        
         body {
             font-family: 'SF Pro Display', sans-serif;
-            background-color: var(--bg);
             color: var(--text);
-            min-height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
-            margin: 0;
-            padding: 20px;
-            overflow-x: hidden;
-            background-image: 
-                radial-gradient(circle at 10% 20%, rgba(108, 99, 255, 0.1) 0%, transparent 20%),
-                radial-gradient(circle at 90% 80%, rgba(255, 107, 107, 0.1) 0%, transparent 20%);
+            height: 100vh;
+            overflow: hidden;
         }
         
         .card {
@@ -56,12 +53,13 @@
             -webkit-backdrop-filter: blur(16px);
             border-radius: 12px;
             padding: 40px;
-            width: 100%;
+            width: 90%;
             max-width: 500px;
             border: 1px solid var(--border);
             text-align: center;
             position: relative;
             overflow: hidden;
+            margin: 20px;
         }
         
         h1 {
@@ -132,7 +130,6 @@
             font-weight: 400;
         }
 
-        /* Animations */
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(10px); }
             to { opacity: 1; transform: translateY(0); }
@@ -149,33 +146,26 @@
             .card {
                 padding: 30px 20px;
             }
+            h1 {
+                font-size: 2.2rem;
+            }
             .holiday-status {
                 font-size: 2rem;
             }
             .holiday-name {
                 font-size: 1.2rem;
             }
-
-                  }  
-        
-        .noise-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-image: url('https://cdn.prod.website-files.com/651d15fb8f27f4a03c14ae88/651d15fb8f27f4a03c14afa4_5d8424ac4ffed73f4d72846e_5c06f51d6e75c933fe05c728_giphy.gif');
-    background-size: 480px;
-    background-attachment: fixed;
-    opacity: 0.03;
-    pointer-events: none;
-    z-index: 2147483647; /* maksymalny możliwy z-index */
-}
         }
     </style>
 </head>
 <body>
-    <div class="noise-overlay" aria-hidden="true"></div>
+    <!-- Video Background -->
+    <video class="video-bg" autoplay muted loop playsinline>
+        <source src="https://cdn.videy.co/r73mqoqL1.mp4" type="video/mp4">
+        <source src="https://media.discordapp.net/attachments/1314337759993004053/1356256834167767190/cartiwebm.webm?ex=67ebe81b&is=67ea969b&hm=36aeb2fc547d19a2adc464d6e86c834911984c5f6381589522057f37031409c1&" type="video/webm">
+    </video>
+    
+    <!-- Content Card -->
     <div class="card">
         <h1>Is Today a Holiday?</h1>
         <p class="subtitle">API STATUS: ONLINE</p>
@@ -221,7 +211,7 @@
             // Animation
             const quoteBox = document.querySelector('.quote-box');
             quoteBox.style.animation = 'none';
-            void quoteBox.offsetWidth; // Trigger reflow
+            void quoteBox.offsetWidth;
             quoteBox.style.animation = 'fadeIn 0.6s ease-out';
         }
 
