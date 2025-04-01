@@ -1,213 +1,203 @@
 <!DOCTYPE html>
-<html lang="pl">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dziś jest święto?</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700&display=swap" rel="stylesheet">
+    <title>Is Today a Holiday?</title>
+    <link href="https://fonts.cdnfonts.com/css/sf-pro-display" rel="stylesheet">
+    <link href="https://fonts.cdnfonts.com/css/fake-receipt" rel="stylesheet">
     <style>
         :root {
-            --primary: #6C63FF;
-            --text: #4A4A4A;
-            --light: #F8F9FA;
-            --shadow: 8px 8px 24px rgba(0, 0, 0, 0.1), -8px -8px 24px rgba(255, 255, 255, 0.8);
-            --inset-shadow: inset 3px 3px 6px rgba(0, 0, 0, 0.05);
+            --primary: #ffffff;
+            --secondary: #a0a0a0;
+            --accent: #6C63FF;
+            --bg: #0a0a0a;
+            --text: #e0e0e0;
+            --glass: rgba(20, 20, 20, 0.7);
+            --border: rgba(255, 255, 255, 0.1);
         }
         
         body {
-            font-family: 'Poppins', sans-serif;
-            background: linear-gradient(135deg, #F5F7FA 0%, #E4E8F0 100%);
+            font-family: 'SF Pro Display', sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
             min-height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
             margin: 0;
             padding: 20px;
-            color: var(--text);
+            overflow-x: hidden;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(108, 99, 255, 0.1) 0%, transparent 20%),
+                radial-gradient(circle at 90% 80%, rgba(255, 107, 107, 0.1) 0%, transparent 20%);
         }
         
         .card {
-            background: white;
-            border-radius: 24px;
+            background: var(--glass);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-radius: 12px;
             padding: 40px;
             width: 100%;
             max-width: 500px;
-            box-shadow: var(--shadow);
-            border: 1px solid rgba(255, 255, 255, 0.6);
+            border: 1px solid var(--border);
             text-align: center;
-            transition: transform 0.3s;
-        }
-        
-        .card:hover {
-            transform: translateY(-5px);
+            position: relative;
+            overflow: hidden;
         }
         
         h1 {
+            font-family: 'Fake Receipt', sans-serif;
+            font-size: 2.8rem;
+            font-weight: 400;
+            margin: 0 0 20px 0;
             color: var(--primary);
-            margin: 0 0 10px 0;
-            font-size: 28px;
-            font-weight: 700;
+            letter-spacing: -0.5px;
+            text-transform: uppercase;
         }
         
         .subtitle {
-            color: #6B7280;
+            font-size: 0.9rem;
+            color: var(--secondary);
             margin-bottom: 30px;
-            font-size: 14px;
+            font-weight: 300;
+            letter-spacing: 1px;
         }
         
         .holiday-container {
-            margin: 25px 0;
+            margin: 40px 0;
+            padding: 30px 0;
+            border-radius: 8px;
+            background: rgba(0, 0, 0, 0.3);
+        }
+        
+        .holiday-status {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin: 0;
+            color: var(--accent);
+            font-family: 'Fake Receipt', sans-serif;
+            letter-spacing: 1px;
         }
         
         .holiday-name {
-            font-size: 26px;
-            font-weight: 600;
-            margin: 10px 0;
+            font-size: 1.5rem;
+            font-weight: 500;
+            margin: 15px 0 5px 0;
             color: var(--primary);
         }
         
         .holiday-date {
-            color: #6B7280;
-            font-size: 14px;
+            font-size: 1rem;
+            color: var(--secondary);
+            font-weight: 300;
         }
         
         .quote-box {
-            background: var(--light);
-            border-radius: 18px;
-            padding: 20px;
-            margin: 25px 0;
-            box-shadow: var(--inset-shadow);
-            min-height: 120px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
+            border-top: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
+            padding: 30px 0;
+            margin: 30px 0;
         }
         
         .quote-text {
-            font-size: 18px;
-            line-height: 1.5;
+            font-size: 1.2rem;
+            line-height: 1.6;
             margin-bottom: 10px;
             font-style: italic;
+            font-weight: 300;
         }
         
         .quote-author {
-            font-size: 14px;
-            color: var(--primary);
-            font-weight: 500;
+            font-size: 0.9rem;
+            color: var(--accent);
+            font-weight: 400;
         }
         
         .refresh-info {
-            color: #9CA3AF;
-            font-size: 12px;
-            margin-top: 5px;
+            font-size: 0.8rem;
+            color: var(--secondary);
+            margin-top: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
         }
         
-        .emoji {
-            font-size: 40px;
-            margin: 10px 0;
-            display: block;
+        #countdown {
+            font-family: 'SF Mono', monospace;
+            color: var(--accent);
+            letter-spacing: 1px;
         }
         
-        .loading {
-            opacity: 0.7;
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
         }
+        
+        .card > * {
+            animation: fadeIn 0.6s ease-out forwards;
+        }
+        
+        .holiday-container { animation-delay: 0.2s; }
+        .quote-box { animation-delay: 0.4s; }
+        .refresh-info { animation-delay: 0.6s; }
         
         @media (max-width: 600px) {
             .card {
                 padding: 30px 20px;
             }
-            h1 {
-                font-size: 24px;
+            .holiday-status {
+                font-size: 2rem;
             }
-            .quote-text {
-                font-size: 16px;
+            .holiday-name {
+                font-size: 1.2rem;
             }
         }
     </style>
 </head>
 <body>
     <div class="card">
-        <h1>Czy dziś jest święto?</h1>
-        <p class="subtitle">Sprawdź i zainspiruj się cytatem</p>
+        <h1>Is Today a Holiday?</h1>
+        <p class="subtitle">API STATUS: ONLINE</p>
         
         <div class="holiday-container">
-            <span class="emoji" id="emoji">📅</span>
-            <div class="holiday-name" id="holiday-name">Sprawdzam...</div>
+            <p class="holiday-status" id="holiday-status">CHECKING...</p>
+            <div class="holiday-name" id="holiday-name"></div>
             <div class="holiday-date" id="holiday-date"></div>
         </div>
         
         <div class="quote-box">
-            <p class="quote-text" id="quote-text">"Design to nie tylko jak to wygląda i jak się to czuje. Design to jak to działa."</p>
-            <p class="quote-author" id="quote-author">– Steve Jobs</p>
+            <p class="quote-text" id="quote-text">"Simplicity is the ultimate sophistication."</p>
+            <p class="quote-author" id="quote-author">– Leonardo da Vinci</p>
         </div>
         
-        <p class="refresh-info">Cytat zmieni się za: <span id="countdown">60:00</span></p>
+        <p class="refresh-info">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"></path>
+            </svg>
+            QUOTE REFRESH IN: <span id="countdown">60:00</span>
+        </p>
     </div>
 
     <script>
-        // API KEY (użyj swojego)
+        // API KEY
         const API_KEY = 'e28fihtMRQG6qg6RIBmpRbusXExgorgJ';
         
-        // Baza cytatów (15 motywujących + 15 o designie)
+        // Quote database
         const quotes = [
-            // Motywujące
-            { text: "Sukces to suma małych wysiłków powtarzanych dzień po dniu.", author: "Robert Collier" },
-            { text: "Jedynym sposobem, by osiągnąć wielkie rzeczy, jest pokochać to, co się robi.", author: "Steve Jobs" },
-            { text: "Nie czekaj. Nigdy nie będzie idealnego momentu.", author: "Napoleon Hill" },
-            { text: "Twoja przyszłość zależy od tego, co robisz dzisiaj.", author: "Mahatma Gandhi" },
-            { text: "Problemem nie jest problem. Problemem jest twoje nastawienie do problemu.", author: "Kapitan Jack Sparrow" },
-            { text: "Zwycięzcy nie robią wymówek.", author: "Kobe Bryant" },
-            { text: "Jeśli możesz to wymarzyć, możesz to osiągnąć.", author: "Walt Disney" },
-            { text: "Nie liczy się to, jak powoli idziesz, bylebyś tylko nie stał w miejscu.", author: "Konfucjusz" },
-            { text: "Inwestowanie w siebie to najlepsza inwestycja, jaką możesz zrobić.", author: "Warren Buffett" },
-            { text: "Sukces nie jest przypadkiem. To ciężka praca, wytrwałość, nauka, poświęcenie.", author: "Pele" },
-            { text: "Najlepszy czas na działanie był wczoraj. Drugi najlepszy czas jest teraz.", author: "Nieznany" },
-            { text: "Porażka to tylko okazja, by zacząć jeszcze raz, tym razem mądrzej.", author: "Henry Ford" },
-            { text: "Nie bój się porzucać dobrego dla świetnego.", author: "John D. Rockefeller" },
-            { text: "Marzenia nie działają, dopóki ty nie zaczniesz działać.", author: "Nieznany" },
-            { text: "Jedyne granice, które istnieją, to te, które sam sobie stawiasz.", author: "Nieznany" },
-            
-            // O designie
-            { text: "Design to nie tylko jak to wygląda i jak się to czuje. Design to jak to działa.", author: "Steve Jobs" },
-            { text: "Każdy detal ma znaczenie, bo detal to nie jest detal. Detal tworzy design.", author: "Charles Eames" },
-            { text: "Dobry design jest jak czyste powietrze – gdy jest, nikt nie zauważa. Gdy go brak, wszyscy widzą.", author: "Dieter Rams" },
-            { text: "Design powinien być prosty, ale nie prymitywny.", author: "Paul Rand" },
-            { text: "Biała przestrzeń to nie zmarnowana przestrzeń. To potężne narzędzie designu.", author: "Nieznany" },
-            { text: "Design to nie ornament. To funkcja i emocje połączone w całość.", author: "Jony Ive" },
-            { text: "Najlepszy design to najmniej designu.", author: "Antoine de Saint-Exupéry" },
-            { text: "Design to język, którym mówi Twoja marka.", author: "David Carson" },
-            { text: "Prawdziwy design rozwiązuje problemy, a nie tylko ładnie wygląda.", author: "Milton Glaser" },
-            { text: "Claymorphism to nie trend – to powrót do przyjemnych, miękkich form.", author: "Nieznany" },
-            { text: "Kolory są jak emocje – mogą opowiadać historie bez słów.", author: "Nieznany" },
-            { text: "Typografia to sztuka, która nadaje głos słowom.", author: "Nieznany" },
-            { text: "Design to most między technologią a człowiekiem.", author: "Nieznany" },
-            { text: "Prostota to szczyt wyrafinowania.", author: "Leonardo da Vinci" },
-            { text: "Design zaczyna się wtedy, gdy przestajesz myśleć o sobie, a zaczynasz o użytkowniku.", author: "Nieznany" }
+            { text: "The only limits are the ones you set yourself.", author: "Anonymous" },
+            { text: "Design is not just what it looks like. Design is how it works.", author: "Steve Jobs" }
         ];
 
-        // Funkcja do losowania cytatu
-        function getRandomQuote() {
-            const randomIndex = Math.floor(Math.random() * quotes.length);
-            return quotes[randomIndex];
-        }
-
-        // Funkcja do aktualizacji cytatu
-        function updateQuote() {
-            const quote = getRandomQuote();
-            document.getElementById('quote-text').textContent = `"${quote.text}"`;
-            document.getElementById('quote-author').textContent = `– ${quote.author}`;
-        }
-
-        // Funkcja do sprawdzania świąt z API Calendarific
         async function checkHoliday() {
             const today = new Date();
             const year = today.getFullYear();
             const month = String(today.getMonth() + 1).padStart(2, '0');
             const day = String(today.getDate()).padStart(2, '0');
             const dateString = `${year}-${month}-${day}`;
-            
-            document.getElementById('holiday-name').classList.add('loading');
-            document.getElementById('holiday-date').classList.add('loading');
             
             try {
                 const response = await fetch(`https://calendarific.com/api/v2/holidays?api_key=${API_KEY}&country=PL&year=${year}`);
@@ -218,34 +208,41 @@
                     
                     if (todayHolidays.length > 0) {
                         const holiday = todayHolidays[0];
-                        document.getElementById('holiday-name').textContent = `TAK! ${holiday.name}`;
-                        document.getElementById('holiday-date').textContent = `Typ: ${holiday.type.join(', ')}`;
-                        document.getElementById('emoji').textContent = "🎉";
+                        document.getElementById('holiday-status').textContent = "YES";
+                        document.getElementById('holiday-name').textContent = holiday.name.toUpperCase();
+                        document.getElementById('holiday-date').textContent = holiday.type.join(', ').toUpperCase();
                     } else {
-                        document.getElementById('holiday-name').textContent = "NIE...";
-                        document.getElementById('holiday-date').textContent = "Ale możesz świętować zwykły dzień!";
-                        document.getElementById('emoji').textContent = "📅";
+                        document.getElementById('holiday-status').textContent = "NO";
+                        document.getElementById('holiday-name').textContent = "NO HOLIDAYS TODAY";
+                        document.getElementById('holiday-date').textContent = "";
                     }
-                } else {
-                    throw new Error('Brak danych o świętach');
                 }
             } catch (error) {
-                console.error('Błąd API:', error);
-                document.getElementById('holiday-name').textContent = "Błąd ładowania świąt";
-                document.getElementById('holiday-date').textContent = "Spróbuj później";
-                document.getElementById('emoji').textContent = "❌";
-            } finally {
-                document.getElementById('holiday-name').classList.remove('loading');
-                document.getElementById('holiday-date').classList.remove('loading');
+                console.error('API Error:', error);
+                document.getElementById('holiday-status').textContent = "ERROR";
+                document.getElementById('holiday-name').textContent = "FAILED TO LOAD DATA";
             }
         }
 
-        // Odliczanie do zmiany cytatu
+        // [Rest of the JavaScript remains the same as previous version]
+        function getRandomQuote() {
+            return quotes[Math.floor(Math.random() * quotes.length)];
+        }
+
+        function updateQuote() {
+            const quote = getRandomQuote();
+            document.getElementById('quote-text').textContent = `"${quote.text}"`;
+            document.getElementById('quote-author').textContent = `– ${quote.author}`;
+            
+            const quoteBox = document.querySelector('.quote-box');
+            quoteBox.style.animation = 'none';
+            void quoteBox.offsetWidth;
+            quoteBox.style.animation = 'fadeIn 0.6s ease-out';
+        }
+
         function startCountdown() {
             let minutes = 60;
             let seconds = 0;
-            
-            const countdownElement = document.getElementById('countdown');
             
             const timer = setInterval(() => {
                 if (seconds === 0) {
@@ -261,11 +258,11 @@
                     seconds--;
                 }
                 
-                countdownElement.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+                document.getElementById('countdown').textContent = 
+                    `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
             }, 1000);
         }
 
-        // Inicjalizacja
         document.addEventListener('DOMContentLoaded', () => {
             checkHoliday();
             updateQuote();
