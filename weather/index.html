@@ -3,81 +3,376 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Weather Data Poland</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="style.css">
+        <link rel="stylesheet" href="style.css">
     <link href="https://fonts.cdnfonts.com/css/sf-pro-display" rel="stylesheet">
     <link href="https://fonts.cdnchars.com/css/fake-receipt" rel="stylesheet">
-</head>
-<body class="bg-black text-white min-h-screen overflow-x-hidden" style="font-family: 'Fake Receipt', monospace">
-    <div class="noise-overlay" aria-hidden="true"></div>
-    <!-- Custom cursor -->
-    <div class="cursor"></div>
-    <div class="cursor-f"></div>
-    
-    <!-- Back button -->
-    <div class="fixed top-3 left-3 z-50">
-        <a href="../index.html">
-            <button class="back-button">
-                <svg height="14" width="14" xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 1024 1024">
-                    <path d="M874.690416 495.52477c0 11.2973-9.168824 20.466124-20.466124 20.466124l-604.773963 0 188.083679 188.083679c7.992021 7.992021 7.992021 20.947078 0 28.939099-4.001127 3.990894-9.240455 5.996574-14.46955 5.996574-5.239328 0-10.478655-1.995447-14.479783-5.996574l-223.00912-223.00912c-3.837398-3.837398-5.996574-9.046027-5.996574-14.46955 0-5.433756 2.159176-10.632151 5.996574-14.46955l223.019353-223.029586c7.992021-7.992021 20.957311-7.992021 28.949332 0 7.992021 8.002254 7.992021 20.957311 0 28.949332l-188.073446 188.073446 604.753497 0C865.521592 475.058646 874.690416 484.217237 874.690416 495.52477z"></path>
-                </svg>
-                <span>Back</span>
-            </button>
-        </a>
-    </div>
-<div class="container mx-auto px-4 py-6 min-h-screen flex flex-col">
-        <h1 class="header-shine text-center mb-6 pt-12 tracking-wider">Weather Data for Poland</h1>
-        
-       <!-- Weather panels grid -->
-<div class="grid grid-cols-1 md:grid-cols-2 gap-1 w-full max-w-3xl mx-auto" style="row-gap: 2px">
-    <!-- Hottest Today -->
-    <div class="weather-panel border-red-500">
-        <h2 class="text-base font-bold mb-1 text-red-500 tracking-wider">HOTTEST TODAY</h2>
-        <div class="text-3xl font-bold text-white" style="font-family: 'SF Pro Display', sans-serif" id="hottest-today-temp">--°C</div>
-        <div class="text-sm text-white opacity-90 mt-1" id="hottest-today-location">--</div>
-    </div>
-    
-    <!-- Coldest Today -->
-    <div class="weather-panel border-blue-500">
-        <h2 class="text-base font-bold mb-1 text-blue-500 tracking-wider">COLDEST TODAY</h2>
-        <div class="text-3xl font-bold text-white" style="font-family: 'SF Pro Display', sans-serif" id="coldest-today-temp">--°C</div>
-        <div class="text-sm text-white opacity-90 mt-1" id="coldest-today-location">--</div>
-    </div>
-    
-    <!-- Hottest All Time -->
-    <div class="weather-panel border-red-500">
-        <h2 class="text-base font-bold mb-1 text-red-500 tracking-wider">HOTTEST ALL TIME</h2>
-        <div class="text-3xl font-bold text-white" style="font-family: 'SF Pro Display', sans-serif">40.2°C</div>
-        <div class="text-sm text-white opacity-90 mt-1">Pruszków (2023)</div>
-    </div>
-    
-    <!-- Coldest All Time -->
-    <div class="weather-panel border-blue-500">
-        <h2 class="text-base font-bold mb-1 text-blue-500 tracking-wider">COLDEST ALL TIME</h2>
-        <div class="text-3xl font-bold text-white" style="font-family: 'SF Pro Display', sans-serif">-41.0°C</div>
-        <div class="text-sm text-white opacity-90 mt-1">Siedlce (1940)</div>
-    </div>
-    
-    <!-- Strongest Wind -->
-    <div class="weather-panel border-purple-500">
-        <h2 class="text-base font-bold mb-1 text-purple-500 tracking-wider">STRONGEST WIND</h2>
-        <div class="text-3xl font-bold text-white" style="font-family: 'SF Pro Display', sans-serif" id="wind-speed">-- km/h</div>
-        <div class="text-sm text-white opacity-90 mt-1" id="wind-location">--</div>
-    </div>
-    
-    <!-- Ground Temperature -->
-    <div class="weather-panel border-amber-500">
-        <h2 class="text-base font-bold mb-1 text-amber-500 tracking-wider">GROUND TEMP</h2>
-        <div class="text-3xl font-bold text-white" style="font-family: 'SF Pro Display', sans-serif" id="ground-temp">--°C</div>
-        <div class="text-sm text-white opacity-90 mt-1">At surface</div>
-    </div>
-</div>
-        <div class="text-center text-xs text-gray-500 mt-8 pb-6">
-    Data sourced from <a href="https://danepubliczne.imgw.pl/" target="_blank" class="underline hover:text-gray-400">IMGW API</a>
-</div>
+       <script src="https://cdn.tailwindcss.com"></script>
+    <title>Temperatury w Polsce</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f5f5f5;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+            min-height: 100vh;
+            margin: 0;
+        }
 
+        h1 {
+            color: #333;
+            margin-bottom: 30px;
+        }
+
+        .container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+            width: 100%;
+            max-width: 1200px;
+        }
+
+        .card {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            height: 180px;
+            width: 280px;
+            border-radius: 25px;
+            background: lightgrey;
+            overflow: hidden;
+            transition: 100ms ease;
+            box-shadow: rgba(0, 0, 0, 0.15) 2px 3px 4px;
+        }
+
+        /* ---------- Info section ---------- */
+        .info-section {
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+            height: 100%;
+            color: white;
+        }
+
+        .left-side {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-around;
+            height: 100%;
+            z-index: 1;
+            padding-left: 18px;
+        }
+
+        button {
+            display: block;
+            border: none;
+            background: transparent;
+        }
+
+        .weather {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            gap: 5px;
+        }
+
+        .weather div {
+            display: flex;
+            align-items: center;
+        }
+
+        .weather div:nth-child(1) {
+            width: 40%;
+            height: auto;
+        }
+
+        .temperature {
+            font-size: 34pt;
+            font-weight: 500;
+            line-height: 8%;
+        }
+
+        .range {
+            font-size: 12pt;
+        }
+
+        .right-side {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            justify-content: space-around;
+            height: 100%;
+            padding-right: 18px;
+            z-index: 1;
+        }
+
+        .right-side > div {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+        }
+
+        .date {
+            font-size: 15px;
+        }
+
+        /* ---------- Background ---------- */
+        .background-design {
+            position: absolute;
+            height: 100%;
+            width: 100%;
+            overflow: hidden;
+        }
+
+        .circle {
+            background-color: #efc745; /* Domyślny żółty kolor */
+        }
+
+        .circle.cold {
+            background-color: #5dade2; /* Niebieski kolor dla niskich temperatur */
+        }
+
+        .circle:nth-child(1) {
+            position: absolute;
+            top: -80%;
+            right: -50%;
+            width: 300px;
+            height: 300px;
+            opacity: 0.4;
+            border-radius: 50%;
+        }
+
+        .circle:nth-child(2) {
+            position: absolute;
+            top: -70%;
+            right: -30%;
+            width: 210px;
+            height: 210px;
+            opacity: 0.4;
+            border-radius: 50%;
+        }
+
+        .circle:nth-child(3) {
+            position: absolute;
+            top: -35%;
+            right: -8%;
+            width: 100px;
+            height: 100px;
+            opacity: 1;
+            border-radius: 50%;
+        }
+
+        /* Colors for different cards */
+        .max-temp .background-design {
+            background-color: #ec7263;
+        }
+
+        .min-temp .background-design {
+            background-color: #3a7bd5;
+        }
+
+        .last-update {
+            margin-top: 20px;
+            color: #666;
+            font-size: 14px;
+        }
+
+        .loading {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100px;
+            font-size: 18px;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+    <h1>Temperatury w Polsce</h1>
+    <div class="container">
+        <div class="card max-temp">
+            <section class="info-section">
+                <div class="background-design">
+                    <div class="circle"></div>
+                    <div class="circle"></div>
+                    <div class="circle"></div>
+                </div>
+                <div class="left-side">
+                    <div class="weather">
+                        <div>
+                            <svg stroke="#ffffff" fill="#ffffff" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024">
+                                <g stroke-width="0" id="SVGRepo_bgCarrier"></g>
+                                <g stroke-linejoin="round" stroke-linecap="round" id="SVGRepo_tracerCarrier"></g>
+                                <g id="SVGRepo_iconCarrier">
+                                    <path d="M512 704a192 192 0 1 0 0-384 192 192 0 0 0 0 384zm0 64a256 256 0 1 1 0-512 256 256 0 0 1 0 512zm0-704a32 32 0 0 1 32 32v64a32 32 0 0 1-64 0V96a32 32 0 0 1 32-32zm0 768a32 32 0 0 1 32 32v64a32 32 0 1 1-64 0v-64a32 32 0 0 1 32-32zM195.2 195.2a32 32 0 0 1 45.248 0l45.248 45.248a32 32 0 1 1-45.248 45.248L195.2 240.448a32 32 0 0 1 0-45.248zm543.104 543.104a32 32 0 0 1 45.248 0l45.248 45.248a32 32 0 0 1-45.248 45.248l-45.248-45.248a32 32 0 0 1 0-45.248zM64 512a32 32 0 0 1 32-32h64a32 32 0 0 1 0 64H96a32 32 0 0 1-32-32zm768 0a32 32 0 0 1 32-32h64a32 32 0 1 1 0 64h-64a32 32 0 0 1-32-32zM195.2 828.8a32 32 0 0 1 0-45.248l45.248-45.248a32 32 0 0 1 45.248 45.248L240.448 828.8a32 32 0 0 1-45.248 0zm543.104-543.104a32 32 0 0 1 0-45.248l45.248-45.248a32 32 0 0 1 45.248 45.248l-45.248 45.248a32 32 0 0 1-45.248 0z" fill="#ffffff"></path>
+                                </g>
+                            </svg>
+                        </div>
+                        <div id="max-weather">Sunny</div>
+                    </div>
+                    <div class="temperature" id="max-temp">--°</div>
+                    <div class="range" id="max-range">--°/--°</div>
+                </div>
+                <div class="right-side">
+                    <div class="date" id="max-date">--- --</div>
+                    <div class="city" id="max-city">---</div>
+                </div>
+            </section>
+        </div>
+
+        <div class="card min-temp">
+            <section class="info-section">
+                <div class="background-design">
+                    <div class="circle"></div>
+                    <div class="circle"></div>
+                    <div class="circle"></div>
+                </div>
+                <div class="left-side">
+                    <div class="weather">
+                        <div>
+                            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="#ffffff">
+                                <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                                <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                                <g id="SVGRepo_iconCarrier">
+                                    <path d="M16 18.5L15 21M8 18.5L7 21M12 18.5L11 21M7 15C4.23858 15 2 12.7614 2 10C2 7.23858 4.23858 5 7 5C7.03315 5 7.06622 5.00032 7.09922 5.00097C8.0094 3.2196 9.86227 2 12 2C14.5192 2 16.6429 3.69375 17.2943 6.00462C17.3625 6.00155 17.4311 6 17.5 6C19.9853 6 22 8.01472 22 10.5C22 12.9853 19.9853 15 17.5 15C13.7434 15 11.2352 15 7 15Z" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                                </g>
+                            </svg>
+                        </div>
+                        <div id="min-weather">Cloudy</div>
+                    </div>
+                    <div class="temperature" id="min-temp">--°</div>
+                    <div class="range" id="min-range">--°/--°</div>
+                </div>
+                <div class="right-side">
+                    <div class="date" id="min-date">--- --</div>
+                    <div class="city" id="min-city">---</div>
+                </div>
+            </section>
+        </div>
+    </div>
+    <div class="last-update" id="last-update">Ostatnia aktualizacja: --:--</div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Pobierz dane pogodowe przy załadowaniu strony
+            fetchWeatherData();
+            
+            // Aktualizuj dane co godzinę
+            setInterval(fetchWeatherData, 3600000);
+        });
+
+        function fetchWeatherData() {
+            fetch('https://danepubliczne.imgw.pl/api/data/synop/')
+                .then(response => response.json())
+                .then(data => {
+                    processWeatherData(data);
+                    updateLastUpdateTime();
+                })
+                .catch(error => {
+                    console.error('Błąd podczas pobierania danych:', error);
+                });
+        }
+
+        function processWeatherData(weatherData) {
+            // Znajdź najwyższą i najniższą temperaturę
+            let maxTemp = -Infinity;
+            let minTemp = Infinity;
+            let maxTempCity = '';
+            let minTempCity = '';
+            let maxTempData = null;
+            let minTempData = null;
+
+            weatherData.forEach(station => {
+                const temp = parseFloat(station.temperatura);
+                if (!isNaN(temp)) {
+                    if (temp > maxTemp) {
+                        maxTemp = temp;
+                        maxTempCity = station.stacja;
+                        maxTempData = station;
+                    }
+                    if (temp < minTemp) {
+                        minTemp = temp;
+                        minTempCity = station.stacja;
+                        minTempData = station;
+                    }
+                }
+            });
+
+            // Aktualizuj UI dla najwyższej temperatury
+            if (maxTempData) {
+                document.getElementById('max-temp').textContent = `${Math.round(maxTemp)}°`;
+                document.getElementById('max-city').textContent = maxTempCity;
+                document.getElementById('max-range').textContent = `${Math.round(maxTempData.temperatura_max)}°/${Math.round(maxTempData.temperatura_min)}°`;
+                document.getElementById('max-weather').textContent = getWeatherDescription(maxTempData.suma_opadu);
+                
+                const dateTime = formatDateTime(maxTempData.data_pomiaru);
+                document.getElementById('max-date').textContent = dateTime.date;
+                
+                // Ustaw żółte kółka dla wysokich temperatur
+                setCircleColors('max-temp', maxTemp);
+            }
+
+            // Aktualizuj UI dla najniższej temperatury
+            if (minTempData) {
+                document.getElementById('min-temp').textContent = `${Math.round(minTemp)}°`;
+                document.getElementById('min-city').textContent = minTempCity;
+                document.getElementById('min-range').textContent = `${Math.round(minTempData.temperatura_max)}°/${Math.round(minTempData.temperatura_min)}°`;
+                document.getElementById('min-weather').textContent = getWeatherDescription(minTempData.suma_opadu);
+                
+                const dateTime = formatDateTime(minTempData.data_pomiaru);
+                document.getElementById('min-date').textContent = dateTime.date;
+                
+                // Ustaw niebieskie kółka dla niskich temperatur
+                setCircleColors('min-temp', minTemp);
+            }
+        }
+
+        function setCircleColors(cardClass, temperature) {
+            const circles = document.querySelector(`.${cardClass} .circle`);
+            const isCold = temperature < 10; // Ustawienie progu dla "niskiej" temperatury
+            
+            document.querySelectorAll(`.${cardClass} .circle`).forEach(circle => {
+                if (isCold) {
+                    circle.classList.add('cold');
+                } else {
+                    circle.classList.remove('cold');
+                }
+            });
+        }
+
+        function getWeatherDescription(precipitation) {
+            const precip = parseFloat(precipitation);
+            if (isNaN(precip)) return 'Sunny';
+            
+            if (precip > 5) return 'Heavy Rain';
+            if (precip > 0.5) return 'Rain';
+            if (precip > 0) return 'Light Rain';
+            return 'Sunny';
+        }
+
+        function formatDateTime(dateStr) {
+            const date = new Date(`${dateStr}T00:00:00`);
+            const days = ['NIE', 'PON', 'WT', 'ŚR', 'CZW', 'PT', 'SOB'];
+            const dayName = days[date.getDay()];
+            const month = date.getMonth() + 1;
+            const day = date.getDate();
+            
+            return {
+                date: `${dayName} ${day.toString().padStart(2, '0')}-${month.toString().padStart(2, '0')}`
+            };
+        }
+
+        function updateLastUpdateTime() {
+            const now = new Date();
+            const hours = now.getHours().toString().padStart(2, '0');
+            const minutes = now.getMinutes().toString().padStart(2, '0');
+            document.getElementById('last-update').textContent = `Ostatnia aktualizacja: ${hours}:${minutes}`;
+        }
+    </script>
     <script src="script.js"></script>
 </body>
 </html>
-
