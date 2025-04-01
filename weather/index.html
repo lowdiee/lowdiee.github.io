@@ -385,7 +385,7 @@
 
         function formatDateTime(dateStr) {
             const date = new Date(`${dateStr}T00:00:00`);
-            const days = ['NIE', 'PON', 'WT', 'ŚR', 'CZW', 'PT', 'SOB'];
+            const days = ['SUN', 'MON', 'TUE', 'WEN', 'THU', 'FRI', 'SAT'];
             const dayName = days[date.getDay()];
             const month = date.getMonth() + 1;
             const day = date.getDate();
