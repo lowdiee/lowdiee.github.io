@@ -139,13 +139,13 @@ html, body, * {
 
 /*marginesy*/
 .weather-panel h2 {
-    margin: 7px 14px 0 14px;
+    margin: 10px 12px 0 8px;
 }
 .weather-panel .text-3xl {
-    margin: 0 8px;
+    margin: 0 12px;
 }
 .weather-panel .text-sm {
-    margin: 0 8px 4px 8px;
+    margin: 0 12px 4px 8px;
 }
 
 
