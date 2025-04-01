@@ -13,7 +13,6 @@
     z-index: 2147483647;
 }
 
-/* Custom cursor styles */
 .cursor, .cursor-f {
     position: fixed;
     pointer-events: none;
@@ -41,8 +40,5 @@
     opacity: 0.5;
 }
 
-/* Disable default cursor */
-html, body, * {
-    cursor: none !important;
-}
+
 
