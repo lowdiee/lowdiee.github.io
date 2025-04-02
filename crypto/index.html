@@ -53,18 +53,18 @@
             z-index: 2147483647;
         }
 
-        /* Custom Cursor */
+        /* Custom Cursor - dokładnie jak w portfolio */
         .cursor {
             position: fixed;
             width: 20px;
             height: 20px;
             border-radius: 50%;
-            background-color: rgba(255, 255, 255, 1);
+            background-color: white;
             pointer-events: none;
             mix-blend-mode: difference;
             z-index: 9999;
             transform: translate(-50%, -50%);
-            transition: transform 0.1s ease;
+            transition: transform 0.15s ease;
         }
 
         .cursor-follower {
@@ -72,24 +72,46 @@
             width: 40px;
             height: 40px;
             border-radius: 50%;
-            border: 1px solid rgba(197, 184, 255, 0.3);
+            border: 1px solid white;
             pointer-events: none;
             z-index: 9998;
             transform: translate(-50%, -50%);
-            transition: transform 0.3s ease, width 0.3s ease, height 0.3s ease;
+            transition: 
+                transform 0.4s ease,
+                width 0.3s ease,
+                height 0.3s ease;
         }
 
         .cursor-active {
-            transform: translate(-50%, -50%) scale(1.5);
-            background-color: rgba(197, 184, 255, 0.8);
+            transform: translate(-50%, -50%) scale(0.5);
+            background-color: #4facfe;
         }
 
         .cursor-follower-active {
-            width: 20px;
-            height: 20px;
-            background-color: rgba(197, 184, 255, 0.2);
+            width: 60px;
+            height: 60px;
+            background-color: rgba(79, 172, 254, 0.2);
+            border-color: #4facfe;
         }
 
+        .cursor-click {
+            transform: translate(-50%, -50%) scale(0.8);
+        }
+
+        .cursor-follower-click {
+            transform: translate(-50%, -50%) scale(0.8);
+        }
+
+        @media (max-width: 768px) {
+            * {
+                cursor: auto !important;
+            }
+            .cursor, .cursor-follower {
+                display: none !important;
+            }
+        }
+
+        /* Reszta Twoich styli pozostaje bez zmian */
         .container {
             max-width: 1400px;
             margin: 0 auto;
@@ -341,14 +363,6 @@
             .card {
                 padding: 1.5rem;
             }
-
-            /* Disable custom cursor on mobile */
-            * {
-                cursor: auto !important;
-            }
-            .cursor, .cursor-follower {
-                display: none !important;
-            }
         }
 
         /* Loading animation */
@@ -420,45 +434,73 @@
     </div>
 
     <script>
-        // Custom Cursor Logic
+        // Custom Cursor Logic - dokładnie jak w portfolio
         const cursor = document.querySelector('.cursor');
         const cursorFollower = document.querySelector('.cursor-follower');
+        let mouseX = 0, mouseY = 0;
+        let followerX = 0, followerY = 0;
+        let isHovering = false;
+        let isClicking = false;
+
+        // Smoothing factor for cursor movement (lower = smoother)
+        const smoothingFactor = 0.2;
+        const followerSmoothing = 0.1;
 
         document.addEventListener('mousemove', (e) => {
-            cursor.style.left = e.clientX + 'px';
-            cursor.style.top = e.clientY + 'px';
+            mouseX = e.clientX;
+            mouseY = e.clientY;
+        });
+
+        function animateCursor() {
+            // Main cursor (fast, precise movement)
+            const cursorX = mouseX;
+            const cursorY = mouseY;
             
-            // Add slight delay to follower for smooth effect
-            setTimeout(() => {
-                cursorFollower.style.left = e.clientX + 'px';
-                cursorFollower.style.top = e.clientY + 'px';
-            }, 50);
-        });
+            // Follower cursor (slower, lagging movement)
+            followerX += (mouseX - followerX) * followerSmoothing;
+            followerY += (mouseY - followerY) * followerSmoothing;
+            
+            // Apply positions
+            cursor.style.left = cursorX + 'px';
+            cursor.style.top = cursorY + 'px';
+            
+            cursorFollower.style.left = followerX + 'px';
+            cursorFollower.style.top = followerY + 'px';
+            
+            requestAnimationFrame(animateCursor);
+        }
 
-        // Add active state on click
-        document.addEventListener('mousedown', () => {
-            cursor.classList.add('cursor-active');
-            cursorFollower.classList.add('cursor-follower-active');
-        });
-
-        document.addEventListener('mouseup', () => {
-            cursor.classList.remove('cursor-active');
-            cursorFollower.classList.remove('cursor-follower-active');
-        });
-
-        // Add hover effects for interactive elements
+        // Add active state on hover
         const interactiveElements = document.querySelectorAll('a, button, .card, .news-item, .change');
         interactiveElements.forEach(el => {
             el.addEventListener('mouseenter', () => {
+                isHovering = true;
                 cursor.classList.add('cursor-active');
                 cursorFollower.classList.add('cursor-follower-active');
             });
             
             el.addEventListener('mouseleave', () => {
+                isHovering = false;
                 cursor.classList.remove('cursor-active');
                 cursorFollower.classList.remove('cursor-follower-active');
             });
         });
+
+        // Click effects
+        document.addEventListener('mousedown', () => {
+            isClicking = true;
+            cursor.classList.add('cursor-click');
+            cursorFollower.classList.add('cursor-follower-click');
+        });
+
+        document.addEventListener('mouseup', () => {
+            isClicking = false;
+            cursor.classList.remove('cursor-click');
+            cursorFollower.classList.remove('cursor-follower-click');
+        });
+
+        // Start animation
+        animateCursor();
 
         // Configuration
         const coins = [
