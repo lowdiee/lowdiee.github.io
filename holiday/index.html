@@ -289,10 +289,10 @@
             font-weight: 400;
         }
 
-        /* Back Button */
+        /* Back Button - NOWA POZYCJA */
         .back-button {
-            position: absolute;
-            bottom: 20px;
+            position: fixed;
+            top: 20px;
             left: 20px;
             align-items: center;
             background-color: transparent;
@@ -309,6 +309,7 @@
             border: 0;
             padding: 1rem;
             letter-spacing: 1px;
+            z-index: 101;
         }
 
         .back-button:before {
@@ -372,6 +373,11 @@
         <source src="https://media.discordapp.net/attachments/1314337759993004053/1356256834167767190/cartiwebm.webm?ex=67ebe81b&is=67ea969b&hm=36aeb2fc547d19a2adc464d6e86c834911984c5f6381589522057f37031409c1&" type="video/webm">
     </video>
     
+    <!-- Back Button - TERAZ NA GÓRZE PO LEWEJ STRONIE -->
+    <button class="back-button" onclick="window.location.href='https://lowdiee.site'">
+        Back
+    </button>
+    
     <!-- CRYPTO PANEL - TERAZ WYŚWIETLA SIĘ U GÓRY -->
     <div class="crypto-panel">
         <div class="crypto-header">Crypto Tracker</div>
@@ -395,11 +401,6 @@
             <p class="quote-text" id="quote-text">"Simplicity is the ultimate sophistication."</p>
             <p class="quote-author" id="quote-author">Leonardo da Vinci</p>
         </div>
-
-        <!-- Back Button -->
-        <button class="back-button" onclick="window.location.href='https://lowdiee.site'">
-            Back
-        </button>
     </div>
 
     <script>
