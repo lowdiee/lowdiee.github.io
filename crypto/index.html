@@ -53,6 +53,45 @@
             z-index: 2147483647;
         }
 
+                /* Back Button - styl jak w portfolio */
+        .back-button {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            z-index: 1000;
+            font-family: 'Fake Receipt', monospace;
+            font-size: 12px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            color: white;
+            text-decoration: none;
+            padding: 10px 15px;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-radius: 4px;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .back-button:hover {
+            color: #4facfe;
+            border-color: rgba(79, 172, 254, 0.3);
+        }
+
+        .back-button svg {
+            width: 12px;
+            height: 12px;
+            transition: transform 0.3s ease;
+        }
+
+        .back-button:hover svg {
+            transform: translateX(-3px);
+        }
+
         /* Custom Cursor - dokładnie jak w portfolio */
         .cursor {
             position: fixed;
@@ -382,6 +421,14 @@
 <body>
     <!-- Noise Overlay -->
     <div class="noise-overlay" aria-hidden="true"></div>
+
+        <!-- Back Button -->
+    <a href="https://lowdiee.site" class="back-button">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+        </svg>
+        BACK
+    </a>
     
     <!-- Custom Cursor Elements -->
     <div class="cursor"></div>
@@ -738,6 +785,21 @@
 
         // Start the dashboard
         document.addEventListener('DOMContentLoaded', initDashboard);
+
+ // Back Button hover effect for cursor
+        const backButton = document.querySelector('.back-button');
+        
+        backButton.addEventListener('mouseenter', () => {
+            cursor.classList.add('cursor-active');
+            cursorFollower.classList.add('cursor-follower-active');
+        });
+        
+        backButton.addEventListener('mouseleave', () => {
+            cursor.classList.remove('cursor-active');
+            cursorFollower.classList.remove('cursor-follower-active');
+        });
+
+        
     </script>
 </body>
 </html>
