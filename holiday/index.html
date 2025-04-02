@@ -94,12 +94,11 @@
             overflow: hidden;
         }
 
-        /* NEW CRYPTO PANEL - ZMIENIONE CENTROWANIE */
+        /* ZMIENIONY CRYPTO PANEL - TERAZ WYŚWIETLA SIĘ U GÓRY */
         .crypto-panel {
             position: fixed;
             left: 20px;
-            top: 50%;
-            transform: translateY(-50%);
+            top: 20px; /* Zmienione z top: 50% */
             background: var(--glass);
             backdrop-filter: blur(16px);
             -webkit-backdrop-filter: blur(16px);
@@ -109,7 +108,7 @@
             border: 1px solid var(--border);
             z-index: 100;
             animation: fadeIn 0.6s ease-out forwards;
-            margin: 0; /* USUNIĘTE MARGINESY KTÓRE MOGŁY WPŁYWAĆ NA POZYCJĘ */
+            margin: 0;
             max-height: 80vh;
             overflow-y: auto;
         }
@@ -159,8 +158,13 @@
         }
 
         .sparkline-container {
-            height: 20px;
+            height: 30px; /* Zwiększone z 20px */
             margin-top: 8px;
+        }
+
+        .sparkline-container svg {
+            width: 100%;
+            height: 100%;
         }
 
         .whale-bubble {
@@ -357,7 +361,7 @@
         <source src="https://media.discordapp.net/attachments/1314337759993004053/1356256834167767190/cartiwebm.webm?ex=67ebe81b&is=67ea969b&hm=36aeb2fc547d19a2adc464d6e86c834911984c5f6381589522057f37031409c1&" type="video/webm">
     </video>
     
-    <!-- NEW CRYPTO PANEL -->
+    <!-- CRYPTO PANEL - TERAZ WYŚWIETLA SIĘ U GÓRY -->
     <div class="crypto-panel">
         <div class="crypto-header">Crypto Tracker</div>
         <div id="cryptoList">
@@ -395,7 +399,12 @@
         const quotes = [
             { text: "The only limits are the ones you set yourself.", author: "Anonymous" },  
             { text: "The future belongs to those who believe in the beauty of their dreams.", author: "Eleanor Roosevelt" },
-            // ... (twoje cytaty pozostają bez zmian) ...
+            { text: "Simplicity is the ultimate sophistication.", author: "Leonardo da Vinci" },
+            { text: "Stay hungry, stay foolish.", author: "Steve Jobs" },
+            { text: "The best way to predict the future is to invent it.", author: "Alan Kay" },
+            { text: "Code is like humor. When you have to explain it, it's bad.", author: "Cory House" },
+            { text: "First, solve the problem. Then, write the code.", author: "John Johnson" },
+            { text: "Sometimes it pays to stay in bed on Monday, rather than spending the rest of the week debugging Monday's code.", author: "Dan Salomon" },
             { text: "I don’t make mistakes. I date them.", author: "Anonymous" }       
         ];
 
@@ -456,7 +465,6 @@
             }
         }
 
-        // NEW CRYPTO FUNCTION
         async function fetchCryptoData() {
             const cryptoList = document.getElementById('cryptoList');
             if (!cryptoList) return;
