@@ -167,6 +167,17 @@
             height: 100%;
         }
 
+        .sparkline-container svg polyline {
+    stroke-width: 2;
+    stroke-dasharray: 1000;
+    stroke-dashoffset: 1000;
+    animation: draw 1.5s ease-out forwards;
+}
+
+@keyframes draw {
+    to { stroke-dashoffset: 0; }
+}
+
         .whale-bubble {
             position: absolute;
             right: -15px;
