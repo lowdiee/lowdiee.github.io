@@ -158,24 +158,50 @@
         }
 
         .sparkline-container {
-            height: 30px; /* Zwiększone z 20px */
-            margin-top: 8px;
-        }
+    height: 36px; /* Zwiększyłem kontener */
+    margin-top: 8px;
+}
 
-        .sparkline-container svg {
-            width: 100%;
-            height: 100%;
-        }
+.sparkline-container svg {
+    width: 100%;
+    height: 100%;
+}
 
-        .sparkline-container svg polyline {
-    stroke-width: 2;
+.sparkline-container svg polyline {
+    stroke-width: 3; /* Grubsza linia */
     stroke-dasharray: 1000;
     stroke-dashoffset: 1000;
-    animation: draw 1.5s ease-out forwards;
+    stroke-linecap: round; /* Zaokrąglone końcówki */
+    stroke-linejoin: round; /* Gładkie łączenia */
+    animation: draw 1.2s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+    filter: drop-shadow(0 0 1px currentColor); /* Subtelne świecenie */
+}
+
+/* Dla wzrostu cen - styl Binance (zielony) */
+.price-up .sparkline-container svg polyline {
+    stroke: #0ecb81; /* Zielony Binance */
+    stroke-opacity: 0.9;
+}
+
+/* Dla spadku cen - styl Binance (czerwony) */
+.price-down .sparkline-container svg polyline {
+    stroke: #f6465d; /* Czerwony Binance */
+    stroke-opacity: 0.9;
+}
+
+/* Tło wykresu z gradientem */
+.sparkline-container svg {
+    background: linear-gradient(to top, 
+        rgba(14, 203, 129, 0.05) 0%, 
+        rgba(246, 70, 93, 0.05) 100%);
+    border-radius: 4px;
 }
 
 @keyframes draw {
-    to { stroke-dashoffset: 0; }
+    to { 
+        stroke-dashoffset: 0;
+        filter: drop-shadow(0 0 2px currentColor); /* Wzmocnienie cienia po animacji */
+    }
 }
 
         .whale-bubble {
