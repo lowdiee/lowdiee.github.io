@@ -122,7 +122,7 @@ nav a {
 }
 
 nav a:hover {
-    color: #0e34cf;
+    color: #4facfe;
 }
 
 .time-display {
@@ -135,7 +135,7 @@ nav a:hover {
 }
 
 .time-display:hover {
-    color: #0e34cf;
+    color: #4facfe;
 }
 
 
@@ -302,7 +302,7 @@ nav a:hover {
        .quote-author {
             font-family: 'Fake Receipt', monospace;
             font-size: 1rem;
-            color: #0e34cf;
+            color: #4facfe;
             letter-spacing: 1px;
             font-style: normal;
         }
