@@ -458,7 +458,7 @@
                 <div class="card-header">
                     <div class="card-title">Ethereum (ETH)</div>
                 </div>
-                <div class="chart-container" id="ethChart"></div>
+                <div class="chart-container" id="xlmChart"></div>
             </div>
         </div>
 
@@ -586,7 +586,7 @@
             },
         });
 
-        const ethChart = LightweightCharts.createChart(document.getElementById('ethChart'), {
+        const xlmChart = LightweightCharts.createChart(document.getElementById('xlmChart'), {
             layout: {
                 background: { color: 'transparent' },
                 textColor: 'rgba(255, 255, 255, 0.7)',
@@ -614,7 +614,7 @@
             lineWidth: 3,
         });
 
-        const ethLineSeries = ethChart.addAreaSeries({
+        const ethLineSeries = xlmChart.addAreaSeries({
             topColor: 'rgba(197, 184, 255, 0.4)',
             bottomColor: 'rgba(197, 184, 255, 0)',
             lineColor: 'rgba(197, 184, 255, 1)',
