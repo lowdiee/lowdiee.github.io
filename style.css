@@ -361,7 +361,7 @@ nav a:hover {
 /*QUOTE highlight*/
 .highlight {
   background: linear-gradient(45deg, #01064d, #022ea5);
-  color: #000;
+  color: #FFFFFF;
   padding: 0 4px;
   border-radius: 12px;
 }
