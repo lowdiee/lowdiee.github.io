@@ -502,7 +502,19 @@ function animateProjects() {
     });
 }
 
+document.addEventListener('DOMContentLoaded', function() {
+  document.querySelectorAll('img[data-src]').forEach(function(img) {
+    img.src = img.dataset.src;
+  });
+});
+
+
 // Obsługa scrollowania
 window.addEventListener('scroll', animateProjects);
 window.addEventListener('load', animateProjects); // Animacja przy pierwszym ładowaniu
+  });
+});
+
+
+
 
