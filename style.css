@@ -126,13 +126,19 @@ nav a:hover {
 }
 
 .time-display {
-    font-family: 'Fake Receipt', -apple-system, BlinkMacSystemFont, sans-serif;
-    font-size: 12px;
+    position: fixed;
+    top: 0;
+    right: 0;
+    z-index: 150;
+    padding: 14px 24px;
+    font-family: 'Fake Receipt', monospace;
+    font-size: 18px;
     letter-spacing: 1px;
-    cursor: default;
-    transition: all 0.3s ease;
-    margin-left: auto;
+    background: rgba(0,0,0,0.7);
+    border-bottom-left-radius: 20px;
+    cursor: pointer;
 }
+
 
 .time-display:hover {
     color: #4facfe;
@@ -594,4 +600,5 @@ html, body, * {
     height: 100vh;
     /* Remove overflow: hidden if present */
 }
+
 
