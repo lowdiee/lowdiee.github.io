@@ -278,18 +278,30 @@ nav a:hover {
     opacity: 0.8;
 }
 
-       .loading-icon-section {
+/* LOADING SECTION */
+.loading-section {
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
-    padding: 40px 0;
+    padding: 60px 0 100px; /* Więcej odstępu na dole */
     background: #000;
+    text-align: center;
 }
 
-.loading-icon-section svg {
-    width: 60px;
-    height: 60px;
-    margin: 0 auto;
+.loading-icon svg {
+    width: 50px;
+    height: 50px;
+    margin-bottom: 20px; /* Odstęp między ikoną a tekstem */
+}
+
+.loading-text {
+    font-family: 'Fake Receipt', monospace;
+    color: white;
+    font-size: 14px;
+    letter-spacing: 1px;
+    opacity: 0.8;
+    margin-top: 10px;
 }
 /* Responsywność */
 @media (max-width: 768px) {
@@ -578,6 +590,7 @@ html, body, * {
     height: 100vh;
     /* Remove overflow: hidden if present */
 }
+
 
 
 
