@@ -551,14 +551,15 @@
         animateCursor();
 
         // Configuration
-        const coins = [
-            { id: 'bitcoin', symbol: 'BTC', name: 'Bitcoin', icon: 'https://cryptologos.cc/logos/bitcoin-btc-logo.png' },
-            { id: 'ethereum', symbol: 'ETH', name: 'Ethereum', icon: 'https://cryptologos.cc/logos/ethereum-eth-logo.png' },
-            { id: 'ripple', symbol: 'XRP', name: 'XRP', icon: 'https://cryptologos.cc/logos/xrp-xrp-logo.png' },
-            { id: 'stellar', symbol: 'XLM', name: 'Stellar', icon: 'https://cryptologos.cc/logos/stellar-xlm-logo.png' },
-            { id: 'solana', symbol: 'SOL', name: 'Solana', icon: 'https://cryptologos.cc/logos/solana-sol-logo.png' },
-            { id: 'dogecoin', symbol: 'DOGE', name: 'Dogecoin', icon: 'https://cryptologos.cc/logos/dogecoin-doge-logo.png' }
-        ];
+const coins = [
+    { id: 'bitcoin', symbol: 'BTC', name: 'Bitcoin', icon: 'https://assets.coingecko.com/coins/images/1/large/bitcoin.png' },
+    { id: 'ethereum', symbol: 'ETH', name: 'Ethereum', icon: 'https://assets.coingecko.com/coins/images/279/large/ethereum.png' },
+    { id: 'ripple', symbol: 'XRP', name: 'XRP', icon: 'https://assets.coingecko.com/coins/images/44/large/xrp-symbol-white-128.png' },
+    { id: 'stellar', symbol: 'XLM', name: 'Stellar', icon: 'https://assets.coingecko.com/coins/images/100/large/Stellar_symbol_black_RGB.png' },
+    { id: 'solana', symbol: 'SOL', name: 'Solana', icon: 'https://assets.coingecko.com/coins/images/4128/large/solana.png' },
+    { id: 'dogecoin', symbol: 'DOGE', name: 'Dogecoin', icon: 'https://assets.coingecko.com/coins/images/5/large/dogecoin.png' }
+];
+
 
         // DOM Elements
         const priceCardsContainer = document.getElementById('priceCards');
