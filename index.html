@@ -111,122 +111,15 @@
     svg defs linearGradient stop:nth-child(2) {
         stop-color: rgba(255,255,255,0.3);
     }
-        /* Projects Section */
-     /* Sekcja projektów */
-.projects-section {
-    min-height: 100vh;
-    background: #000;
-    padding: 100px 20px 40px; /* Odstęp góra/dół i boki */
-    transform: translateY(100px);
-    opacity: 0;
-    transition: all 1s cubic-bezier(0.16, 1, 0.3, 1);
-}
+   
 
-.projects-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 20px; /* Ten sam odstęp co padding boczny */
-    margin: 0 auto;
-    max-width: calc(100% - 40px); /* Uwzględnia padding 20px z każdej strony */
-}
-
-.project-item {
-    position: relative;
-    overflow: hidden;
-    border-radius: 12px; /* Lekkie zaokrąglenie */
-    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-    transition: all 0.3s ease;
-    aspect-ratio: 16/9;
-}
-
-
-/* Responsywność */
-@media (max-width: 768px) {
-    .projects-section {
-        padding: 100px 15px 40px;
-    }
-    
-    .projects-grid {
-        gap: 15px;
-        max-width: calc(100% - 30px);
-    }
-}
-
-@media (max-width: 480px) {
-    .projects-section {
-        padding: 80px 10px 30px;
-    }
-    
-    .projects-grid {
-        grid-template-columns: 1fr;
-        gap: 10px;
-        max-width: calc(100% - 20px);
-    }
-}
-        
-        .project-overlay {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            padding: 30px;
-            background: linear-gradient(to top, rgba(0,0,0,0.9), transparent);
-            color: white;
-            transform: translateY(0);
-            transition: all 0.4s ease;
-            opacity: 1;
-        }
-        
-        .project-title {
-            font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, sans-serif;
-            font-size: 24px;
-            font-weight: 600;
-            margin-bottom: 8px;
-        }
-        
-        .project-category {
-            font-family: 'Fake Receipt', monospace;
-            font-size: 16px;
-            font-weight: 400;
-            opacity: 0.8;
-        }
-        
-        
-
-        /* Responsive adjustments */
-        @media (max-width: 768px) {
-            .projects-grid {
-                grid-template-columns: 1fr;
-            }
-            
-            .projects-title {
-                font-size: 20vw;
-            }
-            
-            nav {
-                padding: 15px 20px;
-            }
-            
-            nav a {
-                margin: 0 15px;
-                font-size: 12px;
-            }
-            
-            .quote-text {
-                font-size: 1.8rem;
-            }
-            
-            .quote-author {
-                font-size: 1rem;
-            }
-        }
     </style>
 </head>
 <body>
 <div class="noise-overlay" aria-hidden="true"></div>
 	<div class="cursor"></div>
 <div class="cursor-f"></div>
-<!-- PRZYCISK BACK TO THE TOP TYPE SHIT-->
+<!-- PRZYCISK BACK TO THE TOP -->
 <button class="back-to-top" style="font-family: 'Fake Receipt', monospace">
   <div class="text" style="font-family: inherit">
     <span style="font-family: inherit">BACK</span>
@@ -247,7 +140,6 @@
     <nav>
  <div class="nav-links">
             <a href="#" class="projects-link">PROJECTS</a>
-	    <a href="/crypto" class="weather-link">CRYPTO</a>
         </div>
         <div class="time-display" id="timeDisplay"></div>
     </nav>
@@ -267,63 +159,29 @@
     <canvas class="canvas"></canvas>
 </section>
     
-<section class="projects-section" id="projects">
-    <!-- Pierwszy rząd (4 projekty) -->
-    <div class="projects-grid">
-        <div class="project-item">
-            <img src="https://i.ibb.co/N23Sw7mf/bentley.jpg" alt="Project 1">
-            <div class="project-overlay">
-                <div class="project-title"></div>
-                <div class="project-category">Graphic Design</div>
-            </div>
-        </div>
-        
-        <div class="project-item">
-            <img src="https://i.ibb.co/tpzkqvss/bluzy.jpg" alt="Project 2">
-            <div class="project-overlay">
-                <div class="project-title"></div>
-                <div class="project-category">Clothing</div>
-            </div>
-        </div>
-        
-        <div class="project-item">
-            <img src="https://i.ibb.co/VY00FnTX/awp.jpg" alt="Project 3">
-            <div class="project-overlay">
-                <div class="project-title"></div>
-                <div class="project-category">3D Renders</div>
-            </div>
-        </div>
-	
-	<div class="project-item">
-            <img src="https://i.ibb.co/vxHmCNjR/ytlogo1-1-2.png" alt="Project 3">
-            <div class="project-overlay">
-                <div class="project-title"></div>
-                <div class="project-category">Logo</div>
-            </div>
-        </div>
-   
+<section class="projects-section">
+  <div class="collage-grid">
+
+    <div class="collage-item">
+      <img src="https://i.ibb.co/LzwdTfrh/bmw3.png" alt="Project">
     </div>
-    
-    <!-- Drugi rząd (3 projekty) -->
-    <div class="projects-grid" style="margin-top: 20px;">
-        <div class="project-item">
-            <img src="https://i.ibb.co/9HzDDmX4/gora.jpg" alt="Project 4">
-            <div class="project-overlay">
-                <div class="project-title"></div>
-                <div class="project-category">Renders</div>
-            </div>
-        </div>
-        
-        <div class="project-item">
-            <img src="https://i.ibb.co/LDrtD7tK/wizytowka.jpg" alt="Project 5">
-            <div class="project-overlay">
-                <div class="project-title"></div>
-                <div class="project-category">Brand Identity</div>
-            </div>
-        </div>
-        
+
+    <div class="collage-item">
+      <img src="https://i.ibb.co/G4pVdDfZ/akvulcan.png" alt="Project">
     </div>
-        
+
+    <div class="collage-item">
+      <img src="https://i.ibb.co/VY00FnTX/awp.jpg" alt="Project">
+    </div>
+
+    <div class="collage-item">
+      <img src="https://i.ibb.co/tMLKh66q/awpredline.png" alt="Project">
+    </div>
+
+  </div>
+</section>
+
+<section>        
         <!-- Loading Work in progress -->
 <div class="loading-section">
     <div class="loading-icon">
