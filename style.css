@@ -193,90 +193,50 @@ nav a:hover {
 /*30.03 ANIMACJA KONIEC*/
 
 
-/* Sekcja projektów */
+/* --- TRUE MASONRY COLLAGE (2 COLUMNS, NO CROPPING, NATURAL HEIGHTS) --- */
+
 .projects-section {
-    min-height: 100vh;
+    margin-top: 50px;
+    padding: 20px;
     background: #000;
-    padding: 100px 40px 40px;
-    transform: translateY(100px);
-    opacity: 0;
-    transition: all 1s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.projects-section.visible {
-    transform: translateY(0);
-    opacity: 1;
+.collage-grid {
+    column-count: 3;          
+    column-gap: 20px;
 }
 
-.projects-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr); /* Zmiana z 2 na 3 kolumny */
-    gap: 20px;
+.collage-item {
+    break-inside: avoid;      /* zapobiega łamaniu elementów */
     margin-bottom: 20px;
-}
-
-@media (max-width: 1024px) {
-    .projects-grid {
-        grid-template-columns: repeat(2, 1fr); /* 2 kolumny na tabletach */
-    }
-}
-
-@media (max-width: 768px) {
-    .projects-grid {
-        grid-template-columns: 1fr; /* 1 kolumna na mobile */
-    }
-}
-
-.project-item {
-    position: relative;
+    border-radius: 18px;
     overflow: hidden;
-    border-radius: 20px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-    transform: scale(0.95);
-    transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
-    will-change: transform;
-    aspect-ratio: 16/9; /* Utrzymuje proporcje 16:9 */
-    background: #1a1a1a; /* Tło przed załadowaniem obrazu */
 }
 
-.project-item:hover {
-    transform: scale(0.98);
-    box-shadow: 0 15px 40px rgba(0,0,0,0.4);
-}
-
-.project-item img {
+.collage-item img {
     width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    height: auto;              /* <<< zdjęcie zachowuje oryginalne proporcje */
     display: block;
+    border-radius: 18px;
 }
 
-.project-item:hover img {
-    transform: scale(1.05);
+/* Hover efekt */
+.collage-item img {
+    transition: transform 0.3s ease;
+}
+.collage-item:hover img {
+    transform: scale(1.03);
 }
 
-.project-overlay {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    padding: 30px;
-    background: linear-gradient(to top, rgba(0,0,0,0.9), transparent);
-    color: white;
+/* MOBILNE – 1 kolumna */
+@media (max-width: 768px) {
+    .collage-grid {
+        column-count: 1;
+    }
 }
 
-.project-title {
-    font-size: 24px;
-    font-weight: 600;
-    margin-bottom: 8px;
-}
 
-.project-category {
-    font-size: 16px;
-    font-weight: 400;
-    opacity: 0.8;
-}
+
 
 /* LOADING SECTION */
 .loading-section {
