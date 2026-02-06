@@ -1,508 +1,363 @@
-// FIXED CURSOR CODE - WORKING VERSION
-document.addEventListener('DOMContentLoaded', function() {
-    const cursor = document.querySelector('.cursor');
-    const cursorF = document.querySelector('.cursor-f');
+// Game state
+let currentWords = [];
+let currentWordIndex = 0;
+let startTime = null;
+let isTestActive = false;
+let correctChars = 0;
+let totalCharsTyped = 0;
+let intervalId = null;
+let wordElements = [];
+let currentLanguage = 'eng'; // 'eng' or 'pl'
+let wordsToGenerate = 10; // Domyślna liczba słów
+
+// DOM elements
+const wordsDisplay = document.getElementById('wordsDisplay');
+const hiddenInput = document.getElementById('hiddenInput');
+const restartBtn = document.getElementById('restartBtn');
+const wpmElement = document.getElementById('wpm');
+const accuracyElement = document.getElementById('accuracy');
+const statsContainer = document.querySelector('.stats');
+const progressElement = document.getElementById('progress');
+const avgWpmElement = document.querySelector('.avg-wpm');
+const languageOptions = document.querySelectorAll('.language-option');
+
+// Word banks
+let wordBankEng = [];
+let wordBankPl = [];
+
+// Load words from files
+async function loadWords() {
+    try {
+        const responseEng = await fetch('words.txt');
+        if (responseEng.ok) {
+            const textEng = await responseEng.text();
+            wordBankEng = textEng.split('\n')
+                .map(word => word.trim().toLowerCase())
+                .filter(word => word.length > 0);
+        }
+        
+        const responsePl = await fetch('words2.txt');
+        if (responsePl.ok) {
+            const textPl = await responsePl.text();
+            wordBankPl = textPl.split('\n')
+                .map(word => word.trim().toLowerCase())
+                .filter(word => word.length > 0);
+        }
+    } catch (error) {
+        console.log('Error loading words:', error.message);
+        wordBankEng = ["monkey", "variable", "method", "english", "object", "layout", "speed", "function", "accuracy", "test"];
+        wordBankPl = ["pies", "kot", "dom", "las", "woda", "niebo", "ziemia", "ogień", "powietrze", "kamień"];
+    }
+}
+
+function getCurrentWordBank() {
+    return currentLanguage === 'eng' ? wordBankEng : wordBankPl;
+}
+
+// Initialize the game
+async function init() {
+    await loadWords();
     
-    if (!cursor || !cursorF) return;
+    // Language switcher
+    languageOptions.forEach(option => {
+        option.addEventListener('click', () => {
+            setLanguage(option.dataset.lang);
+        });
+    });
+
+    // OBSŁUGA WYBORU LICZBY SŁÓW (Naprawione 25 słów)
+    document.querySelectorAll('.count-option').forEach(option => {
+        option.addEventListener('click', () => {
+            document.querySelectorAll('.count-option').forEach(opt => opt.classList.remove('active'));
+            option.classList.add('active');
+            // Wymuszenie konwersji na liczbę, aby slice działał poprawnie
+            wordsToGenerate = Number(option.dataset.count); 
+            restartTest();
+        });
+    });
     
-    // Cursor settings
-    const settings = {
-        size: 8,
-        sizeF: 36,
-        followSpeed: 0.16
-    };
+    generateWords();
     
-    let posX = 0, posY = 0;
-    let mouseX = 0, mouseY = 0;
+    hiddenInput.addEventListener('input', handleInput);
+    hiddenInput.addEventListener('keydown', (e) => {
+        if (e.key === 'Tab' || e.key === 'Escape') {
+            e.preventDefault();
+            restartTest();
+        }
+        if (e.key === ' ') {
+            e.preventDefault();
+            handleSpace();
+        }
+        if (e.key === 'Backspace') {
+            handleBackspace();
+        }
+    });
     
-    // Touch device check
-    if ('ontouchstart' in window) {
-        cursor.style.display = 'none';
-        cursorF.style.display = 'none';
+    document.addEventListener('click', (e) => {
+        if (!e.target.closest('#restartBtn') && !e.target.closest('.language-option') && !e.target.closest('.count-option')) {
+            hiddenInput.focus();
+        }
+    });
+    
+    restartBtn.addEventListener('click', restartTest);
+    
+    const avgWpm = calculateAverageWpm();
+    avgWpmElement.textContent = `avg: ${avgWpm}wpm`;
+    
+    hiddenInput.focus();
+}
+
+function setLanguage(lang) {
+    if (currentLanguage === lang) return;
+    currentLanguage = lang;
+    languageOptions.forEach(option => {
+        option.classList.toggle('active', option.dataset.lang === lang);
+    });
+    restartTest();
+}
+
+function generateWords() {
+    currentWordIndex = 0;
+    currentWords = [];
+    const wordBank = getCurrentWordBank();
+    
+    // Losowe mieszanie
+    const shuffled = [...wordBank].sort(() => 0.5 - Math.random());
+    
+    // Pobranie wybranej liczby słów
+    currentWords = shuffled.slice(0, wordsToGenerate);
+    
+    // Zabezpieczenie na wypadek małego pliku words.txt
+    while (currentWords.length < wordsToGenerate && wordBank.length > 0) {
+        currentWords.push(wordBank[Math.floor(Math.random() * wordBank.length)]);
+    }
+    
+    renderWords();
+    updateProgress();
+}
+
+function renderWords() {
+    wordsDisplay.innerHTML = '';
+    wordElements = [];
+    
+    currentWords.forEach((word, index) => {
+        const wordElement = document.createElement('span');
+        wordElement.className = 'word';
+        wordElement.dataset.index = index;
+        
+        for (let i = 0; i < word.length; i++) {
+            const letterSpan = document.createElement('span');
+            letterSpan.className = 'letter';
+            letterSpan.textContent = word[i];
+            letterSpan.style.color = '#CCB499'; // Tekst nie napisany
+            wordElement.appendChild(letterSpan);
+        }
+        
+        wordsDisplay.appendChild(wordElement);
+        if (index < currentWords.length - 1) {
+            wordsDisplay.appendChild(document.createTextNode(' '));
+        }
+        wordElements.push(wordElement);
+    });
+    
+    if (wordElements[0]) {
+        wordElements[0].classList.add('active');
+        updateCursorPosition(0, wordElements[0]);
+    }
+}
+
+function updateProgress() {
+    progressElement.textContent = `${currentWordIndex + 1}/${currentWords.length}`;
+}
+
+function handleInput(e) {
+    const input = hiddenInput.value;
+    if (!isTestActive && input.length > 0) {
+        startTest();
+    }
+    if (!isTestActive) return;
+
+    const currentWord = currentWords[currentWordIndex];
+    const currentWordElement = wordElements[currentWordIndex];
+    
+    if (input === currentWord && currentWordIndex === currentWords.length - 1) {
+        completeCurrentWord(true);
         return;
     }
     
-    // Set initial cursor size
-    cursor.style.setProperty('--size', settings.size + 'px');
-    cursorF.style.setProperty('--size', settings.sizeF + 'px');
-    
-    // Mouse move event - FIXED VERSION (no scroll interference)
-    document.addEventListener('mousemove', function(e) {
-        mouseX = e.clientX;
-        mouseY = e.clientY;
-        
-        // Update immediate cursor position
-        cursor.style.left = mouseX - settings.size/2 + 'px';
-        cursor.style.top = mouseY - settings.size/2 + 'px';
-    }, { passive: true });
-    
-    // Click animations - FIXED VERSION
-    document.addEventListener('mousedown', function() {
-        // Scale up main cursor
-        cursor.style.transform = 'scale(4.5)';
-        // Scale down follower
-        cursorF.style.transform = 'scale(0.4)';
-    });
-    
-    document.addEventListener('mouseup', function() {
-        // Reset scales with smooth transition
-        cursor.style.transform = 'scale(1)';
-        cursorF.style.transform = 'scale(1)';
-    });
-    
-function animate() {
-    // Calculate new position with easing
-    posX += (mouseX - posX) * settings.followSpeed;
-    posY += (mouseY - posY) * settings.followSpeed;
-    
-    // Apply to follower (REMOVED scroll offset)
-    cursorF.style.left = posX - settings.sizeF/2 + 'px';
-    cursorF.style.top = posY - settings.sizeF/2 + 'px'; // Usunięto scrollY
-    
-    requestAnimationFrame(animate);
-}
-    // Start animation
-    animate();
-});
-// Back to Top Button
-const backToTopBtn = document.querySelector('.back-to-top');
-
-function toggleBackToTop() {
-  if (window.pageYOffset > 300) {
-    backToTopBtn.classList.add('visible');
-  } else {
-    backToTopBtn.classList.remove('visible');
-  }
+    updateLetterHighlighting(input, currentWord, currentWordElement);
+    updateStats();
 }
 
-backToTopBtn.addEventListener('click', () => {
-  window.scrollTo({
-    top: 0,
-    behavior: 'smooth'
-  });
-});
-
-window.addEventListener('scroll', toggleBackToTop);
-toggleBackToTop(); // Initialize
-
-// Scroll indicator functionality
-const scrollIndicator = document.querySelector('.scroll-indicator');
-
-function handleScroll() {
-  if (window.pageYOffset > 50) {
-    scrollIndicator.classList.add('hidden');
-  } else {
-    scrollIndicator.classList.remove('hidden');
-  }
-}
-
-// Initial check
-handleScroll();
-
-// Add scroll event listener
-window.addEventListener('scroll', handleScroll);
-// Initial check
-handleScroll();
-
-// Add scroll event listener
-window.addEventListener('scroll', handleScroll);
-
-// Konfiguracja animacji
-const ANIMATION_CONFIG = {
-  wordDuration: 3000,
-  dotSpeed: 0.04,
-  switchSpeed: 0.15,
-  dotSpacing: 15 // Nowy parametr - odstęp między kropkami
-};
-
-// Reszta zmiennych pozostaje bez zmian
-let isPageVisible = true;
-let currentWordIndex = 0;
-const words = ["PROJECTS", "プロジェクト", "المشاريع", "프로젝트", "ПРОЕКТЫ"];
-
-function handleVisibilityChange() {
-  if (!document.hidden) {
-    // Reset animacji z płynnym przejściem
-    S.Shape.switchShape(S.ShapeBuilder.letter(words[currentWordIndex]), false);
-    setTimeout(() => {
-      isPageVisible = true;
-    }, 100);
-  } else {
-    isPageVisible = false;
-  }
-}
-
-document.addEventListener('visibilitychange', handleVisibilityChange, false);
-
-// Shape Shifter implementation
-var S = {
-  init: function() {
-    S.Drawing.init('.canvas');
-    S.ShapeBuilder.init();
+function handleSpace() {
+    if (!isTestActive || hiddenInput.value.length === 0) return;
     
-    function animateNextWord() {
-      if (isPageVisible) {
-        currentWordIndex = (currentWordIndex + 1) % words.length;
-        S.Shape.switchShape(S.ShapeBuilder.letter(words[currentWordIndex]));
-      }
-      setTimeout(animateNextWord, ANIMATION_CONFIG.wordDuration);
+    const currentWord = currentWords[currentWordIndex];
+    const input = hiddenInput.value;
+    const currentWordElement = wordElements[currentWordIndex];
+    
+    let correctInWord = 0;
+    for (let i = 0; i < Math.min(input.length, currentWord.length); i++) {
+        if (input[i] === currentWord[i]) correctInWord++;
     }
     
-    // Pierwsze uruchomienie z płynną animacją
-    S.Shape.switchShape(S.ShapeBuilder.letter(words[0]), false);
-    setTimeout(animateNextWord, ANIMATION_CONFIG.wordDuration);
-
-    S.Drawing.loop(function() {
-      if (isPageVisible) S.Shape.render();
-    });
-  }
-};
-
-S.Drawing = (function() {
-  var canvas,
-      context,
-      renderFn,
-      requestFrame = window.requestAnimationFrame ||
-                   window.webkitRequestAnimationFrame ||
-                   window.mozRequestAnimationFrame ||
-                   window.oRequestAnimationFrame ||
-                   window.msRequestAnimationFrame ||
-                   function(callback) {
-                     window.setTimeout(callback, 1000 / 60);
-                   };
-
-  return {
-    init: function(el) {
-      canvas = document.querySelector(el);
-      context = canvas.getContext('2d');
-      this.adjustCanvas();
-
-      window.addEventListener('resize', function() {
-        S.Drawing.adjustCanvas();
-      });
-    },
-
-    loop: function(fn) {
-      renderFn = !renderFn ? fn : renderFn;
-      this.clearFrame();
-      if (isPageVisible) {
-        renderFn();
-      }
-      requestFrame.call(window, this.loop.bind(this));
-    },
-
-    adjustCanvas: function() {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
-    },
-
-    clearFrame: function() {
-      context.clearRect(0, 0, canvas.width, canvas.height);
-    },
-
-    getArea: function() {
-      return { w: canvas.width, h: canvas.height };
-    },
-
-    drawCircle: function(p, c) {
-      context.fillStyle = c.render();
-      context.beginPath();
-      context.arc(p.x, p.y, p.z, 0, 2 * Math.PI, true);
-      context.closePath();
-      context.fill();
-    }
-  };
-}());
-
-S.Point = function(args) {
-  this.x = args.x;
-  this.y = args.y;
-  this.z = args.z;
-  this.a = args.a;
-  this.h = args.h;
-};
-
-S.Color = function(r, g, b, a) {
-  this.r = r;
-  this.g = g;
-  this.b = b;
-  this.a = a;
-};
-
-S.Color.prototype = {
-  render: function() {
-    return 'rgba(' + this.r + ',' + this.g + ',' + this.b + ',' + this.a + ')';
-  }
-};
-
-// W S.Dot zmień prędkość kropek
-S.Dot = function(x, y) {
-  this.p = new S.Point({
-    x: x,
-    y: y,
-    z: 5,
-    a: 1,
-    h: 0
-  });
-
-  this.e = ANIMATION_CONFIG.dotSpeed; // Użyj nowej konfiguracji
-  this.s = true;
-  this.c = new S.Color(255, 255, 255, this.p.a);
-  this.t = this.clone();
-  this.q = [];
-};
-
-S.Dot.prototype = {
-  clone: function() {
-    return new S.Point({
-      x: this.p.x,
-      y: this.p.y,
-      z: this.p.z,
-      a: this.p.a,
-      h: this.p.h
-    });
-  },
-
-  _draw: function() {
-    this.c.a = this.p.a;
-    S.Drawing.drawCircle(this.p, this.c);
-  },
-
-  _moveTowards: function(n) {
-    var details = this.distanceTo(n, true),
-        dx = details[0],
-        dy = details[1],
-        d = details[2],
-        e = this.e * d;
-
-    if (this.p.h === -1) {
-      this.p.x = n.x;
-      this.p.y = n.y;
-      return true;
-    }
-
-    if (d > 1) {
-      this.p.x -= ((dx / d) * e);
-      this.p.y -= ((dy / d) * e);
+    correctChars += correctInWord;
+    totalCharsTyped += Math.max(input.length, currentWord.length);
+    
+    if (input === currentWord) {
+        currentWordElement.classList.add('completed');
+        currentWordElement.style.color = '#EBEFEE'; // Tekst napisany
     } else {
-      if (this.p.h > 0) {
-        this.p.h--;
-      } else {
-        return true;
-      }
+        currentWordElement.classList.add('incorrect-word');
+        currentWordElement.style.color = '#BB6C43'; // Zły tekst
     }
-
-    return false;
-  },
-
-  _update: function() {
-    if (this._moveTowards(this.t)) {
-      var p = this.q.shift();
-      if (p) {
-        this.t.x = p.x || this.p.x;
-        this.t.y = p.y || this.p.y;
-        this.t.z = p.z || this.p.z;
-        this.t.a = p.a || this.p.a;
-        this.p.h = p.h || 0;
-      }
-    }
-
-    var d = this.p.a - this.t.a;
-    this.p.a = Math.max(0.1, this.p.a - (d * 0.05));
-    d = this.p.z - this.t.z;
-    this.p.z = Math.max(1, this.p.z - (d * 0.05));
-  },
-
-  distanceTo: function(n, details) {
-    var dx = this.p.x - n.x,
-        dy = this.p.y - n.y,
-        d = Math.sqrt(dx * dx + dy * dy);
-
-    return details ? [dx, dy, d] : d;
-  },
-
-  move: function(p, avoidStatic) {
-    if (!avoidStatic || (avoidStatic && this.distanceTo(p) > 1)) {
-      this.q.push(p);
-    }
-  },
-
-  render: function() {
-    this._update();
-    this._draw();
-  }
-};
-
-S.ShapeBuilder = (function() {
-  var gap = 15,
-      shapeCanvas = document.createElement('canvas'),
-      shapeContext = shapeCanvas.getContext('2d'),
-      fontSize = 500,
-      fontFamily = 'SF Pro Display, -apple-system, BlinkMacSystemFont, sans-serif';
-
-  function fit() {
-    shapeCanvas.width = Math.floor(window.innerWidth / gap) * gap;
-    shapeCanvas.height = Math.floor(window.innerHeight / gap) * gap;
-    shapeContext.fillStyle = 'red';
-    shapeContext.textBaseline = 'middle';
-    shapeContext.textAlign = 'center';
-  }
-
-  function processCanvas() {
-    var pixels = shapeContext.getImageData(0, 0, shapeCanvas.width, shapeCanvas.height).data,
-        dots = [],
-        x = 0,
-        y = 0,
-        fx = shapeCanvas.width,
-        fy = shapeCanvas.height,
-        w = 0,
-        h = 0;
-
-    // Generuj kropki na regularnej siatce
-    for (y = 0; y < shapeCanvas.height; y += gap) {
-      for (x = 0; x < shapeCanvas.width; x += gap) {
-        // Sprawdź czy w tym miejscu jest tekst
-        var p = (Math.floor(y) * shapeCanvas.width + Math.floor(x)) * 4;
-        if (pixels[p + 3] > 0) { // Tylko jeśli jest część tekstu
-          dots.push(new S.Point({
-            x: x,
-            y: y
-          }));
-        }
-        
-        // Aktualizuj rozmiary obszaru
-        w = x > w ? x : w;
-        h = y > h ? y : h;
-        fx = x < fx ? x : fx;
-        fy = y < fy ? y : fy;
-      }
-    }
-
-    return { dots: dots, w: w + fx, h: h + fy };
-  }
-
-  function setFontSize(s) {
-    shapeContext.font = 'bold ' + s + 'px ' + fontFamily;
-  }
-
-  function init() {
-    fit();
-    window.addEventListener('resize', fit);
-  }
-
-  return {
-    init: init,
     
-    letter: function(l) {
-      var s = 0;
-      setFontSize(fontSize);
-      s = Math.min(fontSize,
-                  (shapeCanvas.width / shapeContext.measureText(l).width) * 0.8 * fontSize,
-                  (shapeCanvas.height / fontSize) * 0.8 * fontSize);
-      setFontSize(s);
-
-      shapeContext.clearRect(0, 0, shapeCanvas.width, shapeCanvas.height);
-      shapeContext.fillText(l, shapeCanvas.width / 2, shapeCanvas.height / 2);
-
-      return processCanvas();
+    if (currentWordIndex === currentWords.length - 1) {
+        finishTest();
+    } else {
+        moveToNextWord();
     }
-  };
-}());
-
-S.Shape = (function() {
-  var dots = [],
-      width = 0,
-      height = 0,
-      cx = 0,
-      cy = 0;
-
-  function compensate() {
-    var a = S.Drawing.getArea();
-    cx = a.w / 2 - width / 2;
-    cy = a.h / 2 - height / 2;
-  }
-
-  return {
-    shuffleIdle: function() {
-      // Wyłączone losowe poruszanie kropek
-    },
-
-    switchShape: function(n, fast) {
-      var size, a = S.Drawing.getArea();
-      width = n.w;
-      height = n.h;
-      compensate();
-
-      // Zachowaj tylko kropki potrzebne dla nowego kształtu
-      if (n.dots.length < dots.length) {
-        dots = dots.slice(0, n.dots.length);
-      } else if (n.dots.length > dots.length) {
-        size = n.dots.length - dots.length;
-        for (var d = 1; d <= size; d++) {
-          dots.push(new S.Dot(a.w / 2, a.h / 2));
-        }
-      }
-
-      var d = 0, i = 0;
-      while (n.dots.length > 0) {
-        i = Math.floor(Math.random() * n.dots.length);
-        dots[d].e = fast ? 0.25 : 0.11;
-
-        dots[d].s = true;
-        dots[d].move(new S.Point({
-          x: n.dots[i].x + cx,
-          y: n.dots[i].y + cy,
-          a: 1,
-          z: 5,
-          h: 0
-        }));
-
-        n.dots = n.dots.slice(0, i).concat(n.dots.slice(i + 1));
-        d++;
-      }
-    },
-
-    render: function() {
-      for (var d = 0; d < dots.length; d++) {
-        dots[d].render();
-      }
-    }
-  };
-}());
-
-// Initialize when fonts are loaded
-WebFont.load({
-  custom: {
-    families: ['SF Pro Display'],
-    urls: ['https://fonts.cdnfonts.com/css/sf-pro-display']
-  },
-  active: function() {
-    S.init();
-  },
-  inactive: function() {
-    // Fallback if fonts fail to load
-    setTimeout(S.init, 1000);
-  }
-});
-
-// Animacja projektów
-function animateProjects() {
-    const projectItems = document.querySelectorAll('.project-item');
-    const windowHeight = window.innerHeight;
-    const triggerPoint = windowHeight * 0.8;
-
-    projectItems.forEach((item, index) => {
-        const itemTop = item.getBoundingClientRect().top;
-        
-        if (itemTop < triggerPoint) {
-            item.classList.add('animate');
-        } else {
-            item.classList.remove('animate'); // Reset animacji gdy projekt znika z widoku
-        }
-    });
 }
 
-// Obsługa scrollowania
-window.addEventListener('scroll', animateProjects);
-window.addEventListener('load', animateProjects); // Animacja przy pierwszym ładowaniu
+function handleBackspace() {
+    if (!isTestActive) return;
+    updateLetterHighlighting(hiddenInput.value, currentWords[currentWordIndex], wordElements[currentWordIndex]);
+}
 
+function startTest() {
+    isTestActive = true;
+    startTime = Date.now();
+    correctChars = 0;
+    totalCharsTyped = 0;
+    intervalId = setInterval(updateStats, 100);
+}
+
+// STABILNY KURSOR (nie przesuwa liter)
+function updateCursorPosition(cursorPos, wordElement) {
+    const oldCursor = document.querySelector('.cursor');
+    if (oldCursor) oldCursor.remove();
+    
+    const letters = wordElement.querySelectorAll('.letter');
+    const cursor = document.createElement('span');
+    cursor.className = 'cursor';
+    
+    if (letters.length > 0) {
+        if (cursorPos < letters.length) {
+            const targetLetter = letters[cursorPos];
+            cursor.style.left = targetLetter.offsetLeft + "px";
+            cursor.style.top = targetLetter.offsetTop + "px";
+        } else {
+            const lastLetter = letters[letters.length - 1];
+            cursor.style.left = (lastLetter.offsetLeft + lastLetter.offsetWidth) + "px";
+            cursor.style.top = lastLetter.offsetTop + "px";
+        }
+    }
+    wordElement.appendChild(cursor);
+}
+
+function updateLetterHighlighting(input, correctWord, wordElement) {
+    const letters = wordElement.querySelectorAll('.letter');
+    
+    for (let i = 0; i < Math.max(input.length, correctWord.length); i++) {
+        if (i < letters.length) {
+            const letter = letters[i];
+            if (i < input.length) {
+                if (input[i] === correctWord[i]) {
+                    letter.className = 'letter typed';
+                    letter.style.color = '#EBEFEE';
+                } else {
+                    letter.className = 'letter incorrect';
+                    letter.style.color = '#BB6C43';
+                }
+            } else {
+                letter.className = 'letter';
+                letter.style.color = '#CCB499';
+            }
+        } else if (i < input.length) {
+            // Obsługa dodatkowych liter
+            const extraLetter = document.createElement('span');
+            extraLetter.className = 'letter incorrect extra';
+            extraLetter.textContent = input[i];
+            extraLetter.style.color = '#BB6C43';
+            wordElement.appendChild(extraLetter);
+        }
+    }
+    
+    // Usuwanie nadmiarowych liter extra
+    const allLetters = wordElement.querySelectorAll('.letter');
+    for (let i = allLetters.length - 1; i >= correctWord.length; i--) {
+        if (i >= input.length) {
+            wordElement.removeChild(allLetters[i]);
+        }
+    }
+    
+    updateCursorPosition(input.length, wordElement);
+}
+
+function completeCurrentWord(isLastWord = false) {
+    const currentWord = currentWords[currentWordIndex];
+    correctChars += currentWord.length;
+    totalCharsTyped += currentWord.length;
+    wordElements[currentWordIndex].classList.add('completed');
+    wordElements[currentWordIndex].style.color = '#EBEFEE';
+    
+    if (isLastWord) finishTest();
+    else moveToNextWord();
+}
+
+function moveToNextWord() {
+    wordElements[currentWordIndex].classList.remove('active');
+    const oldCursor = wordElements[currentWordIndex].querySelector('.cursor');
+    if (oldCursor) oldCursor.remove();
+    
+    hiddenInput.value = '';
+    currentWordIndex++;
+    wordElements[currentWordIndex].classList.add('active');
+    updateCursorPosition(0, wordElements[currentWordIndex]);
+    updateProgress();
+}
+
+function updateStats() {
+    if (!startTime || !isTestActive) return;
+    const timeElapsed = (Date.now() - startTime) / 1000 / 60;
+    const wpm = timeElapsed > 0 ? Math.round((correctChars / 5) / timeElapsed) : 0;
+    const accuracy = totalCharsTyped > 0 ? Math.round((correctChars / totalCharsTyped) * 100) : 100;
+    
+    wpmElement.textContent = wpm;
+    accuracyElement.textContent = `${accuracy}%`;
+}
+
+function calculateAverageWpm() {
+    const history = JSON.parse(localStorage.getItem('typeshitHistory') || '[]');
+    if (history.length === 0) return 0;
+    return Math.round(history.reduce((a, b) => a + b, 0) / history.length);
+}
+
+function finishTest() {
+    isTestActive = false;
+    clearInterval(intervalId);
+    
+    const timeElapsed = (Date.now() - startTime) / 1000 / 60;
+    const finalWpm = Math.round((correctChars / 5) / timeElapsed);
+    
+    const history = JSON.parse(localStorage.getItem('typeshitHistory') || '[]');
+    history.push(finalWpm);
+    localStorage.setItem('typeshitHistory', JSON.stringify(history.slice(-100)));
+    
+    avgWpmElement.textContent = `avg: ${calculateAverageWpm()}wpm`;
+    statsContainer.classList.add('show');
+    progressElement.textContent = `Test completed!`;
+}
+
+function restartTest() {
+    isTestActive = false;
+    startTime = null;
+    clearInterval(intervalId);
+    hiddenInput.value = '';
+    generateWords();
+    statsContainer.classList.remove('show');
+    updateProgress();
+    hiddenInput.focus();
+}
+
+document.addEventListener('DOMContentLoaded', init);

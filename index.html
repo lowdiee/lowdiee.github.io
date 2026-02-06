@@ -1,382 +1,73 @@
 <!DOCTYPE html>
 <html lang="en">
-<!--DESIGNED AND DEVELOPED BY LOWDIEE 03.2025©-->
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/style.css">
-    <!-- Web Font Loader i bezpośrednie importy czcionek -->
-    <script src="https://ajax.googleapis.com/ajax/libs/webfont/1.6.26/webfont.js"></script>
-    <link href="https://fonts.cdnfonts.com/css/sf-pro-display" rel="stylesheet">
-    <link href="https://fonts.cdnfonts.com/css/fake-receipt" rel="stylesheet">
-    <title>Portfolio</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-        }
-        
-        /* Tymczasowe style podczas ładowania */
-        .wf-loading body {
-            visibility: hidden;
-        }
-        
-        .wf-active body, .wf-inactive body {
-            visibility: visible;
-        }
-        
-        body {
-            background-color: #000;
-            color: #fff;
-            overflow-x: hidden;
-            font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-        }
-        
-        
-        body {
-            background-color: #000;
-            color: #fff;
-            overflow-x: hidden;
-            font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, sans-serif;
-        }
-
-        
-        /* Hero Section */
-        .hero {
-            height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-            overflow: hidden;
-        }
-
-        
-        
-  /* Shape Shifter Styles */
-    .shape-shifter {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        width: 100%;
-        height: 100%;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        z-index: -1;
-    }
-
-    .shape-shifter svg {
-        width: 100%;
-        height: auto;
-        max-width: 800px;
-    }
-
-    .shape-shifter path {
-        fill: none;
-        stroke: none;
-    }
-
-    .shape-shifter text {
-        font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, sans-serif;
-        font-weight: 700;
-        text-transform: uppercase;
-        letter-spacing: 5px;
-        font-size: 10vw;
-        fill: white;
-    }
-
-    @media (max-width: 768px) {
-        .shape-shifter text {
-            font-size: 15vw;
-        }
-    }
-
-    /* Particle styles */
-    .shape-shifter use {
-        opacity: 0;
-    }
-
-    .shape-shifter svg.morphing use {
-        opacity: 1;
-    }
-
-    /* Gradient for text */
-    svg defs linearGradient stop:nth-child(1) {
-        stop-color: #ffffff;
-    }
-    svg defs linearGradient stop:nth-child(2) {
-        stop-color: rgba(255,255,255,0.3);
-    }
-   
-
-    </style>
+    <title>TypeShit - Typing Test</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400&display=swap" rel="stylesheet">
+    <!-- Roboto Mono dla całej strony -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-<div class="noise-overlay" aria-hidden="true"></div>
-	<div class="cursor"></div>
-<div class="cursor-f"></div>
-<!-- PRZYCISK BACK TO THE TOP -->
-<button class="back-to-top" style="font-family: 'Fake Receipt', monospace">
-  <div class="text" style="font-family: inherit">
-    <span style="font-family: inherit">BACK</span>
-    <span style="font-family: inherit">TO</span>
-    <span style="font-family: inherit">TOP</span>
-  </div>
-  <div class="clone" style="font-family: inherit">
-    <span style="font-family: inherit">BACK</span>
-    <span style="font-family: inherit">TO</span>
-    <span style="font-family: inherit">TOP</span>
-  </div>
-  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-    <path d="M5 15l7-7 7 7" stroke-linecap="round" stroke-linejoin="round"/>
-  </svg>
-</button>
-
-
-    <nav>
- <div class="nav-links">
-            <a href="#" class="projects-link">PROJECTS</a>
+    <div class="container">
+        <div class="header">
+            <div class="logo">
+                <span class="icon">⌨️</span>typeshit
+            </div>
+            <div class="user-info">
+                <div class="language-selector">
+                    <span class="language-option active" data-lang="eng">eng</span>
+                    <span class="language-separator">/</span>
+                    <span class="language-option" data-lang="pl">pl</span>
+                </div>
+                <span class="avg-wpm">avg: 0wpm</span>
+            </div>
         </div>
-        <div class="time-display" id="timeDisplay"></div>
-    </nav>
-    
-<div class="scroll-indicator">
-  <div class="dots"></div>
+
+        <div class="stats">
+            <div class="stat">
+                <div class="stat-value" id="wpm">0</div>
+                <div class="stat-label">wpm</div>
+            </div>
+            <div class="stat">
+                <div class="stat-value" id="accuracy">100%</div>
+                <div class="stat-label">accuracy</div>
+            </div>
+        </div>
+
+<div class="word-count-selector">
+    <span class="count-option" data-count="5">5</span>
+    <span class="count-option active" data-count="10">10</span>
+    <span class="count-option" data-count="25">25</span>
 </div>
-	
-<section class="hero">
-    <!-- Wideo w tle -->
-    <video class="hero-bg" autoplay muted loop playsinline>
-        <source src="https://cdn.videy.co/2FmKleiW1.mp4" type="video/mp4">
-        <source src="https://cdn.discordapp.com/attachments/1314337759993004053/1357009025920798911/Gradient-1.webm?ex=67eea4a3&is=67ed5323&hm=2d29a9b9efc5e77a53ad61fd1bc17fce9d997759700ab105a9877c769ee41b71&" type="video/webm">
-    </video>
-    
-    <!-- Canvas dla efektu shape shifter -->
-    <canvas class="canvas"></canvas>
-</section>
-    
-<section class="projects-section">
-  <div class="collage-grid">
 
-    <div class="collage-item">
-      <img src="https://i.ibb.co/jPFjpn0R/awpredline.jpg" alt="Project">
-    </div>
+<div class="progress" id="progress">1/10</div>
 
-    <div class="collage-item">
-      <img src="https://i.ibb.co/rG7zzrRz/Untitled.jpg" alt="Project">
-    </div>
-
-	      <div class="collage-item">
-      <img src="https://i.ibb.co/B2bBghmx/supra.jpg" alt="Project">
-    </div>
-
-    <div class="collage-item">
-      <img src="https://i.ibb.co/nNWkKnPt/awp-lightning-strike.jpg" alt="Project">
-    </div>
-
-    <div class="collage-item">
-      <img src="https://i.ibb.co/5XXTHNkT/akvulcan.jpg" alt="Project">
-    </div>
-
-	  <div class="collage-item">
-		  <img src="https://i.ibb.co/V0C5xCtV/porsche2.jpg" alt="Project">
-	  </div>
-
-	      <div class="collage-item">
-      <img src="https://i.ibb.co/TD96w9LD/bmw3.jpg" alt="Project">
-    </div>
-
-	  	      <div class="collage-item">
-      <img src="https://i.ibb.co/7dSC0ZwZ/porschelback.jpg" alt="Project">
-    </div>
-
-	      <div class="collage-item">
-      <img src="https://i.ibb.co/XfmrMZmq/biurko.jpg" alt="Project">
-    </div>
-
-	  
-  </div>
-</section>
-
-<section>        
-        <!-- Loading Work in progress -->
-<div class="loading-section">
-    <div class="loading-icon">
-        <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" 
-             width="40px" height="40px" viewBox="0 0 40 40" xml:space="preserve">
-          <path opacity="0.2" fill="#438AC8" d="M20.201,5.169c-8.254,0-14.946,6.692-14.946,14.946c0,8.255,6.692,14.946,14.946,14.946
-            s14.946-6.691,14.946-14.946C35.146,11.861,28.455,5.169,20.201,5.169z M20.201,31.749c-6.425,0-11.634-5.208-11.634-11.634
-            c0-6.425,5.209-11.634,11.634-11.634c6.425,0,11.633,5.209,11.633,11.634C31.834,26.541,26.626,31.749,20.201,31.749z"/>
-          <path fill="#438AC8" d="M26.013,10.047l1.654-2.866c-2.198-1.272-4.743-2.012-7.466-2.012h0v3.312h0
-            C22.32,8.481,24.301,9.057,26.013,10.047z">
-            <animateTransform attributeType="xml"
-              attributeName="transform"
-              type="rotate"
-              from="0 20 20"
-              to="360 20 20"
-              dur="0.5s"
-              repeatCount="indefinite"/>
-          </path>
-        </svg>
-    </div>
-    <p class="loading-text">WORK IN PROGRESS</p>
-</div>
-        
-    </section>
-    
-  
-<script src="script.js"></script>
-<script>
-    WebFont.load({
-        // konfiguracja WebFont...
-    });
-</script>
-   <script>
-   
-        
-    
-
-    // Time display functionality
-    const timeDisplay = document.getElementById('timeDisplay');
-    let isHovering = false;
-    let cetInterval, gmtInterval;
-
-    function updateCET() {
-        const now = new Date();
-        const cetOptions = {
-            timeZone: 'Europe/Paris',
-            hour: '2-digit',
-            minute: '2-digit',
-            second: '2-digit',
-            hour12: false
-        };
-        timeDisplay.textContent = `CET ${now.toLocaleTimeString('en-GB', cetOptions)}`;
-    }
-
-    function updateGMT() {
-        const now = new Date();
-        const gmtOptions = {
-            timeZone: 'GMT',
-            hour: '2-digit',
-            minute: '2-digit',
-            second: '2-digit',
-            hour12: false
-        };
-        timeDisplay.textContent = `GMT ${now.toLocaleTimeString('en-GB', gmtOptions)}`;
-    }
-
-    // Initial setup
-    function setupTimeDisplay() {
-        // Clear any existing intervals
-        clearInterval(cetInterval);
-        clearInterval(gmtInterval);
-
-        if (isHovering) {
-            updateGMT();
-            gmtInterval = setInterval(updateGMT, 1000);
-        } else {
-            updateCET();
-            cetInterval = setInterval(updateCET, 1000);
-        }
-    }
-
-    // Hover effects for time display
-    timeDisplay.addEventListener('mouseenter', () => {
-        isHovering = true;
-        setupTimeDisplay();
-    });
-
-    timeDisplay.addEventListener('mouseleave', () => {
-        isHovering = false;
-        setupTimeDisplay();
-    });
-
-    // Initialize
-    setupTimeDisplay();
-        
-        // Scroll reveal animation for projects section
-        const projectsSection = document.getElementById('projects');
-        
-        function checkScroll() {
-            const sectionTop = projectsSection.getBoundingClientRect().top;
-            const windowHeight = window.innerHeight;
+        <div class="typing-container">
+            <div class="words-display" id="wordsDisplay">
+                <!-- Words will be loaded here -->
+            </div>
             
-            if (sectionTop < windowHeight * 0.75) {
-                projectsSection.classList.add('visible');
-                window.removeEventListener('scroll', checkScroll);
-            }
-        }
-        
-        window.addEventListener('scroll', checkScroll);
-        window.addEventListener('load', checkScroll);
-        
-        // Simple parallax effect for hero section only
-        const heroBg = document.querySelector('.hero-bg');
-        
-        window.addEventListener('scroll', () => {
-            const scrollPosition = window.pageYOffset;
-            heroBg.style.transform = `translateY(${scrollPosition * 0.5}px)`;
-            typingText.style.transform = `translateY(${scrollPosition * 0.3}px)`;
-        });
-    </script>
-      <script>
-        // Inicjalizacja Web Font Loader
-        WebFont.load({
-            custom: {
-                families: ['SF Pro Display', 'Fake Receipt'],
-                urls: [
-                    'https://fonts.cdnfonts.com/css/sf-pro-display',
-                    'https://fonts.cdnfonts.com/css/fake-receipt'
-                ]
-            },
-            timeout: 2000
-        });
+            <!-- Hidden input for capturing keystrokes -->
+            <input type="text" class="hidden-input" id="hiddenInput" autocomplete="off" autocorrect="off" 
+                   autocapitalize="off" spellcheck="false">
+            
+            <div class="restart-info">
+                <span id="restartBtn">restart test</span> or <kbd>tab</kbd>
+            </div>
+        </div>
 
-        // Fallback jeśli czcionki się nie załadują
-        setTimeout(function() {
-            if (!document.fonts || !document.fonts.check('1em SF Pro Display')) {
-                document.documentElement.classList.add('no-sf-pro');
-            }
-            if (!document.fonts || !document.fonts.check('1em Fake Receipt')) {
-                document.documentElement.classList.add('no-fake-receipt');
-            }
-        }, 2500);
-    </script>
-<script>
-// Automatic image optimization with Cloudflare or Imgix
-document.addEventListener('DOMContentLoaded', function() {
-  const images = document.querySelectorAll('img[data-src]');
-  images.forEach(img => {
-    const src = img.dataset.src;
-    // Add compression parameters (example for Cloudflare CDN)
-    if(src.includes('i.ibb.co')) { // Jeśli używasz imgbb
-      img.dataset.src = src + '?width=1200&quality=80';
-    }
-  });
-});
-</script>
+        <div class="footer">
+            <div class="footer-links">
+                @lowdiee - 2026
+            </div>
+            <div class="version">v1.0.0</div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

@@ -1,0 +1,377 @@
+@font-face {
+    font-family: "CoolveticaLight";
+    src: url("https://db.onlinewebfonts.com/t/5d474fd2ebc6ef77c9bf3219391bed9c.eot");
+    src: url("https://db.onlinewebfonts.com/t/5d474fd2ebc6ef77c9bf3219391bed9c.eot?#iefix")format("embedded-opentype"),
+    url("https://db.onlinewebfonts.com/t/5d474fd2ebc6ef77c9bf3219391bed9c.woff2") format("woff2"),
+    url("https://db.onlinewebfonts.com/t/5d474fd2ebc6ef77c9bf3219391bed9c.woff") format("woff"),
+    url("https://db.onlinewebfonts.com/t/5d474fd2ebc6ef77c9bf3219391bed9c.ttf") format("truetype"),
+    url("https://db.onlinewebfonts.com/t/5d474fd2ebc6ef77c9bf3219391bed9c.svg#CoolveticaRg-Regular") format("svg");
+    font-style: normal;
+    font-weight: normal;
+    font-display: swap;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: #3c3a37; /* Tło strony */
+    color: #EBEFEE; /* Tekst napisany */
+    font-family: 'Roboto Mono', 'Courier New', monospace;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+
+.container {
+    width: 100%;
+    max-width: 1100px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* Header */
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    padding: 20px 0;
+    margin-bottom: 40px;
+}
+
+.logo {
+    font-size: 2.2rem;
+    font-weight: 700;
+    color: #e2b714;
+    letter-spacing: -1px;
+    font-family: 'Roboto Mono', 'Courier New', monospace;
+}
+
+.logo .icon {
+    color: #e2b714;
+    margin-right: 5px;
+}
+
+.user-info {
+    font-size: 1.1rem;
+    color: #CCB499; /* Tekst nie napisany */
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    font-family: 'Roboto Mono', 'Courier New', monospace;
+}
+
+/* Language Selector */
+.language-selector {
+    background: rgba(0, 0, 0, 0.2);
+    padding: 5px 15px;
+    border-radius: 5px;
+    font-family: 'Roboto Mono', 'Courier New', monospace;
+    display: flex;
+    gap: 5px;
+}
+
+.language-option {
+    cursor: pointer;
+    padding: 2px 5px;
+    border-radius: 3px;
+    transition: background-color 0.2s;
+}
+
+.language-option.active {
+    background-color: rgba(226, 183, 20, 0.3);
+    color: #e2b714;
+}
+
+.language-option:hover {
+    background-color: rgba(226, 183, 20, 0.2);
+}
+
+.language-separator {
+    color: #CCB499;
+}
+
+.avg-wpm {
+    color: #e2b714;
+    font-family: 'Roboto Mono', 'Courier New', monospace;
+}
+
+/* Stats - shown only after test */
+.stats {
+    display: none;
+    gap: 100px;
+    margin-bottom: 40px;
+    text-align: center;
+}
+
+.stats.show {
+    display: flex;
+}
+
+.stat-value {
+    font-size: 4rem;
+    font-weight: 700;
+    color: #e2b714;
+    line-height: 1;
+    min-width: 120px;
+    font-family: 'Roboto Mono', 'Courier New', monospace;
+}
+
+.stat-label {
+    font-size: 1rem;
+    color: #CCB499; /* Tekst nie napisany */
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-top: 10px;
+    font-family: 'Roboto Mono', 'Courier New', monospace;
+}
+
+/* Progress */
+.progress {
+    font-size: 1.5rem;
+    color: #CCB499; /* Tekst nie napisany */
+    margin-bottom: 30px;
+    text-align: center;
+    font-family: 'Roboto Mono', 'Courier New', monospace;
+}
+
+/* Typing Container */
+.typing-container {
+    width: 100%;
+    max-width: 1000px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    cursor: text;
+}
+
+.words-display {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 12px 25px;
+    margin-bottom: 50px;
+    padding: 30px;
+    width: 100%;
+    min-height: 180px;
+    line-height: 1.8;
+    text-align: center;
+    font-size: 2.2rem; /* Możesz nieco zmniejszyć do 2.0rem, bo Inter jest optycznie większy */
+    letter-spacing: -0.02em; /* Inter wygląda świetnie z lekko ujemnym spacingiem */
+    
+    /* Zmiana czcionki na Inter */
+    font-family: 'Inter', sans-serif;
+    font-weight: 400; 
+}
+}
+
+/* Aktualne słowo */
+.word.active {
+    position: relative;
+}
+
+/* Znajdź sekcję .word i dodaj position: relative */
+.word {
+    padding: 2px 0;
+    border-radius: 3px;
+    transition: background-color 0.1s;
+    position: relative; /* Dodaj to, aby kursor trzymał się słowa */
+    display: inline-block; /* Upewnij się, że to jest tutaj */
+    color: #CCB499; 
+}
+
+/* Zamień cały blok .cursor na ten */
+.cursor {
+    position: absolute; /* Kursor nie zajmuje już miejsca w tekście */
+    width: 2px;
+    height: 1.2em; /* Dopasuj do wysokości fontu */
+    background-color: #e2b714;
+    animation: blink 1s infinite;
+    z-index: 10;
+    transition: left 0.1s ease; /* Opcjonalnie: kursor będzie płynniej płynął */
+}
+
+/* Przepisane słowa - EBEFEE */
+.word.completed {
+    color: #EBEFEE !important; /* Tekst napisany (#EBEFEE) */
+}
+
+/* Literki które już wpisałeś - stają się EBEFEE */
+.letter.typed {
+    color: #EBEFEE !important; /* Tekst napisany (#EBEFEE) */
+}
+
+/* Błędne literki - BB6C43 */
+.letter.incorrect {
+    color: #BB6C43 !important; /* Zły tekst (#BB6C43) */
+    background-color: rgba(187, 108, 67, 0.1);
+    border-radius: 2px;
+}
+
+/* Dodatkowe literki poza słowem */
+.letter.extra {
+    color: #BB6C43 !important; /* Zły tekst (#BB6C43) */
+    text-decoration: underline;
+}
+
+/* Całe słowo błędne */
+.word.incorrect-word {
+    color: #BB6C43 !important; /* Zły tekst (#BB6C43) */
+}
+
+@keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0; }
+}
+
+/* Hidden input - invisible but captures typing */
+.hidden-input {
+    position: absolute;
+    opacity: 0;
+    height: 0;
+    width: 0;
+    pointer-events: none;
+}
+
+.word-count-selector {
+    display: flex;
+    justify-content: center; /* Wyśrodkowanie w poziomie */
+    gap: 15px;
+    margin-bottom: 10px; /* Odstęp od licznika 1/5 */
+    font-family: 'Roboto Mono', monospace;
+    font-size: 1rem;
+}
+
+.count-option {
+    cursor: pointer;
+    color: #CCB499; /* Kolor nie napisany */
+    transition: color 0.2s;
+}
+
+.count-option.active {
+    color: #e2b714; /* Twój złoty kolor akcentowy */
+    font-weight: 700;
+}
+
+.count-option:hover {
+    color: #EBEFEE; /* Kolor po najechaniu */
+}
+
+/* Restart Info */
+.restart-info {
+    color: #CCB499; /* Tekst nie napisany */
+    font-size: 1rem;
+    text-align: center;
+    margin-top: 20px;
+    font-family: 'Roboto Mono', 'Courier New', monospace;
+}
+
+.restart-info span {
+    background: rgba(0, 0, 0, 0.2);
+    padding: 8px 16px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.2s;
+    display: inline-block;
+    margin-right: 10px;
+    font-family: 'Roboto Mono', 'Courier New', monospace;
+}
+
+.restart-info span:hover {
+    background: rgba(0, 0, 0, 0.3);
+}
+
+.restart-info kbd {
+    background: rgba(0, 0, 0, 0.2);
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-family: 'Roboto Mono', monospace;
+    margin: 0 4px;
+}
+
+/* Footer */
+.footer {
+    width: 100%;
+    text-align: center;
+    padding: 30px 0;
+    color: #CCB499; /* Tekst nie napisany */
+    font-size: 0.9rem;
+    border-top: 1px solid rgba(204, 180, 153, 0.3);
+    margin-top: 60px;
+    font-family: 'Roboto Mono', 'Courier New', monospace;
+}
+
+.footer-links {
+    margin-bottom: 10px;
+}
+
+.version {
+    color: rgba(204, 180, 153, 0.6);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .container {
+        padding: 10px;
+    }
+    
+    .header {
+        flex-direction: column;
+        gap: 15px;
+        text-align: center;
+    }
+    
+    .logo {
+        font-size: 2rem;
+    }
+    
+    .user-info {
+        flex-direction: column;
+        gap: 10px;
+    }
+    
+    .stats {
+        gap: 50px;
+    }
+    
+    .stat-value {
+        font-size: 3rem;
+        min-width: 100px;
+    }
+    
+    .words-display {
+        font-size: 1.8rem;
+        gap: 8px 15px;
+        padding: 20px;
+        min-height: 150px;
+    }
+    
+    .restart-info {
+        font-size: 0.9rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .words-display {
+        font-size: 1.5rem;
+        gap: 5px 10px;
+        padding: 15px;
+    }
+    
+    .stats {
+        gap: 30px;
+    }
+    
+    .stat-value {
+        font-size: 2.5rem;
+    }
+}
