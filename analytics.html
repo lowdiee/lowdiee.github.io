@@ -1,257 +1,364 @@
-```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <meta charset="UTF-8" />
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  />
 
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>LOWDIEE Dashboard</title>
 
-<title>LOWDIEE Dashboard</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
 
-<style>
+    *{
+      margin:0;
+      padding:0;
+      box-sizing:border-box;
+    }
 
-*{
-  margin:0;
-  padding:0;
-  box-sizing:border-box;
-}
+    body{
+      background:#050505;
+      color:white;
+      font-family:
+      -apple-system,
+      BlinkMacSystemFont,
+      "Segoe UI",
+      sans-serif;
 
-body{
-  background:#050505;
-  color:white;
-  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
-  min-height:100vh;
-  overflow-x:hidden;
-  padding:28px;
-}
+      min-height:100vh;
+      overflow-x:hidden;
+      padding:28px;
+    }
 
-body::before{
-  content:"";
-  position:fixed;
-  inset:0;
-  background:
-  radial-gradient(circle at top left, rgba(88,101,242,.15), transparent 30%),
-  radial-gradient(circle at bottom right, rgba(0,180,255,.12), transparent 30%);
-  z-index:-2;
-}
+    body::before{
+      content:"";
+      position:fixed;
+      inset:0;
 
-body::after{
-  content:"";
-  position:fixed;
-  inset:0;
-  backdrop-filter:blur(100px);
-  z-index:-1;
-}
+      background:
+      radial-gradient(
+        circle at top left,
+        rgba(88,101,242,.18),
+        transparent 28%
+      ),
 
-.container{
-  max-width:1450px;
-  margin:auto;
-}
+      radial-gradient(
+        circle at bottom right,
+        rgba(0,180,255,.14),
+        transparent 30%
+      );
 
-.navbar{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  margin-bottom:28px;
-  flex-wrap:wrap;
-  gap:20px;
-}
+      z-index:-2;
+    }
 
-.logo{
-  font-size:40px;
-  font-weight:800;
-  letter-spacing:-2px;
-}
+    body::after{
+      content:"";
+      position:fixed;
+      inset:0;
+      backdrop-filter:blur(120px);
+      z-index:-1;
+    }
 
-.logo span{
-  opacity:.4;
-  font-weight:500;
-}
+    .container{
+      max-width:1400px;
+      margin:auto;
+    }
 
-.live{
-  display:flex;
-  align-items:center;
-  gap:10px;
-  padding:12px 18px;
-  border-radius:999px;
-  background:rgba(255,255,255,.05);
-  border:1px solid rgba(255,255,255,.08);
-  backdrop-filter:blur(20px);
-  font-size:13px;
-}
+    .navbar{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      margin-bottom:26px;
+      gap:20px;
+      flex-wrap:wrap;
+    }
 
-.live-dot{
-  width:8px;
-  height:8px;
-  border-radius:50%;
-  background:#71ffb4;
-  box-shadow:0 0 12px #71ffb4;
-  animation:pulse 1.4s infinite;
-}
+    .logo{
+      font-size:34px;
+      font-weight:700;
+      letter-spacing:-1px;
+    }
 
-@keyframes pulse{
-  0%{transform:scale(1);}
-  50%{transform:scale(1.5);}
-  100%{transform:scale(1);}
-}
+    .logo span{
+      opacity:.4;
+      font-weight:400;
+    }
 
-.stats-grid{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
-  gap:18px;
-  margin-bottom:22px;
-}
+    .live{
+      display:flex;
+      align-items:center;
+      gap:10px;
 
-.card{
-  position:relative;
-  overflow:hidden;
-  padding:28px;
-  border-radius:32px;
-  background:rgba(255,255,255,.05);
-  border:1px solid rgba(255,255,255,.08);
-  backdrop-filter:blur(24px);
-  transition:.3s;
-}
+      padding:12px 18px;
 
-.card:hover{
-  transform:translateY(-4px);
-  border-color:rgba(255,255,255,.14);
-}
+      border-radius:999px;
 
-.label{
-  font-size:14px;
-  opacity:.5;
-  margin-bottom:16px;
-}
+      background:
+      rgba(255,255,255,.05);
 
-.value{
-  font-size:44px;
-  font-weight:800;
-  letter-spacing:-2px;
-}
+      border:
+      1px solid rgba(255,255,255,.08);
 
-.green{
-  color:#72ffb5;
-}
+      backdrop-filter:blur(20px);
 
-.chart-card{
-  padding:32px;
-  border-radius:34px;
-  background:rgba(255,255,255,.05);
-  border:1px solid rgba(255,255,255,.08);
-  backdrop-filter:blur(24px);
-}
+      font-size:13px;
+      letter-spacing:.4px;
+    }
 
-.chart-header{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  margin-bottom:28px;
-}
+    .live-dot{
+      width:8px;
+      height:8px;
+      border-radius:50%;
+      background:#73ffb4;
 
-.chart-title{
-  font-size:30px;
-  font-weight:700;
-  letter-spacing:-1px;
-}
+      box-shadow:
+      0 0 14px #73ffb4;
 
-.badge{
-  padding:10px 16px;
-  border-radius:999px;
-  background:rgba(255,255,255,.05);
-  border:1px solid rgba(255,255,255,.08);
-  font-size:13px;
-  opacity:.8;
-}
+      animation:pulse 1.4s infinite;
+    }
 
-.chart-wrapper{
-  height:420px;
-}
+    @keyframes pulse{
 
-.section-title{
-  margin-top:34px;
-  margin-bottom:18px;
-  font-size:28px;
-  font-weight:700;
-  letter-spacing:-1px;
-}
+      0%{
+        transform:scale(1);
+        opacity:1;
+      }
 
-.videos-grid{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(330px,1fr));
-  gap:20px;
-}
+      50%{
+        transform:scale(1.5);
+        opacity:.5;
+      }
 
-.video-card{
-  overflow:hidden;
-  border-radius:30px;
-  background:rgba(255,255,255,.05);
-  border:1px solid rgba(255,255,255,.08);
-  transition:.3s;
-}
+      100%{
+        transform:scale(1);
+        opacity:1;
+      }
 
-.video-card:hover{
-  transform:translateY(-4px);
-}
+    }
 
-.video-thumb{
-  width:100%;
-  height:210px;
-  object-fit:cover;
-}
+    .stats-grid{
+      display:grid;
 
-.video-info{
-  padding:22px;
-}
+      grid-template-columns:
+      repeat(auto-fit,minmax(250px,1fr));
 
-.video-title{
-  font-size:17px;
-  line-height:1.5;
-  font-weight:600;
-  margin-bottom:12px;
-}
+      gap:18px;
 
-.video-stats{
-  opacity:.55;
-  font-size:14px;
-}
+      margin-bottom:22px;
+    }
 
-.footer{
-  margin-top:40px;
-  text-align:center;
-  opacity:.3;
-  font-size:13px;
-}
+    .card{
+      position:relative;
+      overflow:hidden;
 
-@media(max-width:768px){
+      padding:28px;
 
-  body{
-    padding:18px;
-  }
+      border-radius:30px;
 
-  .logo{
-    font-size:28px;
-  }
+      background:
+      rgba(255,255,255,.05);
 
-  .value{
-    font-size:34px;
-  }
+      border:
+      1px solid rgba(255,255,255,.08);
 
-  .chart-wrapper{
-    height:320px;
-  }
+      backdrop-filter:blur(24px);
 
-  .chart-card{
-    padding:22px;
-  }
+      transition:.35s ease;
+    }
 
-}
+    .card:hover{
+      transform:translateY(-5px);
 
-</style>
+      border-color:
+      rgba(255,255,255,.14);
+    }
+
+    .card::before{
+      content:"";
+      position:absolute;
+      inset:0;
+
+      background:
+      linear-gradient(
+        135deg,
+        rgba(255,255,255,.05),
+        transparent
+      );
+
+      pointer-events:none;
+    }
+
+    .label{
+      font-size:14px;
+      opacity:.55;
+      margin-bottom:14px;
+    }
+
+    .value{
+      font-size:54px;
+      font-weight:700;
+      letter-spacing:-3px;
+      line-height:1;
+    }
+
+    .green{
+      color:#73ffb4;
+    }
+
+    .chart-card{
+      margin-top:10px;
+
+      padding:30px;
+
+      border-radius:34px;
+
+      background:
+      rgba(255,255,255,.05);
+
+      border:
+      1px solid rgba(255,255,255,.08);
+
+      backdrop-filter:blur(24px);
+    }
+
+    .chart-header{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+
+      margin-bottom:30px;
+
+      gap:15px;
+      flex-wrap:wrap;
+    }
+
+    .chart-title{
+      font-size:28px;
+      font-weight:700;
+      letter-spacing:-1px;
+    }
+
+    .badge{
+      padding:10px 16px;
+
+      border-radius:999px;
+
+      background:
+      rgba(255,255,255,.05);
+
+      border:
+      1px solid rgba(255,255,255,.08);
+
+      font-size:13px;
+
+      opacity:.85;
+    }
+
+    .chart-wrapper{
+      position:relative;
+      height:420px;
+    }
+
+    .section-title{
+      margin-top:34px;
+      margin-bottom:18px;
+
+      font-size:30px;
+      font-weight:700;
+      letter-spacing:-1px;
+    }
+
+    .videos-grid{
+      display:grid;
+
+      grid-template-columns:
+      repeat(auto-fit,minmax(320px,1fr));
+
+      gap:20px;
+    }
+
+    .video-card{
+      overflow:hidden;
+
+      border-radius:28px;
+
+      background:
+      rgba(255,255,255,.05);
+
+      border:
+      1px solid rgba(255,255,255,.08);
+
+      backdrop-filter:blur(20px);
+
+      transition:.35s ease;
+    }
+
+    .video-card:hover{
+      transform:translateY(-4px);
+    }
+
+    .video-thumb{
+      width:100%;
+      height:210px;
+      object-fit:cover;
+    }
+
+    .video-info{
+      padding:22px;
+    }
+
+    .video-title{
+      font-size:17px;
+      line-height:1.45;
+      margin-bottom:12px;
+      font-weight:600;
+    }
+
+    .video-stats{
+      opacity:.6;
+      font-size:14px;
+    }
+
+    .footer{
+      margin-top:50px;
+      text-align:center;
+      opacity:.35;
+      font-size:13px;
+    }
+
+    @media(max-width:768px){
+
+      body{
+        padding:18px;
+      }
+
+      .logo{
+        font-size:26px;
+      }
+
+      .value{
+        font-size:42px;
+      }
+
+      .chart-card{
+        padding:22px;
+      }
+
+      .chart-wrapper{
+        height:300px;
+      }
+
+      .video-thumb{
+        height:180px;
+      }
+
+    }
+
+  </style>
 </head>
-
 <body>
 
 <div class="container">
@@ -263,8 +370,11 @@ body::after{
     </div>
 
     <div class="live">
+
       <div class="live-dot"></div>
+
       LIVE DATA
+
     </div>
 
   </div>
@@ -272,39 +382,51 @@ body::after{
   <div class="stats-grid">
 
     <div class="card">
+
       <div class="label">
         Subscribers
       </div>
+
       <div class="value" id="subs">
         --
       </div>
+
     </div>
 
     <div class="card">
+
       <div class="label">
         Total Channel Views
       </div>
+
       <div class="value" id="views">
         --
       </div>
+
     </div>
 
     <div class="card">
+
       <div class="label">
         Uploaded Videos
       </div>
+
       <div class="value" id="videos">
         --
       </div>
+
     </div>
 
     <div class="card">
+
       <div class="label">
         Average Views / Short
       </div>
-      <div class="value green" id="avgViews">
+
+      <div class="value green" id="average">
         --
       </div>
+
     </div>
 
   </div>
@@ -314,11 +436,11 @@ body::after{
     <div class="chart-header">
 
       <div class="chart-title">
-        Top Recent Shorts
+        Most Viewed Shorts
       </div>
 
       <div class="badge">
-        Latest uploads
+        Top Performing Content
       </div>
 
     </div>
@@ -330,46 +452,30 @@ body::after{
   </div>
 
   <div class="section-title">
-    Recent Shorts
+    Top Shorts
   </div>
 
-  <div class="videos-grid" id="videosGrid"></div>
+  <div class="videos-grid">
+
+  </div>
 
   <div class="footer">
-    LOWDIEE YouTube Performance Dashboard
+    LOWDIEE YouTube Analytics
   </div>
 
 </div>
 
 <script>
 
-function formatNumber(num){
+async function loadDashboard() {
 
-  num = Number(num);
-
-  if(num >= 1000000){
-    return (num / 1000000).toFixed(1) + "M";
-  }
-
-  if(num >= 1000){
-    return (num / 1000).toFixed(1) + "K";
-  }
-
-  return num;
-
-}
-
-async function loadDashboard(){
-
-  try{
+  try {
 
     const response =
       await fetch("/api/youtube");
 
     const data =
       await response.json();
-
-    console.log(data);
 
     const channel =
       data.channel;
@@ -378,50 +484,55 @@ async function loadDashboard(){
       channel.statistics;
 
     /*
-      MAIN STATS
+      CHANNEL STATS
     */
 
-    document.getElementById("subs").innerText =
-      formatNumber(stats.subscriberCount);
-
-    document.getElementById("views").innerText =
-      formatNumber(stats.viewCount);
-
-    document.getElementById("videos").innerText =
-      formatNumber(stats.videoCount);
-
-    /*
-      AVERAGE VIEWS
-    */
+    const subscribers =
+      Number(stats.subscriberCount);
 
     const totalViews =
-      data.videos.reduce(
-        (acc, video) =>
-          acc + Number(video.views),
-        0
-      );
+      Number(stats.viewCount);
 
-    const avgViews =
+    const totalVideos =
+      Number(stats.videoCount);
+
+    const averageViews =
       Math.floor(
-        totalViews /
-        data.videos.length
+        totalViews / totalVideos
       );
 
-    document.getElementById("avgViews").innerText =
-      formatNumber(avgViews);
+    document.getElementById("subs").innerText =
+      formatNumber(subscribers);
+
+    document.getElementById("views").innerText =
+      formatNumber(totalViews);
+
+    document.getElementById("videos").innerText =
+      totalVideos.toLocaleString();
+
+    document.getElementById("average").innerText =
+      formatNumber(averageViews);
 
     /*
-      VIDEO CARDS
+      SORT VIDEOS
+    */
+
+    const sortedVideos =
+      [...data.videos]
+      .sort((a,b) =>
+        Number(b.views) - Number(a.views)
+      );
+
+    /*
+      VIDEO GRID
     */
 
     const videosGrid =
-      document.getElementById(
-        "videosGrid"
-      );
+      document.querySelector(".videos-grid");
 
     videosGrid.innerHTML = "";
 
-    data.videos.forEach(video => {
+    sortedVideos.forEach(video => {
 
       videosGrid.innerHTML += `
 
@@ -439,11 +550,11 @@ async function loadDashboard(){
 
             <div class="video-stats">
 
-              ${formatNumber(video.views)} views
+              ${Number(video.views).toLocaleString()} views
+
               •
-              ${formatNumber(video.likes)} likes
-              •
-              ${formatNumber(video.comments)} comments
+
+              ${Number(video.likes).toLocaleString()} likes
 
             </div>
 
@@ -461,72 +572,77 @@ async function loadDashboard(){
 
     const ctx =
       document
-      .getElementById("viewsChart")
-      .getContext("2d");
+      .getElementById("viewsChart");
 
     new Chart(ctx, {
 
-      type:"bar",
+      type: "bar",
 
-      data:{
+      data: {
 
-        labels:data.videos.map(video => {
+        labels:
+          sortedVideos.map(video =>
 
-          let title =
-            video.title;
+            video.title.length > 20
 
-          if(title.length > 18){
+            ?
 
-            title =
-              title.slice(0,18)
-              + "...";
+            video.title.slice(0,20) + "..."
 
-          }
+            :
 
-          return title;
+            video.title
 
-        }),
-
-        datasets:[{
-
-          data:data.videos.map(video =>
-            Number(video.views)
           ),
 
-          borderRadius:12,
+        datasets: [{
 
-          backgroundColor:
-            "rgba(56,189,248,.75)",
+          data:
+            sortedVideos.map(video =>
+              Number(video.views)
+            ),
 
-          hoverBackgroundColor:
-            "rgba(56,189,248,1)"
+          borderRadius:14,
+
+          borderSkipped:false
 
         }]
 
       },
 
-      options:{
+      options: {
 
         responsive:true,
 
         maintainAspectRatio:false,
 
-        plugins:{
+        plugins: {
 
-          legend:{
+          legend: {
             display:false
           },
 
-          tooltip:{
+          tooltip: {
 
-            callbacks:{
+            backgroundColor:"#111",
 
-              label:function(context){
+            borderColor:
+            "rgba(255,255,255,.1)",
+
+            borderWidth:1,
+
+            padding:14,
+
+            titleColor:"#fff",
+
+            bodyColor:"#aaa",
+
+            callbacks: {
+
+              label: function(context){
 
                 return (
-                  formatNumber(
-                    context.raw
-                  )
+                  context.raw.toLocaleString()
                   + " views"
                 );
 
@@ -538,36 +654,57 @@ async function loadDashboard(){
 
         },
 
-        scales:{
+        scales: {
 
-          x:{
+          x: {
 
-            ticks:{
-              color:"rgba(255,255,255,.7)"
+            ticks: {
+
+              color:
+              "rgba(255,255,255,.75)",
+
+              maxRotation:0,
+
+              minRotation:0
+
             },
 
-            grid:{
+            grid: {
               display:false
             }
 
           },
 
-          y:{
+          y: {
 
-            ticks:{
+            ticks: {
 
-              color:"rgba(255,255,255,.7)",
+              color:
+              "rgba(255,255,255,.5)",
 
-              callback:function(value){
+              callback: function(value){
 
-                return formatNumber(value);
+                if(value >= 1000000)
+                  return (
+                    value / 1000000
+                  ) + "M";
+
+                if(value >= 1000)
+                  return (
+                    value / 1000
+                  ) + "K";
+
+                return value;
 
               }
 
             },
 
-            grid:{
-              color:"rgba(255,255,255,.04)"
+            grid: {
+
+              color:
+              "rgba(255,255,255,.05)"
+
             }
 
           }
@@ -585,10 +722,36 @@ async function loadDashboard(){
     console.error(err);
 
     alert(
-      "Could not load YouTube data."
+      "Błąd pobierania danych z YouTube API"
     );
 
   }
+
+}
+
+/*
+  FORMAT
+*/
+
+function formatNumber(num){
+
+  if(num >= 1000000){
+
+    return (
+      num / 1000000
+    ).toFixed(1) + "M";
+
+  }
+
+  if(num >= 1000){
+
+    return (
+      num / 1000
+    ).toFixed(1) + "K";
+
+  }
+
+  return num;
 
 }
 
@@ -598,4 +761,3 @@ loadDashboard();
 
 </body>
 </html>
-```
