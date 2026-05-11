@@ -1,270 +1,257 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>LOWDIEE Dashboard</title>
 
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 
-  <style>
+<title>LOWDIEE Dashboard</title>
 
-    *{
-      margin:0;
-      padding:0;
-      box-sizing:border-box;
-    }
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-    body{
-      background:#050505;
-      color:white;
-      font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
-      min-height:100vh;
-      overflow-x:hidden;
-      padding:28px;
-    }
+<style>
 
-    body::before{
-      content:"";
-      position:fixed;
-      inset:0;
-      background:
-      radial-gradient(circle at top left, rgba(88,101,242,.18), transparent 28%),
-      radial-gradient(circle at bottom right, rgba(0,180,255,.14), transparent 30%);
-      z-index:-2;
-    }
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+}
 
-    body::after{
-      content:"";
-      position:fixed;
-      inset:0;
-      backdrop-filter:blur(120px);
-      z-index:-1;
-    }
+body{
+  background:#050505;
+  color:white;
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  min-height:100vh;
+  overflow-x:hidden;
+  padding:28px;
+}
 
-    .container{
-      max-width:1400px;
-      margin:auto;
-    }
+body::before{
+  content:"";
+  position:fixed;
+  inset:0;
+  background:
+  radial-gradient(circle at top left, rgba(88,101,242,.15), transparent 30%),
+  radial-gradient(circle at bottom right, rgba(0,180,255,.12), transparent 30%);
+  z-index:-2;
+}
 
-    .navbar{
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
-      margin-bottom:26px;
-      flex-wrap:wrap;
-      gap:20px;
-    }
+body::after{
+  content:"";
+  position:fixed;
+  inset:0;
+  backdrop-filter:blur(100px);
+  z-index:-1;
+}
 
-    .logo{
-      font-size:34px;
-      font-weight:700;
-      letter-spacing:-1px;
-    }
+.container{
+  max-width:1450px;
+  margin:auto;
+}
 
-    .logo span{
-      opacity:.45;
-      font-weight:400;
-    }
+.navbar{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:28px;
+  flex-wrap:wrap;
+  gap:20px;
+}
 
-    .live{
-      display:flex;
-      align-items:center;
-      gap:10px;
-      padding:10px 18px;
-      border-radius:999px;
-      background:rgba(255,255,255,.05);
-      border:1px solid rgba(255,255,255,.08);
-      backdrop-filter:blur(20px);
-      font-size:13px;
-      letter-spacing:.5px;
-    }
+.logo{
+  font-size:40px;
+  font-weight:800;
+  letter-spacing:-2px;
+}
 
-    .live-dot{
-      width:8px;
-      height:8px;
-      border-radius:50%;
-      background:#6dff9a;
-      box-shadow:0 0 12px #6dff9a;
-      animation:pulse 1.4s infinite;
-    }
+.logo span{
+  opacity:.4;
+  font-weight:500;
+}
 
-    @keyframes pulse{
-      0%{transform:scale(1);opacity:1;}
-      50%{transform:scale(1.6);opacity:.5;}
-      100%{transform:scale(1);opacity:1;}
-    }
+.live{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  padding:12px 18px;
+  border-radius:999px;
+  background:rgba(255,255,255,.05);
+  border:1px solid rgba(255,255,255,.08);
+  backdrop-filter:blur(20px);
+  font-size:13px;
+}
 
-    .stats-grid{
-      display:grid;
-      grid-template-columns:repeat(auto-fit,minmax(230px,1fr));
-      gap:18px;
-      margin-bottom:22px;
-    }
+.live-dot{
+  width:8px;
+  height:8px;
+  border-radius:50%;
+  background:#71ffb4;
+  box-shadow:0 0 12px #71ffb4;
+  animation:pulse 1.4s infinite;
+}
 
-    .card{
-      position:relative;
-      overflow:hidden;
-      padding:26px;
-      border-radius:30px;
-      background:rgba(255,255,255,.05);
-      border:1px solid rgba(255,255,255,.08);
-      backdrop-filter:blur(24px);
-      transition:.35s ease;
-    }
+@keyframes pulse{
+  0%{transform:scale(1);}
+  50%{transform:scale(1.5);}
+  100%{transform:scale(1);}
+}
 
-    .card:hover{
-      transform:translateY(-5px);
-      border-color:rgba(255,255,255,.14);
-    }
+.stats-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+  gap:18px;
+  margin-bottom:22px;
+}
 
-    .card::before{
-      content:"";
-      position:absolute;
-      inset:0;
-      background:linear-gradient(
-      135deg,
-      rgba(255,255,255,.06),
-      transparent);
-      pointer-events:none;
-    }
+.card{
+  position:relative;
+  overflow:hidden;
+  padding:28px;
+  border-radius:32px;
+  background:rgba(255,255,255,.05);
+  border:1px solid rgba(255,255,255,.08);
+  backdrop-filter:blur(24px);
+  transition:.3s;
+}
 
-    .label{
-      font-size:14px;
-      opacity:.5;
-      margin-bottom:14px;
-    }
+.card:hover{
+  transform:translateY(-4px);
+  border-color:rgba(255,255,255,.14);
+}
 
-    .value{
-      font-size:40px;
-      font-weight:700;
-      letter-spacing:-2px;
-    }
+.label{
+  font-size:14px;
+  opacity:.5;
+  margin-bottom:16px;
+}
 
-    .positive{
-      color:#73ffb4;
-    }
+.value{
+  font-size:44px;
+  font-weight:800;
+  letter-spacing:-2px;
+}
 
-    .chart-card{
-      padding:30px;
-      border-radius:34px;
-      background:rgba(255,255,255,.05);
-      border:1px solid rgba(255,255,255,.08);
-      backdrop-filter:blur(24px);
-      margin-top:10px;
-    }
+.green{
+  color:#72ffb5;
+}
 
-    .chart-header{
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
-      margin-bottom:30px;
-      flex-wrap:wrap;
-      gap:15px;
-    }
+.chart-card{
+  padding:32px;
+  border-radius:34px;
+  background:rgba(255,255,255,.05);
+  border:1px solid rgba(255,255,255,.08);
+  backdrop-filter:blur(24px);
+}
 
-    .chart-title{
-      font-size:28px;
-      font-weight:600;
-      letter-spacing:-1px;
-    }
+.chart-header{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:28px;
+}
 
-    .badge{
-      padding:10px 16px;
-      border-radius:999px;
-      background:rgba(255,255,255,.05);
-      border:1px solid rgba(255,255,255,.08);
-      font-size:13px;
-      opacity:.8;
-    }
+.chart-title{
+  font-size:30px;
+  font-weight:700;
+  letter-spacing:-1px;
+}
 
-    canvas{
-      width:100% !important;
-      height:450px !important;
-    }
+.badge{
+  padding:10px 16px;
+  border-radius:999px;
+  background:rgba(255,255,255,.05);
+  border:1px solid rgba(255,255,255,.08);
+  font-size:13px;
+  opacity:.8;
+}
 
-    .section-title{
-      margin-top:28px;
-      margin-bottom:18px;
-      font-size:24px;
-      font-weight:600;
-      letter-spacing:-1px;
-    }
+.chart-wrapper{
+  height:420px;
+}
 
-    .videos-grid{
-      display:grid;
-      grid-template-columns:repeat(auto-fit,minmax(320px,1fr));
-      gap:20px;
-    }
+.section-title{
+  margin-top:34px;
+  margin-bottom:18px;
+  font-size:28px;
+  font-weight:700;
+  letter-spacing:-1px;
+}
 
-    .video-card{
-      overflow:hidden;
-      border-radius:28px;
-      background:rgba(255,255,255,.05);
-      border:1px solid rgba(255,255,255,.08);
-      backdrop-filter:blur(20px);
-      transition:.35s ease;
-    }
+.videos-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(330px,1fr));
+  gap:20px;
+}
 
-    .video-card:hover{
-      transform:translateY(-4px);
-    }
+.video-card{
+  overflow:hidden;
+  border-radius:30px;
+  background:rgba(255,255,255,.05);
+  border:1px solid rgba(255,255,255,.08);
+  transition:.3s;
+}
 
-    .video-thumb{
-      width:100%;
-      height:200px;
-      object-fit:cover;
-    }
+.video-card:hover{
+  transform:translateY(-4px);
+}
 
-    .video-info{
-      padding:22px;
-    }
+.video-thumb{
+  width:100%;
+  height:210px;
+  object-fit:cover;
+}
 
-    .video-title{
-      font-size:16px;
-      line-height:1.4;
-      margin-bottom:10px;
-      font-weight:600;
-    }
+.video-info{
+  padding:22px;
+}
 
-    .video-stats{
-      opacity:.5;
-      font-size:14px;
-    }
+.video-title{
+  font-size:17px;
+  line-height:1.5;
+  font-weight:600;
+  margin-bottom:12px;
+}
 
-    .footer{
-      margin-top:40px;
-      text-align:center;
-      opacity:.3;
-      font-size:13px;
-    }
+.video-stats{
+  opacity:.55;
+  font-size:14px;
+}
 
-    @media(max-width:768px){
+.footer{
+  margin-top:40px;
+  text-align:center;
+  opacity:.3;
+  font-size:13px;
+}
 
-      body{
-        padding:18px;
-      }
+@media(max-width:768px){
 
-      .logo{
-        font-size:24px;
-      }
+  body{
+    padding:18px;
+  }
 
-      .value{
-        font-size:32px;
-      }
+  .logo{
+    font-size:28px;
+  }
 
-      .chart-card{
-        padding:20px;
-      }
+  .value{
+    font-size:34px;
+  }
 
-      canvas{
-        height:300px !important;
-      }
+  .chart-wrapper{
+    height:320px;
+  }
 
-    }
+  .chart-card{
+    padding:22px;
+  }
 
-  </style>
+}
+
+</style>
 </head>
+
 <body>
 
 <div class="container">
@@ -277,7 +264,7 @@
 
     <div class="live">
       <div class="live-dot"></div>
-      LIVE ANALYTICS
+      LIVE DATA
     </div>
 
   </div>
@@ -285,23 +272,39 @@
   <div class="stats-grid">
 
     <div class="card">
-      <div class="label">Highest Day</div>
-      <div class="value">1.8M</div>
+      <div class="label">
+        Subscribers
+      </div>
+      <div class="value" id="subs">
+        --
+      </div>
     </div>
 
     <div class="card">
-      <div class="label">Average Daily</div>
-      <div class="value">642K</div>
+      <div class="label">
+        Total Channel Views
+      </div>
+      <div class="value" id="views">
+        --
+      </div>
     </div>
 
     <div class="card">
-      <div class="label">Monthly Views</div>
-      <div class="value">18.3M</div>
+      <div class="label">
+        Uploaded Videos
+      </div>
+      <div class="value" id="videos">
+        --
+      </div>
     </div>
 
     <div class="card">
-      <div class="label">Growth</div>
-      <div class="value positive">+12.4%</div>
+      <div class="label">
+        Average Views / Short
+      </div>
+      <div class="value green" id="avgViews">
+        --
+      </div>
     </div>
 
   </div>
@@ -311,104 +314,62 @@
     <div class="chart-header">
 
       <div class="chart-title">
-        Daily Views
+        Top Recent Shorts
       </div>
 
       <div class="badge">
-        Last 28 Days
+        Latest uploads
       </div>
 
     </div>
 
-    <canvas id="viewsChart"></canvas>
+    <div class="chart-wrapper">
+      <canvas id="viewsChart"></canvas>
+    </div>
 
   </div>
 
   <div class="section-title">
-    Top Performing Shorts
+    Recent Shorts
   </div>
 
-  <div class="videos-grid">
-
-    <div class="video-card">
-
-      <img
-      class="video-thumb"
-      src="https://images.unsplash.com/photo-1511512578047-dfb367046420?q=80&w=1200&auto=format&fit=crop">
-
-      <div class="video-info">
-
-        <div class="video-title">
-          INSANE Gaming Clip Went Viral
-        </div>
-
-        <div class="video-stats">
-          4.2M views • 2 days ago
-        </div>
-
-      </div>
-
-    </div>
-
-    <div class="video-card">
-
-      <img
-      class="video-thumb"
-      src="https://images.unsplash.com/photo-1542751110-97427bbecf20?q=80&w=1200&auto=format&fit=crop">
-
-      <div class="video-info">
-
-        <div class="video-title">
-          Best Edit I've Ever Made
-        </div>
-
-        <div class="video-stats">
-          2.8M views • 5 days ago
-        </div>
-
-      </div>
-
-    </div>
-
-    <div class="video-card">
-
-      <img
-      class="video-thumb"
-      src="https://images.unsplash.com/photo-1493711662062-fa541adb3fc8?q=80&w=1200&auto=format&fit=crop">
-
-      <div class="video-info">
-
-        <div class="video-title">
-          This Short Exploded Overnight
-        </div>
-
-        <div class="video-stats">
-          7.1M views • 1 week ago
-        </div>
-
-      </div>
-
-    </div>
-
-  </div>
+  <div class="videos-grid" id="videosGrid"></div>
 
   <div class="footer">
-    LOWDIEE YouTube Analytics
+    LOWDIEE YouTube Performance Dashboard
   </div>
 
 </div>
 
 <script>
 
-async function loadDashboard() {
+function formatNumber(num){
 
-  try {
+  num = Number(num);
+
+  if(num >= 1000000){
+    return (num / 1000000).toFixed(1) + "M";
+  }
+
+  if(num >= 1000){
+    return (num / 1000).toFixed(1) + "K";
+  }
+
+  return num;
+
+}
+
+async function loadDashboard(){
+
+  try{
 
     const response =
       await fetch("/api/youtube");
 
     const data =
       await response.json();
+
+    console.log(data);
 
     const channel =
       data.channel;
@@ -417,27 +378,46 @@ async function loadDashboard() {
       channel.statistics;
 
     /*
-      STATS
+      MAIN STATS
     */
 
-    document.querySelectorAll(".value")[0].innerText =
-      Number(stats.subscriberCount).toLocaleString();
+    document.getElementById("subs").innerText =
+      formatNumber(stats.subscriberCount);
 
-    document.querySelectorAll(".value")[1].innerText =
-      Number(stats.viewCount).toLocaleString();
+    document.getElementById("views").innerText =
+      formatNumber(stats.viewCount);
 
-    document.querySelectorAll(".value")[2].innerText =
-      Number(stats.videoCount).toLocaleString();
-
-    document.querySelectorAll(".value")[3].innerText =
-      channel.snippet.title;
+    document.getElementById("videos").innerText =
+      formatNumber(stats.videoCount);
 
     /*
-      VIDEOS
+      AVERAGE VIEWS
+    */
+
+    const totalViews =
+      data.videos.reduce(
+        (acc, video) =>
+          acc + Number(video.views),
+        0
+      );
+
+    const avgViews =
+      Math.floor(
+        totalViews /
+        data.videos.length
+      );
+
+    document.getElementById("avgViews").innerText =
+      formatNumber(avgViews);
+
+    /*
+      VIDEO CARDS
     */
 
     const videosGrid =
-      document.querySelector(".videos-grid");
+      document.getElementById(
+        "videosGrid"
+      );
 
     videosGrid.innerHTML = "";
 
@@ -458,9 +438,13 @@ async function loadDashboard() {
             </div>
 
             <div class="video-stats">
-              ${Number(video.views).toLocaleString()} views
+
+              ${formatNumber(video.views)} views
               •
-              ${Number(video.likes).toLocaleString()} likes
+              ${formatNumber(video.likes)} likes
+              •
+              ${formatNumber(video.comments)} comments
+
             </div>
 
           </div>
@@ -477,60 +461,115 @@ async function loadDashboard() {
 
     const ctx =
       document
-      .getElementById("viewsChart");
+      .getElementById("viewsChart")
+      .getContext("2d");
 
     new Chart(ctx, {
 
-      type: "line",
+      type:"bar",
 
-      data: {
+      data:{
 
-        labels: data.videos.map(v =>
-          v.title.slice(0, 12)
-        ),
+        labels:data.videos.map(video => {
 
-        datasets: [{
+          let title =
+            video.title;
 
-          label: "Views",
+          if(title.length > 18){
 
-          data: data.videos.map(v =>
-            Number(v.views)
+            title =
+              title.slice(0,18)
+              + "...";
+
+          }
+
+          return title;
+
+        }),
+
+        datasets:[{
+
+          data:data.videos.map(video =>
+            Number(video.views)
           ),
 
-          tension: .4,
+          borderRadius:12,
 
-          fill: true,
+          backgroundColor:
+            "rgba(56,189,248,.75)",
 
-          borderWidth: 3
+          hoverBackgroundColor:
+            "rgba(56,189,248,1)"
 
         }]
 
       },
 
-      options: {
+      options:{
 
-        responsive: true,
+        responsive:true,
 
-        plugins: {
+        maintainAspectRatio:false,
 
-          legend: {
-            display: false
+        plugins:{
+
+          legend:{
+            display:false
+          },
+
+          tooltip:{
+
+            callbacks:{
+
+              label:function(context){
+
+                return (
+                  formatNumber(
+                    context.raw
+                  )
+                  + " views"
+                );
+
+              }
+
+            }
+
           }
 
         },
 
-        scales: {
+        scales:{
 
-          x: {
-            ticks: {
-              color: "white"
+          x:{
+
+            ticks:{
+              color:"rgba(255,255,255,.7)"
+            },
+
+            grid:{
+              display:false
             }
+
           },
 
-          y: {
-            ticks: {
-              color: "white"
+          y:{
+
+            ticks:{
+
+              color:"rgba(255,255,255,.7)",
+
+              callback:function(value){
+
+                return formatNumber(value);
+
+              }
+
+            },
+
+            grid:{
+              color:"rgba(255,255,255,.04)"
             }
+
           }
 
         }
@@ -539,12 +578,14 @@ async function loadDashboard() {
 
     });
 
-  } catch (err) {
+  }
+
+  catch(err){
 
     console.error(err);
 
     alert(
-      "Błąd pobierania danych z YouTube API"
+      "Could not load YouTube data."
     );
 
   }
@@ -557,3 +598,4 @@ loadDashboard();
 
 </body>
 </html>
+```
