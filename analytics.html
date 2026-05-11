@@ -399,260 +399,44 @@
 </div>
 
 <script>
-
-async function loadDashboard(){
-
-  try{
-
-    const response = await fetch('/api/youtube');
-    const apiData = await response.json();
-
-    console.log(apiData);
-
-    const channel = apiData.channel;
-    const videos = apiData.videos;
-
-    /*
-      TOP STATS
-    */
-
-    document.querySelectorAll('.value')[0].innerText =
-      Number(channel.statistics.subscriberCount).toLocaleString();
-
-    document.querySelectorAll('.label')[0].innerText =
-      'Subscribers';
-
-    document.querySelectorAll('.value')[1].innerText =
-      Number(channel.statistics.viewCount).toLocaleString();
-
-    document.querySelectorAll('.label')[1].innerText =
-      'Total Views';
-
-    document.querySelectorAll('.value')[2].innerText =
-      Number(channel.statistics.videoCount).toLocaleString();
-
-    document.querySelectorAll('.label')[2].innerText =
-      'Videos';
-
-    /*
-      GROWTH CALC
-    */
-
-    const totalViews =
-      videos.reduce((acc,v)=>acc + Number(v.views),0);
-
-    const avgViews =
-      Math.floor(totalViews / videos.length);
-
-    document.querySelectorAll('.value')[3].innerText =
-      avgViews.toLocaleString();
-
-    document.querySelectorAll('.label')[3].innerText =
-      'Avg Views';
-
-    /*
-      VIDEOS SECTION
-    */
-
-    const videosGrid =
-      document.querySelector('.videos-grid');
-
-    videosGrid.innerHTML = '';
-
-    videos.forEach(video=>{
-
-      const card = document.createElement('div');
-
-      card.className = 'video-card';
-
-      card.innerHTML = `
-
-      <img
-      class="video-thumb"
-      src="${video.thumbnail}">
-
-      <div class="video-info">
-
-        <div class="video-title">
-          ${video.title}
-        </div>
-
-        <div class="video-stats">
-          ${Number(video.views).toLocaleString()} views
-        </div>
-
-      </div>
-
-      `;
-
-      videosGrid.appendChild(card);
-
-    });
-
-    /*
-      CHART
-    */
-
-    const labels =
-      videos
-      .slice()
-      .reverse()
-      .map(v =>
-        v.title.substring(0,18) + '...'
-      );
-
-    const data =
-      videos
-      .slice()
-      .reverse()
-      .map(v =>
-        Number(v.views)
-      );
-
-    const ctx =
-      document.getElementById('viewsChart');
-
-    new Chart(ctx, {
-
-      type:'line',
-
-      data:{
-        labels:labels,
-
-        datasets:[{
-          label:'Views',
-          data:data,
-          borderWidth:3,
-          tension:.45,
-          pointRadius:0,
-          fill:true,
-          borderColor:'#7aa2ff',
-
-          backgroundColor:(context)=>{
-
-            const chart = context.chart;
-            const {ctx, chartArea} = chart;
-
-            if(!chartArea){
-              return null;
-            }
-
-            const gradient =
-              ctx.createLinearGradient(
-                0,
-                0,
-                0,
-                chartArea.bottom
-              );
-
-            gradient.addColorStop(
-              0,
-              'rgba(122,162,255,.35)'
-            );
-
-            gradient.addColorStop(
-              1,
-              'rgba(122,162,255,0)'
-            );
-
-            return gradient;
-
-          }
-
-        }]
-      },
-
-      options:{
-
-        responsive:true,
-        maintainAspectRatio:false,
-
-        interaction:{
-          intersect:false,
-          mode:'index'
-        },
-
-        plugins:{
-
-          legend:{
-            display:false
-          },
-
-          tooltip:{
-            backgroundColor:'rgba(15,15,20,.96)',
-            borderColor:'rgba(255,255,255,.08)',
-            borderWidth:1,
-            padding:14,
-            displayColors:false,
-
-            callbacks:{
-              label:function(context){
-
-                return context.raw.toLocaleString()
-                + ' views';
-
-              }
-            }
-          }
-
-        },
-
-        scales:{
-
-          x:{
-            grid:{
-              display:false
-            },
-
-            ticks:{
-              color:'rgba(255,255,255,.45)'
-            }
-          },
-
-          y:{
-            grid:{
-              color:'rgba(255,255,255,.05)'
-            },
-
-            border:{
-              display:false
-            },
-
-            ticks:{
-              color:'rgba(255,255,255,.45)',
-
-              callback:function(value){
-
-                if(value >= 1000000){
-                  return (value / 1000000) + 'M';
-                }
-
-                return (value / 1000) + 'K';
-
-              }
-            }
-          }
-
-        }
-
-      }
-
-    });
-
-  }catch(err){
-
-    console.error(err);
-
-    alert(
-      'Błąd pobierania danych z YouTube API'
+async function loadYouTubeStats() {
+  try {
+    const channelId = "TWOJ_CHANNEL_ID";
+    const apiKey = "TWOJ_API_KEY";
+
+    const response = await fetch(
+      `https://www.googleapis.com/youtube/v3/channels?part=statistics,snippet&id=${channelId}&key=${apiKey}`
     );
 
-  }
+    const data = await response.json();
 
+    if (!data.items || !data.items.length) {
+      alert("Nie znaleziono kanału.");
+      return;
+    }
+
+    const channel = data.items[0];
+    const stats = channel.statistics;
+
+    document.getElementById("subs").innerText =
+      Number(stats.subscriberCount).toLocaleString();
+
+    document.getElementById("views").innerText =
+      Number(stats.viewCount).toLocaleString();
+
+    document.getElementById("videos").innerText =
+      Number(stats.videoCount).toLocaleString();
+
+    document.getElementById("channelName").innerText =
+      channel.snippet.title;
+
+  } catch (err) {
+    console.error(err);
+    alert("Błąd pobierania danych z YouTube API");
+  }
 }
 
-loadDashboard();
-
+loadYouTubeStats();
 </script>
 
 </body>
