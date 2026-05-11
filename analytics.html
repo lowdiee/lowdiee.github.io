@@ -1,581 +1,572 @@
-{\rtf1\ansi\ansicpg1250\cocoartf2868
-\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\froman\fcharset0 Times-Roman;}
-{\colortbl;\red255\green255\blue255;\red255\green255\blue255;}
-{\*\expandedcolortbl;;\cssrgb\c100000\c100000\c100000;}
-\paperw11900\paperh16840\margl1440\margr1440\vieww11520\viewh8400\viewkind0
-\deftab720
-\pard\tx220\tx720\pardeftab720\li720\fi-720\sa240\partightenfactor0
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>LOWDIEE Dashboard</title>
 
-\f0\fs24 \cf2 \expnd0\expndtw0\kerning0
-\outl0\strokewidth0 \strokec2 <!DOCTYPE html>\
-<html lang="en">\
-<head>\
-  <meta charset="UTF-8" />\
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>\
-  <title>LOWDIEE Dashboard</title>\
-\
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>\
-\
-  <style>\
-\
-    *\{\
-      margin:0;\
-      padding:0;\
-      box-sizing:border-box;\
-    \}\
-\
-    body\{\
-      background:#050505;\
-      color:white;\
-      font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;\
-      min-height:100vh;\
-      overflow-x:hidden;\
-      padding:28px;\
-    \}\
-\
-    body::before\{\
-      content:"";\
-      position:fixed;\
-      inset:0;\
-      background:\
-      radial-gradient(circle at top left, rgba(88,101,242,.18), transparent 28%),\
-      radial-gradient(circle at bottom right, rgba(0,180,255,.14), transparent 30%);\
-      z-index:-2;\
-    \}\
-\
-    body::after\{\
-      content:"";\
-      position:fixed;\
-      inset:0;\
-      backdrop-filter:blur(120px);\
-      z-index:-1;\
-    \}\
-\
-    .container\{\
-      max-width:1400px;\
-      margin:auto;\
-    \}\
-\
-    .navbar\{\
-      display:flex;\
-      justify-content:space-between;\
-      align-items:center;\
-      margin-bottom:26px;\
-      flex-wrap:wrap;\
-      gap:20px;\
-    \}\
-\
-    .logo\{\
-      font-size:34px;\
-      font-weight:700;\
-      letter-spacing:-1px;\
-    \}\
-\
-    .logo span\{\
-      opacity:.45;\
-      font-weight:400;\
-    \}\
-\
-    .live\{\
-      display:flex;\
-      align-items:center;\
-      gap:10px;\
-      padding:10px 18px;\
-      border-radius:999px;\
-      background:rgba(255,255,255,.05);\
-      border:1px solid rgba(255,255,255,.08);\
-      backdrop-filter:blur(20px);\
-      font-size:13px;\
-      letter-spacing:.5px;\
-    \}\
-\
-    .live-dot\{\
-      width:8px;\
-      height:8px;\
-      border-radius:50%;\
-      background:#6dff9a;\
-      box-shadow:0 0 12px #6dff9a;\
-      animation:pulse 1.4s infinite;\
-    \}\
-\
-    @keyframes pulse\{\
-      0%\{transform:scale(1);opacity:1;\}\
-      50%\{transform:scale(1.6);opacity:.5;\}\
-      100%\{transform:scale(1);opacity:1;\}\
-    \}\
-\
-    .stats-grid\{\
-      display:grid;\
-      grid-template-columns:repeat(auto-fit,minmax(230px,1fr));\
-      gap:18px;\
-      margin-bottom:22px;\
-    \}\
-\
-    .card\{\
-      position:relative;\
-      overflow:hidden;\
-      padding:26px;\
-      border-radius:30px;\
-      background:rgba(255,255,255,.05);\
-      border:1px solid rgba(255,255,255,.08);\
-      backdrop-filter:blur(24px);\
-      transition:.35s ease;\
-    \}\
-\
-    .card:hover\{\
-      transform:translateY(-5px);\
-      border-color:rgba(255,255,255,.14);\
-    \}\
-\
-    .card::before\{\
-      content:"";\
-      position:absolute;\
-      inset:0;\
-      background:linear-gradient(\
-      135deg,\
-      rgba(255,255,255,.06),\
-      transparent);\
-      pointer-events:none;\
-    \}\
-\
-    .label\{\
-      font-size:14px;\
-      opacity:.5;\
-      margin-bottom:14px;\
-    \}\
-\
-    .value\{\
-      font-size:40px;\
-      font-weight:700;\
-      letter-spacing:-2px;\
-    \}\
-\
-    .positive\{\
-      color:#73ffb4;\
-    \}\
-\
-    .chart-card\{\
-      padding:30px;\
-      border-radius:34px;\
-      background:rgba(255,255,255,.05);\
-      border:1px solid rgba(255,255,255,.08);\
-      backdrop-filter:blur(24px);\
-      margin-top:10px;\
-    \}\
-\
-    .chart-header\{\
-      display:flex;\
-      justify-content:space-between;\
-      align-items:center;\
-      margin-bottom:30px;\
-      flex-wrap:wrap;\
-      gap:15px;\
-    \}\
-\
-    .chart-title\{\
-      font-size:28px;\
-      font-weight:600;\
-      letter-spacing:-1px;\
-    \}\
-\
-    .badge\{\
-      padding:10px 16px;\
-      border-radius:999px;\
-      background:rgba(255,255,255,.05);\
-      border:1px solid rgba(255,255,255,.08);\
-      font-size:13px;\
-      opacity:.8;\
-    \}\
-\
-    canvas\{\
-      width:100% !important;\
-      height:450px !important;\
-    \}\
-\
-    .section-title\{\
-      margin-top:28px;\
-      margin-bottom:18px;\
-      font-size:24px;\
-      font-weight:600;\
-      letter-spacing:-1px;\
-    \}\
-\
-    .videos-grid\{\
-      display:grid;\
-      grid-template-columns:repeat(auto-fit,minmax(320px,1fr));\
-      gap:20px;\
-    \}\
-\
-    .video-card\{\
-      overflow:hidden;\
-      border-radius:28px;\
-      background:rgba(255,255,255,.05);\
-      border:1px solid rgba(255,255,255,.08);\
-      backdrop-filter:blur(20px);\
-      transition:.35s ease;\
-    \}\
-\
-    .video-card:hover\{\
-      transform:translateY(-4px);\
-    \}\
-\
-    .video-thumb\{\
-      width:100%;\
-      height:200px;\
-      object-fit:cover;\
-    \}\
-\
-    .video-info\{\
-      padding:22px;\
-    \}\
-\
-    .video-title\{\
-      font-size:16px;\
-      line-height:1.4;\
-      margin-bottom:10px;\
-      font-weight:600;\
-    \}\
-\
-    .video-stats\{\
-      opacity:.5;\
-      font-size:14px;\
-    \}\
-\
-    .footer\{\
-      margin-top:40px;\
-      text-align:center;\
-      opacity:.3;\
-      font-size:13px;\
-    \}\
-\
-    @media(max-width:768px)\{\
-\
-      body\{\
-        padding:18px;\
-      \}\
-\
-      .logo\{\
-        font-size:24px;\
-      \}\
-\
-      .value\{\
-        font-size:32px;\
-      \}\
-\
-      .chart-card\{\
-        padding:20px;\
-      \}\
-\
-      canvas\{\
-        height:300px !important;\
-      \}\
-\
-    \}\
-\
-  </style>\
-</head>\
-<body>\
-\
-<div class="container">\
-\
-  <div class="navbar">\
-\
-    <div class="logo">\
-      LOWDIEE <span>dashboard</span>\
-    </div>\
-\
-    <div class="live">\
-      <div class="live-dot"></div>\
-      LIVE ANALYTICS\
-    </div>\
-\
-  </div>\
-\
-  <div class="stats-grid">\
-\
-    <div class="card">\
-      <div class="label">Highest Day</div>\
-      <div class="value">1.8M</div>\
-    </div>\
-\
-    <div class="card">\
-      <div class="label">Average Daily</div>\
-      <div class="value">642K</div>\
-    </div>\
-\
-    <div class="card">\
-      <div class="label">Monthly Views</div>\
-      <div class="value">18.3M</div>\
-    </div>\
-\
-    <div class="card">\
-      <div class="label">Growth</div>\
-      <div class="value positive">+12.4%</div>\
-    </div>\
-\
-  </div>\
-\
-  <div class="chart-card">\
-\
-    <div class="chart-header">\
-\
-      <div class="chart-title">\
-        Daily Views\
-      </div>\
-\
-      <div class="badge">\
-        Last 28 Days\
-      </div>\
-\
-    </div>\
-\
-    <canvas id="viewsChart"></canvas>\
-\
-  </div>\
-\
-  <div class="section-title">\
-    Top Performing Shorts\
-  </div>\
-\
-  <div class="videos-grid">\
-\
-    <div class="video-card">\
-\
-      <img\
-      class="video-thumb"\
-      src="https://images.unsplash.com/photo-1511512578047-dfb367046420?q=80&w=1200&auto=format&fit=crop">\
-\
-      <div class="video-info">\
-\
-        <div class="video-title">\
-          INSANE Gaming Clip Went Viral\
-        </div>\
-\
-        <div class="video-stats">\
-          4.2M views \'95 2 days ago\
-        </div>\
-\
-      </div>\
-\
-    </div>\
-\
-    <div class="video-card">\
-\
-      <img\
-      class="video-thumb"\
-      src="https://images.unsplash.com/photo-1542751110-97427bbecf20?q=80&w=1200&auto=format&fit=crop">\
-\
-      <div class="video-info">\
-\
-        <div class="video-title">\
-          Best Edit I've Ever Made\
-        </div>\
-\
-        <div class="video-stats">\
-          2.8M views \'95 5 days ago\
-        </div>\
-\
-      </div>\
-\
-    </div>\
-\
-    <div class="video-card">\
-\
-      <img\
-      class="video-thumb"\
-      src="https://images.unsplash.com/photo-1493711662062-fa541adb3fc8?q=80&w=1200&auto=format&fit=crop">\
-\
-      <div class="video-info">\
-\
-        <div class="video-title">\
-          This Short Exploded Overnight\
-        </div>\
-\
-        <div class="video-stats">\
-          7.1M views \'95 1 week ago\
-        </div>\
-\
-      </div>\
-\
-    </div>\
-\
-  </div>\
-\
-  <div class="footer">\
-    LOWDIEE YouTube Analytics\
-  </div>\
-\
-</div>\
-\
-<script>\
-\
-const labels = [\
-'Day 1','Day 2','Day 3','Day 4','Day 5','Day 6','Day 7',\
-'Day 8','Day 9','Day 10','Day 11','Day 12','Day 13','Day 14',\
-'Day 15','Day 16','Day 17','Day 18','Day 19','Day 20','Day 21',\
-'Day 22','Day 23','Day 24','Day 25','Day 26','Day 27','Day 28'\
-];\
-\
-const data = [\
-210000,\
-280000,\
-350000,\
-420000,\
-510000,\
-480000,\
-600000,\
-720000,\
-680000,\
-810000,\
-950000,\
-870000,\
-740000,\
-620000,\
-580000,\
-640000,\
-790000,\
-920000,\
-1100000,\
-980000,\
-840000,\
-720000,\
-690000,\
-870000,\
-1200000,\
-1450000,\
-1800000,\
-1620000\
-];\
-\
-const ctx = document.getElementById('viewsChart');\
-\
-new Chart(ctx, \{\
-\
-type:'line',\
-\
-data:\{\
-labels:labels,\
-\
-datasets:[\{\
-label:'Views',\
-data:data,\
-borderWidth:3,\
-tension:.45,\
-pointRadius:0,\
-fill:true,\
-borderColor:'#7aa2ff',\
-\
-backgroundColor:(context)=>\{\
-\
-const chart = context.chart;\
-const \{ctx, chartArea\} = chart;\
-\
-if(!chartArea)\{\
-return null;\
-\}\
-\
-const gradient = ctx.createLinearGradient(\
-0,\
-0,\
-0,\
-chartArea.bottom\
-);\
-\
-gradient.addColorStop(\
-0,\
-'rgba(122,162,255,.35)'\
-);\
-\
-gradient.addColorStop(\
-1,\
-'rgba(122,162,255,0)'\
-);\
-\
-return gradient;\
-\
-\}\
-\
-\}]\
-\},\
-\
-options:\{\
-\
-responsive:true,\
-maintainAspectRatio:false,\
-\
-interaction:\{\
-intersect:false,\
-mode:'index'\
-\},\
-\
-plugins:\{\
-\
-legend:\{\
-display:false\
-\},\
-\
-tooltip:\{\
-backgroundColor:'rgba(15,15,20,.96)',\
-borderColor:'rgba(255,255,255,.08)',\
-borderWidth:1,\
-padding:14,\
-displayColors:false,\
-\
-callbacks:\{\
-label:function(context)\{\
-\
-return context.raw.toLocaleString()\
-+ ' views';\
-\
-\}\
-\}\
-\}\
-\
-\},\
-\
-scales:\{\
-\
-x:\{\
-grid:\{\
-display:false\
-\},\
-\
-ticks:\{\
-color:'rgba(255,255,255,.45)'\
-\}\
-\},\
-\
-y:\{\
-grid:\{\
-color:'rgba(255,255,255,.05)'\
-\},\
-\
-border:\{\
-display:false\
-\},\
-\
-ticks:\{\
-color:'rgba(255,255,255,.45)',\
-\
-callback:function(value)\{\
-\
-if(value >= 1000000)\{\
-return (value / 1000000) + 'M';\
-\}\
-\
-return (value / 1000) + 'K';\
-\
-\}\
-\}\
-\}\
-\
-\}\
-\
-\}\
-\
-\});\
-\
-</script>\
-\
-</body>\
-</html>}
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <style>
+
+    *{
+      margin:0;
+      padding:0;
+      box-sizing:border-box;
+    }
+
+    body{
+      background:#050505;
+      color:white;
+      font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+      min-height:100vh;
+      overflow-x:hidden;
+      padding:28px;
+    }
+
+    body::before{
+      content:"";
+      position:fixed;
+      inset:0;
+      background:
+      radial-gradient(circle at top left, rgba(88,101,242,.18), transparent 28%),
+      radial-gradient(circle at bottom right, rgba(0,180,255,.14), transparent 30%);
+      z-index:-2;
+    }
+
+    body::after{
+      content:"";
+      position:fixed;
+      inset:0;
+      backdrop-filter:blur(120px);
+      z-index:-1;
+    }
+
+    .container{
+      max-width:1400px;
+      margin:auto;
+    }
+
+    .navbar{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      margin-bottom:26px;
+      flex-wrap:wrap;
+      gap:20px;
+    }
+
+    .logo{
+      font-size:34px;
+      font-weight:700;
+      letter-spacing:-1px;
+    }
+
+    .logo span{
+      opacity:.45;
+      font-weight:400;
+    }
+
+    .live{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      padding:10px 18px;
+      border-radius:999px;
+      background:rgba(255,255,255,.05);
+      border:1px solid rgba(255,255,255,.08);
+      backdrop-filter:blur(20px);
+      font-size:13px;
+      letter-spacing:.5px;
+    }
+
+    .live-dot{
+      width:8px;
+      height:8px;
+      border-radius:50%;
+      background:#6dff9a;
+      box-shadow:0 0 12px #6dff9a;
+      animation:pulse 1.4s infinite;
+    }
+
+    @keyframes pulse{
+      0%{transform:scale(1);opacity:1;}
+      50%{transform:scale(1.6);opacity:.5;}
+      100%{transform:scale(1);opacity:1;}
+    }
+
+    .stats-grid{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(230px,1fr));
+      gap:18px;
+      margin-bottom:22px;
+    }
+
+    .card{
+      position:relative;
+      overflow:hidden;
+      padding:26px;
+      border-radius:30px;
+      background:rgba(255,255,255,.05);
+      border:1px solid rgba(255,255,255,.08);
+      backdrop-filter:blur(24px);
+      transition:.35s ease;
+    }
+
+    .card:hover{
+      transform:translateY(-5px);
+      border-color:rgba(255,255,255,.14);
+    }
+
+    .card::before{
+      content:"";
+      position:absolute;
+      inset:0;
+      background:linear-gradient(
+      135deg,
+      rgba(255,255,255,.06),
+      transparent);
+      pointer-events:none;
+    }
+
+    .label{
+      font-size:14px;
+      opacity:.5;
+      margin-bottom:14px;
+    }
+
+    .value{
+      font-size:40px;
+      font-weight:700;
+      letter-spacing:-2px;
+    }
+
+    .positive{
+      color:#73ffb4;
+    }
+
+    .chart-card{
+      padding:30px;
+      border-radius:34px;
+      background:rgba(255,255,255,.05);
+      border:1px solid rgba(255,255,255,.08);
+      backdrop-filter:blur(24px);
+      margin-top:10px;
+    }
+
+    .chart-header{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      margin-bottom:30px;
+      flex-wrap:wrap;
+      gap:15px;
+    }
+
+    .chart-title{
+      font-size:28px;
+      font-weight:600;
+      letter-spacing:-1px;
+    }
+
+    .badge{
+      padding:10px 16px;
+      border-radius:999px;
+      background:rgba(255,255,255,.05);
+      border:1px solid rgba(255,255,255,.08);
+      font-size:13px;
+      opacity:.8;
+    }
+
+    canvas{
+      width:100% !important;
+      height:450px !important;
+    }
+
+    .section-title{
+      margin-top:28px;
+      margin-bottom:18px;
+      font-size:24px;
+      font-weight:600;
+      letter-spacing:-1px;
+    }
+
+    .videos-grid{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(320px,1fr));
+      gap:20px;
+    }
+
+    .video-card{
+      overflow:hidden;
+      border-radius:28px;
+      background:rgba(255,255,255,.05);
+      border:1px solid rgba(255,255,255,.08);
+      backdrop-filter:blur(20px);
+      transition:.35s ease;
+    }
+
+    .video-card:hover{
+      transform:translateY(-4px);
+    }
+
+    .video-thumb{
+      width:100%;
+      height:200px;
+      object-fit:cover;
+    }
+
+    .video-info{
+      padding:22px;
+    }
+
+    .video-title{
+      font-size:16px;
+      line-height:1.4;
+      margin-bottom:10px;
+      font-weight:600;
+    }
+
+    .video-stats{
+      opacity:.5;
+      font-size:14px;
+    }
+
+    .footer{
+      margin-top:40px;
+      text-align:center;
+      opacity:.3;
+      font-size:13px;
+    }
+
+    @media(max-width:768px){
+
+      body{
+        padding:18px;
+      }
+
+      .logo{
+        font-size:24px;
+      }
+
+      .value{
+        font-size:32px;
+      }
+
+      .chart-card{
+        padding:20px;
+      }
+
+      canvas{
+        height:300px !important;
+      }
+
+    }
+
+  </style>
+</head>
+<body>
+
+<div class="container">
+
+  <div class="navbar">
+
+    <div class="logo">
+      LOWDIEE <span>dashboard</span>
+    </div>
+
+    <div class="live">
+      <div class="live-dot"></div>
+      LIVE ANALYTICS
+    </div>
+
+  </div>
+
+  <div class="stats-grid">
+
+    <div class="card">
+      <div class="label">Highest Day</div>
+      <div class="value">1.8M</div>
+    </div>
+
+    <div class="card">
+      <div class="label">Average Daily</div>
+      <div class="value">642K</div>
+    </div>
+
+    <div class="card">
+      <div class="label">Monthly Views</div>
+      <div class="value">18.3M</div>
+    </div>
+
+    <div class="card">
+      <div class="label">Growth</div>
+      <div class="value positive">+12.4%</div>
+    </div>
+
+  </div>
+
+  <div class="chart-card">
+
+    <div class="chart-header">
+
+      <div class="chart-title">
+        Daily Views
+      </div>
+
+      <div class="badge">
+        Last 28 Days
+      </div>
+
+    </div>
+
+    <canvas id="viewsChart"></canvas>
+
+  </div>
+
+  <div class="section-title">
+    Top Performing Shorts
+  </div>
+
+  <div class="videos-grid">
+
+    <div class="video-card">
+
+      <img
+      class="video-thumb"
+      src="https://images.unsplash.com/photo-1511512578047-dfb367046420?q=80&w=1200&auto=format&fit=crop">
+
+      <div class="video-info">
+
+        <div class="video-title">
+          INSANE Gaming Clip Went Viral
+        </div>
+
+        <div class="video-stats">
+          4.2M views • 2 days ago
+        </div>
+
+      </div>
+
+    </div>
+
+    <div class="video-card">
+
+      <img
+      class="video-thumb"
+      src="https://images.unsplash.com/photo-1542751110-97427bbecf20?q=80&w=1200&auto=format&fit=crop">
+
+      <div class="video-info">
+
+        <div class="video-title">
+          Best Edit I've Ever Made
+        </div>
+
+        <div class="video-stats">
+          2.8M views • 5 days ago
+        </div>
+
+      </div>
+
+    </div>
+
+    <div class="video-card">
+
+      <img
+      class="video-thumb"
+      src="https://images.unsplash.com/photo-1493711662062-fa541adb3fc8?q=80&w=1200&auto=format&fit=crop">
+
+      <div class="video-info">
+
+        <div class="video-title">
+          This Short Exploded Overnight
+        </div>
+
+        <div class="video-stats">
+          7.1M views • 1 week ago
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+  <div class="footer">
+    LOWDIEE YouTube Analytics
+  </div>
+
+</div>
+
+<script>
+
+const labels = [
+'Day 1','Day 2','Day 3','Day 4','Day 5','Day 6','Day 7',
+'Day 8','Day 9','Day 10','Day 11','Day 12','Day 13','Day 14',
+'Day 15','Day 16','Day 17','Day 18','Day 19','Day 20','Day 21',
+'Day 22','Day 23','Day 24','Day 25','Day 26','Day 27','Day 28'
+];
+
+const data = [
+210000,
+280000,
+350000,
+420000,
+510000,
+480000,
+600000,
+720000,
+680000,
+810000,
+950000,
+870000,
+740000,
+620000,
+580000,
+640000,
+790000,
+920000,
+1100000,
+980000,
+840000,
+720000,
+690000,
+870000,
+1200000,
+1450000,
+1800000,
+1620000
+];
+
+const ctx = document.getElementById('viewsChart');
+
+new Chart(ctx, {
+
+type:'line',
+
+data:{
+labels:labels,
+
+datasets:[{
+label:'Views',
+data:data,
+borderWidth:3,
+tension:.45,
+pointRadius:0,
+fill:true,
+borderColor:'#7aa2ff',
+
+backgroundColor:(context)=>{
+
+const chart = context.chart;
+const {ctx, chartArea} = chart;
+
+if(!chartArea){
+return null;
+}
+
+const gradient = ctx.createLinearGradient(
+0,
+0,
+0,
+chartArea.bottom
+);
+
+gradient.addColorStop(
+0,
+'rgba(122,162,255,.35)'
+);
+
+gradient.addColorStop(
+1,
+'rgba(122,162,255,0)'
+);
+
+return gradient;
+
+}
+
+}]
+},
+
+options:{
+
+responsive:true,
+maintainAspectRatio:false,
+
+interaction:{
+intersect:false,
+mode:'index'
+},
+
+plugins:{
+
+legend:{
+display:false
+},
+
+tooltip:{
+backgroundColor:'rgba(15,15,20,.96)',
+borderColor:'rgba(255,255,255,.08)',
+borderWidth:1,
+padding:14,
+displayColors:false,
+
+callbacks:{
+label:function(context){
+
+return context.raw.toLocaleString()
++ ' views';
+
+}
+}
+}
+
+},
+
+scales:{
+
+x:{
+grid:{
+display:false
+},
+
+ticks:{
+color:'rgba(255,255,255,.45)'
+}
+},
+
+y:{
+grid:{
+color:'rgba(255,255,255,.05)'
+},
+
+border:{
+display:false
+},
+
+ticks:{
+color:'rgba(255,255,255,.45)',
+
+callback:function(value){
+
+if(value >= 1000000){
+return (value / 1000000) + 'M';
+}
+
+return (value / 1000) + 'K';
+
+}
+}
+}
+
+}
+
+}
+
+});
+
+</script>
+
+</body>
+</html>
