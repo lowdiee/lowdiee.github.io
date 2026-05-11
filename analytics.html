@@ -400,129 +400,136 @@
 
 <script>
 
-const CHANNEL_ID = "UCiET35uAJMAHQFbxGDRaITw";
-
-async function loadYouTubeStats() {
+async function loadDashboard() {
 
   try {
 
-    const response = await fetch(
-      `/api/channel?channelId=${CHANNEL_ID}`
-    );
+    const response =
+      await fetch("/api/youtube");
 
-    if (!response.ok) {
-      throw new Error("API Error");
-    }
+    const data =
+      await response.json();
 
-    const data = await response.json();
+    const channel =
+      data.channel;
 
-    const subscribers = Number(data.subscribers);
-    const views = Number(data.views);
-    const videos = Number(data.videos);
+    const stats =
+      channel.statistics;
 
-    // ===== STATY =====
+    /*
+      STATS
+    */
 
-    const statCards = document.querySelectorAll(".value");
+    document.querySelectorAll(".value")[0].innerText =
+      Number(stats.subscriberCount).toLocaleString();
 
-    if(statCards[0]){
-      statCards[0].innerText =
-        subscribers.toLocaleString();
-    }
+    document.querySelectorAll(".value")[1].innerText =
+      Number(stats.viewCount).toLocaleString();
 
-    if(statCards[1]){
-      statCards[1].innerText =
-        views.toLocaleString();
-    }
+    document.querySelectorAll(".value")[2].innerText =
+      Number(stats.videoCount).toLocaleString();
 
-    if(statCards[2]){
-      statCards[2].innerText =
-        videos.toLocaleString();
-    }
+    document.querySelectorAll(".value")[3].innerText =
+      channel.snippet.title;
 
-    // fake growth %
-    if(statCards[3]){
-      statCards[3].innerText = "+12.4%";
-    }
+    /*
+      VIDEOS
+    */
 
-    // ===== CHART =====
+    const videosGrid =
+      document.querySelector(".videos-grid");
 
-    const ctx = document
-      .getElementById('viewsChart')
-      .getContext('2d');
+    videosGrid.innerHTML = "";
 
-    const randomViews = [];
+    data.videos.forEach(video => {
 
-    for(let i = 0; i < 28; i++){
+      videosGrid.innerHTML += `
 
-      randomViews.push(
-        Math.floor(
-          Math.random() * 800000 + 200000
-        )
-      );
+        <div class="video-card">
 
-    }
+          <img
+            class="video-thumb"
+            src="${video.thumbnail}">
+
+          <div class="video-info">
+
+            <div class="video-title">
+              ${video.title}
+            </div>
+
+            <div class="video-stats">
+              ${Number(video.views).toLocaleString()} views
+              •
+              ${Number(video.likes).toLocaleString()} likes
+            </div>
+
+          </div>
+
+        </div>
+
+      `;
+
+    });
+
+    /*
+      CHART
+    */
+
+    const ctx =
+      document
+      .getElementById("viewsChart");
 
     new Chart(ctx, {
 
-      type: 'line',
+      type: "line",
 
       data: {
 
-        labels: [
-          "1","2","3","4","5","6","7",
-          "8","9","10","11","12","13","14",
-          "15","16","17","18","19","20","21",
-          "22","23","24","25","26","27","28"
-        ],
+        labels: data.videos.map(v =>
+          v.title.slice(0, 12)
+        ),
 
         datasets: [{
 
-          label: 'Views',
+          label: "Views",
 
-          data: randomViews,
-
-          borderColor: '#73ffb4',
-
-          backgroundColor: 'rgba(115,255,180,.12)',
-
-          fill: true,
+          data: data.videos.map(v =>
+            Number(v.views)
+          ),
 
           tension: .4,
 
-          pointRadius: 0
+          fill: true,
+
+          borderWidth: 3
 
         }]
+
       },
 
       options: {
 
-        responsive:true,
+        responsive: true,
 
-        maintainAspectRatio:false,
+        plugins: {
 
-        plugins:{
-          legend:{
-            display:false
+          legend: {
+            display: false
           }
+
         },
 
-        scales:{
+        scales: {
 
-          x:{
-            grid:{
-              color:'rgba(255,255,255,.03)'
-            },
-            ticks:{
-              color:'rgba(255,255,255,.4)'
+          x: {
+            ticks: {
+              color: "white"
             }
           },
 
-          y:{
-            grid:{
-              color:'rgba(255,255,255,.03)'
-            },
-            ticks:{
-              color:'rgba(255,255,255,.4)'
+          y: {
+            ticks: {
+              color: "white"
             }
           }
 
@@ -532,19 +539,19 @@ async function loadYouTubeStats() {
 
     });
 
-  }
-
-  catch(err){
+  } catch (err) {
 
     console.error(err);
 
-    alert("Błąd pobierania danych z YouTube API");
+    alert(
+      "Błąd pobierania danych z YouTube API"
+    );
 
   }
 
 }
 
-loadYouTubeStats();
+loadDashboard();
 
 </script>
 
