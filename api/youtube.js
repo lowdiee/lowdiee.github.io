@@ -4,7 +4,7 @@ export default async function handler(req, res) {
 
     const apiKey = process.env.YOUTUBE_API_KEY;
 
-    const channelId = "UCiET35uAJMAHQFbxGDRaITw";
+    const channelId = "UCiET35uAJMAHQFbxGDRalTw";
 
     /*
       CHANNEL DATA
