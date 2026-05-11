@@ -1,15 +1,26 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
   <meta charset="UTF-8" />
   <meta
     name="viewport"
     content="width=device-width, initial-scale=1.0"
   />
 
-  <title>LOWDIEE Dashboard</title>
+  <link
+    href="https://fonts.cdnfonts.com/css/sf-pro-display"
+    rel="stylesheet"
+  >
+
+  <link
+    href="https://fonts.cdnfonts.com/css/fake-receipt"
+    rel="stylesheet"
+  >
 
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <title>LOWDIEE Dashboard</title>
 
   <style>
 
@@ -20,25 +31,31 @@
     }
 
     body{
+
       background:#050505;
       color:white;
+
       font-family:
-      -apple-system,
-      BlinkMacSystemFont,
-      "Segoe UI",
+      'SF Pro Display',
       sans-serif;
 
       min-height:100vh;
+
       overflow-x:hidden;
+
       padding:28px;
+
     }
 
     body::before{
+
       content:"";
+
       position:fixed;
       inset:0;
 
       background:
+
       radial-gradient(
         circle at top left,
         rgba(88,101,242,.18),
@@ -52,14 +69,20 @@
       );
 
       z-index:-2;
+
     }
 
     body::after{
+
       content:"";
+
       position:fixed;
       inset:0;
+
       backdrop-filter:blur(120px);
+
       z-index:-1;
+
     }
 
     .container{
@@ -68,26 +91,36 @@
     }
 
     .navbar{
+
       display:flex;
       justify-content:space-between;
       align-items:center;
+
       margin-bottom:26px;
-      gap:20px;
+
       flex-wrap:wrap;
+      gap:20px;
+
     }
 
     .logo{
+
       font-size:34px;
       font-weight:700;
+
       letter-spacing:-1px;
+
     }
 
     .logo span{
+
       opacity:.4;
       font-weight:400;
+
     }
 
     .live{
+
       display:flex;
       align-items:center;
       gap:10px;
@@ -105,19 +138,29 @@
       backdrop-filter:blur(20px);
 
       font-size:13px;
-      letter-spacing:.4px;
+
+      letter-spacing:1px;
+
+      font-family:
+      'Fake Receipt',
+      monospace;
+
     }
 
     .live-dot{
+
       width:8px;
       height:8px;
+
       border-radius:50%;
+
       background:#73ffb4;
 
       box-shadow:
       0 0 14px #73ffb4;
 
       animation:pulse 1.4s infinite;
+
     }
 
     @keyframes pulse{
@@ -140,6 +183,7 @@
     }
 
     .stats-grid{
+
       display:grid;
 
       grid-template-columns:
@@ -148,9 +192,11 @@
       gap:18px;
 
       margin-bottom:22px;
+
     }
 
     .card{
+
       position:relative;
       overflow:hidden;
 
@@ -167,21 +213,27 @@
       backdrop-filter:blur(24px);
 
       transition:.35s ease;
+
     }
 
     .card:hover{
+
       transform:translateY(-5px);
 
       border-color:
       rgba(255,255,255,.14);
+
     }
 
     .card::before{
+
       content:"";
+
       position:absolute;
       inset:0;
 
       background:
+
       linear-gradient(
         135deg,
         rgba(255,255,255,.05),
@@ -189,19 +241,29 @@
       );
 
       pointer-events:none;
+
     }
 
     .label{
+
       font-size:14px;
+
       opacity:.55;
+
       margin-bottom:14px;
+
     }
 
     .value{
-      font-size:54px;
+
+      font-size:56px;
+
       font-weight:700;
+
       letter-spacing:-3px;
+
       line-height:1;
+
     }
 
     .green{
@@ -209,6 +271,7 @@
     }
 
     .chart-card{
+
       margin-top:10px;
 
       padding:30px;
@@ -222,9 +285,11 @@
       1px solid rgba(255,255,255,.08);
 
       backdrop-filter:blur(24px);
+
     }
 
     .chart-header{
+
       display:flex;
       justify-content:space-between;
       align-items:center;
@@ -232,16 +297,23 @@
       margin-bottom:30px;
 
       gap:15px;
+
       flex-wrap:wrap;
+
     }
 
     .chart-title{
-      font-size:28px;
+
+      font-size:30px;
+
       font-weight:700;
+
       letter-spacing:-1px;
+
     }
 
     .badge{
+
       padding:10px 16px;
 
       border-radius:999px;
@@ -254,33 +326,43 @@
 
       font-size:13px;
 
-      opacity:.85;
+      opacity:.8;
+
     }
 
     .chart-wrapper{
+
       position:relative;
+
       height:420px;
+
     }
 
     .section-title{
+
       margin-top:34px;
       margin-bottom:18px;
 
       font-size:30px;
       font-weight:700;
+
       letter-spacing:-1px;
+
     }
 
     .videos-grid{
+
       display:grid;
 
       grid-template-columns:
       repeat(auto-fit,minmax(320px,1fr));
 
       gap:20px;
+
     }
 
     .video-card{
+
       overflow:hidden;
 
       border-radius:28px;
@@ -294,16 +376,22 @@
       backdrop-filter:blur(20px);
 
       transition:.35s ease;
+
     }
 
     .video-card:hover{
+
       transform:translateY(-4px);
+
     }
 
     .video-thumb{
+
       width:100%;
       height:210px;
+
       object-fit:cover;
+
     }
 
     .video-info{
@@ -311,22 +399,35 @@
     }
 
     .video-title{
+
       font-size:17px;
+
       line-height:1.45;
+
       margin-bottom:12px;
+
       font-weight:600;
+
     }
 
     .video-stats{
+
       opacity:.6;
+
       font-size:14px;
+
     }
 
     .footer{
+
       margin-top:50px;
+
       text-align:center;
+
       opacity:.35;
+
       font-size:13px;
+
     }
 
     @media(max-width:768px){
@@ -358,7 +459,9 @@
     }
 
   </style>
+
 </head>
+
 <body>
 
 <div class="container">
@@ -440,7 +543,7 @@
       </div>
 
       <div class="badge">
-        Top Performing Content
+        Entire Channel
       </div>
 
     </div>
@@ -484,7 +587,7 @@ async function loadDashboard() {
       channel.statistics;
 
     /*
-      CHANNEL STATS
+      MAIN STATS
     */
 
     const subscribers =
@@ -514,13 +617,19 @@ async function loadDashboard() {
       formatNumber(averageViews);
 
     /*
-      SORT VIDEOS
+      SORT BY VIEWS
     */
 
     const sortedVideos =
+
       [...data.videos]
+
       .sort((a,b) =>
-        Number(b.views) - Number(a.views)
+
+        Number(b.views) -
+
+        Number(a.views)
+
       );
 
     /*
@@ -540,7 +649,8 @@ async function loadDashboard() {
 
           <img
             class="video-thumb"
-            src="${video.thumbnail}">
+            src="${video.thumbnail}"
+          >
 
           <div class="video-info">
 
@@ -576,11 +686,12 @@ async function loadDashboard() {
 
     new Chart(ctx, {
 
-      type: "bar",
+      type:"bar",
 
-      data: {
+      data:{
 
         labels:
+
           sortedVideos.map(video =>
 
             video.title.length > 20
@@ -595,11 +706,14 @@ async function loadDashboard() {
 
           ),
 
-        datasets: [{
+        datasets:[{
 
           data:
+
             sortedVideos.map(video =>
+
               Number(video.views)
+
             ),
 
           borderRadius:14,
@@ -610,19 +724,19 @@ async function loadDashboard() {
 
       },
 
-      options: {
+      options:{
 
         responsive:true,
 
         maintainAspectRatio:false,
 
-        plugins: {
+        plugins:{
 
-          legend: {
+          legend:{
             display:false
           },
 
-          tooltip: {
+          tooltip:{
 
             backgroundColor:"#111",
 
@@ -637,13 +751,16 @@ async function loadDashboard() {
 
             bodyColor:"#aaa",
 
-            callbacks: {
+            callbacks:{
 
-              label: function(context){
+              label:function(context){
 
                 return (
+
                   context.raw.toLocaleString()
+
                   + " views"
+
                 );
 
               }
@@ -654,11 +771,11 @@ async function loadDashboard() {
 
         },
 
-        scales: {
+        scales:{
 
-          x: {
+          x:{
 
-            ticks: {
+            ticks:{
 
               color:
               "rgba(255,255,255,.75)",
@@ -669,30 +786,36 @@ async function loadDashboard() {
 
             },
 
-            grid: {
+            grid:{
               display:false
             }
 
           },
 
-          y: {
+          y:{
 
-            ticks: {
+            ticks:{
 
               color:
               "rgba(255,255,255,.5)",
 
-              callback: function(value){
+              callback:function(value){
 
-                if(value >= 1000000)
+                if(value >= 1000000){
+
                   return (
                     value / 1000000
                   ) + "M";
 
-                if(value >= 1000)
+                }
+
+                if(value >= 1000){
+
                   return (
                     value / 1000
                   ) + "K";
+
+                }
 
                 return value;
 
@@ -700,7 +823,7 @@ async function loadDashboard() {
 
             },
 
-            grid: {
+            grid:{
 
               color:
               "rgba(255,255,255,.05)"
@@ -728,10 +851,6 @@ async function loadDashboard() {
   }
 
 }
-
-/*
-  FORMAT
-*/
 
 function formatNumber(num){
 
