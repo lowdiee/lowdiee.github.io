@@ -222,6 +222,14 @@
     .stat-num.c-pink  { color: var(--pink); }
     .stat-num.c-amber { color: var(--amber); }
 
+    .stat-scope {
+      margin-top: 8px;
+      font-family: 'Fake Receipt', monospace;
+      font-size: 10px;
+      letter-spacing: .08em;
+      color: var(--faint);
+    }
+
     /* ── FEATURED #1 SHORT ── */
     .featured-wrap {
       margin-bottom: 22px;
@@ -466,18 +474,22 @@
     <div class="stat-card">
       <div class="stat-label">BEST SHORT</div>
       <div class="stat-num c-amber" id="best-short"><span class="sk" style="width:80px;height:36px"></span></div>
+      <div class="stat-scope">last 50 uploads</div>
     </div>
     <div class="stat-card">
       <div class="stat-label">AVG VIEWS / SHORT</div>
       <div class="stat-num c-green" id="avg-views"><span class="sk" style="width:80px;height:36px"></span></div>
+      <div class="stat-scope">last 50 uploads</div>
     </div>
     <div class="stat-card">
       <div class="stat-label">TOTAL LIKES</div>
       <div class="stat-num c-pink" id="total-likes"><span class="sk" style="width:80px;height:36px"></span></div>
+      <div class="stat-scope">last 50 uploads</div>
     </div>
     <div class="stat-card">
       <div class="stat-label">LIKE RATE</div>
       <div class="stat-num c-blue" id="like-rate"><span class="sk" style="width:80px;height:36px"></span></div>
+      <div class="stat-scope">last 50 uploads</div>
     </div>
   </div>
 
@@ -485,7 +497,7 @@
   <div class="featured-wrap">
     <div class="featured-label">
       <div class="section-title">Best Short</div>
-      <div class="section-tag">#1 ALL TIME</div>
+      <div class="section-tag">#1 LAST 50 UPLOADS</div>
     </div>
     <div class="featured-card" id="featured-card">
       <div class="featured-thumb-wrap">
@@ -568,7 +580,7 @@ async function loadDashboard() {
       fc.innerHTML = `
         <div class="featured-thumb-wrap">
           <img class="featured-thumb" src="${top.thumbnail}" alt="${esc(top.title)}" />
-          <div class="featured-crown">#1 ALL TIME</div>
+          <div class="featured-crown">#1 LAST 50</div>
         </div>
         <div class="featured-info">
           <div>
