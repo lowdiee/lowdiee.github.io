@@ -50,6 +50,7 @@ export default async function handler(req, res) {
 
       if (videosData.items) {
         videos = videosData.items.map(video => ({
+          id: video.id,
           title: video.snippet.title,
           thumbnail: video.snippet.thumbnails.high.url,
           views: Number(video.statistics.viewCount || 0),
