@@ -242,6 +242,66 @@ a.row:hover .th img{transform:scale(1.12)}
 .summary b{display:block;font-size:clamp(22px,2.4vw,30px);font-weight:700;letter-spacing:-.04em;margin-top:8px}
 .note{font-size:12px;color:var(--text3);margin-top:16px;text-align:center}
 
+/* competitors */
+.stack{display:grid;gap:20px}
+.chans{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:20px}
+.cchip{--c:#fff;display:inline-flex;align-items:center;gap:9px;padding:5px 14px 5px 5px;border-radius:99px;background:var(--pill);font-size:13px;font-weight:600;transition:opacity .45s var(--ease),transform .55s var(--spring),background .3s}
+.cchip:hover{transform:translateY(-2px);background:var(--card-hover)}
+.cchip.off{opacity:.35}
+.cchip.off .av{filter:grayscale(1)}
+.av{flex:none;width:26px;height:26px;border-radius:50%;overflow:hidden;background:linear-gradient(135deg,#e9e9ee,#8e8e94);display:grid;place-items:center;font-size:11px;font-weight:800;color:#1d1d1f;box-shadow:0 0 0 2px var(--c,transparent);transition:filter .4s}
+.av img{width:100%;height:100%;object-fit:cover}
+.you{flex:none;font-size:10px;font-weight:700;padding:2px 7px;border-radius:99px;background:var(--green);color:#04210f}
+.lc{position:relative;height:280px;margin-top:22px;touch-action:pan-y}
+.lc svg{width:100%;height:100%;overflow:visible}
+.lc .gl{stroke:var(--line);stroke-dasharray:2 5}
+.lc .yl{fill:var(--text3);font-size:11px;font-weight:600}
+.lc .ln{fill:none;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round;transition:opacity .3s}
+.lc .ar{opacity:.16}
+.lc .mk{stroke-width:2.5;stroke:rgba(30,30,32,.6)}
+.lc .guide{stroke:var(--text2);stroke-dasharray:3 4;opacity:0;transition:opacity .2s}
+.lc .hd{opacity:0;transition:opacity .2s;stroke:#fff;stroke-width:2}
+.lc.hover .guide,.lc.hover .hd{opacity:1}
+.lc-tip{position:absolute;top:6px;left:0;pointer-events:none;min-width:200px;padding:12px 14px;border-radius:16px;background:rgba(28,28,30,.88);color:#fff;-webkit-backdrop-filter:blur(20px);backdrop-filter:blur(20px);font-size:12px;opacity:0;transform:translateY(6px) scale(.97);transition:opacity .25s,transform .4s var(--spring);z-index:5}
+.lc.hover .lc-tip{opacity:1;transform:none}
+.lc-tip h5{font-size:13px;font-weight:700}
+.lc-tip small{display:block;font-size:10px;opacity:.55;margin:2px 0 8px;text-transform:uppercase;letter-spacing:.06em}
+.lc-tip div{display:flex;align-items:center;gap:8px;padding:3px 0}
+.lc-tip i{width:8px;height:8px;border-radius:50%;flex:none}
+.lc-tip span{flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:140px}
+.lc-tip b{font-variant-numeric:tabular-nums}
+.lc-axis{display:flex;justify-content:space-between;margin:10px 0 0 48px;font-size:11px;font-weight:600;color:var(--text3)}
+.card-head{display:flex;justify-content:space-between;align-items:flex-start;gap:14px;flex-wrap:wrap}
+.bhead,.brow{display:grid;grid-template-columns:28px minmax(0,1fr) 170px 80px 80px 90px;gap:14px;align-items:center}
+.bhead,.uhead{padding:16px 0 10px;border-bottom:1px solid var(--line);font-size:11px;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:.06em}
+.bhead span:nth-child(n+3),.uhead span:nth-child(n+3){text-align:right}
+.brow{padding:12px;margin:0 -12px;border-radius:18px;transition:background .35s var(--ease)}
+a.brow:hover,.brow:hover{background:var(--pill)}
+.brow.me{background:rgba(52,209,106,.1)}
+.bname{display:flex;align-items:center;gap:12px;min-width:0}
+.bname .av{width:38px;height:38px;font-size:14px}
+.bname div{min-width:0}
+.bname b{display:flex;align-items:center;gap:7px;font-size:15px;font-weight:650;letter-spacing:-.02em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.bname small{display:block;font-size:12px;color:var(--text3);margin-top:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.bavg{display:flex;flex-direction:column;align-items:flex-end;gap:7px;font-size:15px;font-weight:650}
+.bavg .bar1{width:100%;margin:0;height:5px}
+.bavg .bar1 span{background:var(--c)}
+.uhead,.urow{display:grid;grid-template-columns:44px minmax(0,1fr) 92px 70px 84px 72px 70px;gap:14px;align-items:center}
+.urow{padding:10px 12px;margin:0 -12px;border-radius:18px;transition:background .35s var(--ease),transform .6s var(--spring)}
+a.urow:hover{background:var(--pill);transform:scale(1.006)}
+.urow .th{width:44px}
+.uch{display:flex;align-items:center;gap:6px;margin-top:5px;font-size:12px;color:var(--text3)}
+.uch .av{width:16px;height:16px;font-size:8px;box-shadow:0 0 0 1.5px var(--c)}
+.fmt{justify-self:end;font-size:11px;font-weight:700;padding:3px 9px;border-radius:99px;background:rgba(100,181,255,.18);color:#7cc0ff}
+.fmt.short{background:rgba(255,100,130,.18);color:#ff7d97}
+:root[data-theme=light] .fmt{color:#1769c2}:root[data-theme=light] .fmt.short{color:#c8264a}
+.vs{font-weight:700}.vs.up{color:var(--green)}.vs.down{color:#ff7d97}
+.more-btn{display:block;margin:16px auto 0;padding:12px 22px;border-radius:99px;background:var(--pill);font-size:13px;font-weight:600;transition:background .3s,transform .5s var(--spring)}
+.more-btn:hover{background:var(--card-hover);transform:scale(1.04)}
+.cmp-empty{padding:50px 20px;text-align:center;color:var(--text2);font-size:14px;line-height:1.6}
+.cmp-empty code{font-size:12px;padding:2px 7px;border-radius:6px;background:var(--pill)}
+.seg button .s{display:none}
+
 /* dock */
 .dock{position:fixed;left:50%;bottom:max(20px,env(safe-area-inset-bottom));z-index:5;display:flex;align-items:center;gap:8px;padding:8px;border-radius:999px;transform:translateX(-50%);animation:dockIn 1.2s var(--ease) .45s backwards}
 .dock .seg{background:transparent;padding:0}
@@ -282,6 +342,18 @@ a.row:hover .th img{transform:scale(1.12)}
   .grid{grid-auto-flow:row dense}
 }
 @media (max-width:820px){
+  .bhead{display:none}
+  .brow{grid-template-columns:18px minmax(0,1fr) 70px 52px;gap:8px}
+  .bname{gap:9px}.bname .av{width:30px;height:30px}.bname b{font-size:14px}.bname small{font-size:11px}
+  .card .seg button{padding:8px 11px;font-size:12.5px}
+  .card-head .seg{max-width:100%;overflow-x:auto;scrollbar-width:none}
+  .brow .c-tv,.brow .c-posted{display:none}
+  .bavg .bar1{display:none}
+  .uhead{display:none}
+  .urow{grid-template-columns:38px minmax(0,1fr) 62px 52px;gap:10px}
+  .urow .th{width:38px}
+  .urow .c-posted,.urow .c-fmt,.urow .c-rate{display:none}
+  .lc{height:230px}
   .app{padding:14px 14px 116px;gap:14px}
   .topbar{gap:8px;padding:7px}
   .ask{display:none}
@@ -306,6 +378,8 @@ a.row:hover .th img{transform:scale(1.12)}
   .view-head{margin-bottom:18px}
 }
 @media (max-width:420px){
+  .dock .seg button{padding:12px 13px}
+  .seg button .l{display:none}.seg button .s{display:inline}
   .s3{grid-column:span 6}
   .card{padding:16px}
   .mid{font-size:28px;margin-top:16px}
@@ -347,6 +421,7 @@ a.row:hover .th img{transform:scale(1.12)}
     <nav class="rail glass" id="rail" aria-label="Sections">
       <button class="railbtn on" data-go="overview" aria-label="Overview" title="Overview (1)"><svg viewBox="0 0 24 24"><path d="M3 10.5 12 3l9 7.5V20a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/></svg></button>
       <button class="railbtn" data-go="shorts" aria-label="Top Shorts" title="Top Shorts (2)"><svg viewBox="0 0 24 24"><path d="M8 6h13M8 12h13M8 18h13M3.5 6h.01M3.5 12h.01M3.5 18h.01"/></svg></button>
+      <button class="railbtn" data-go="competitors" aria-label="Competitors" title="Competitors (3)"><svg viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20a6.5 6.5 0 0 1 13 0M16 4.5a3.5 3.5 0 0 1 0 7M18 14a6 6 0 0 1 3.5 6"/></svg></button>
       <button class="railbtn" data-go="goal" aria-label="Goal" title="Silver goal"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1"/></svg></button>
       <span class="rail-sep"></span>
       <a class="railbtn" id="ytLink" href="https://www.youtube.com" target="_blank" rel="noopener noreferrer" aria-label="Open channel on YouTube" title="Open channel"><svg viewBox="0 0 24 24"><path d="M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"/></svg></a>
@@ -460,6 +535,44 @@ a.row:hover .th img{transform:scale(1.12)}
           <p class="note" id="shortsNote"></p>
         </section>
 
+        <!-- ================= COMPETITORS ================= -->
+        <section class="view" data-view="competitors">
+          <div class="view-head rise" style="--i:0">
+            <div><p class="eyebrow">Competitors</p><h2>How you <span class="dim">stack up.</span></h2></div>
+            <span class="chip"><i class="live off" id="compDot"></i><span id="compUpdated">Waiting…</span></span>
+          </div>
+          <div id="compBody">
+            <div class="chans rise" id="chans" style="--i:1"></div>
+            <div class="stack">
+              <article class="card rise" style="--i:2">
+                <div class="card-head">
+                  <div><p class="label" id="lcLabel">Views from Shorts by upload day <span class="tag win">28D</span></p><p class="sub" style="margin-top:6px" id="lcNote">5-day average · hover the chart</p></div>
+                  <div class="seg" id="cmpModeSeg"><span class="ind"></span><button data-m="views" class="on">Views</button><button data-m="posts">Shorts posted</button></div>
+                </div>
+                <div class="lc" id="lc"><svg id="lcSvg"></svg><div class="lc-tip" id="lcTip"></div></div>
+                <div class="lc-axis" id="lcAxis"></div>
+              </article>
+              <article class="card rise" style="--i:3">
+                <div class="card-head">
+                  <p class="label">Leaderboard <span class="tag win">28D · Shorts</span></p>
+                  <div class="seg" id="lbSeg"><span class="ind"></span><button data-s="avg" class="on">Avg views</button><button data-s="subs">Subs</button><button data-s="rate">Like %</button><button data-s="posted">Posted</button></div>
+                </div>
+                <div class="bhead"><span>#</span><span>Channel</span><span>Avg views / Short</span><span>Like %</span><span>Shorts</span><span>Total views</span></div>
+                <div id="board"></div>
+              </article>
+              <article class="card rise" style="--i:4">
+                <div class="card-head">
+                  <div><p class="label">Competitors' latest uploads</p><p class="sub" style="margin-top:6px">“vs avg” = views compared to that channel's usual video of the same format.</p></div>
+                  <div class="seg" id="fmtSeg"><span class="ind"></span><button data-f="all" class="on">All</button><button data-f="short">Shorts</button><button data-f="long">Long</button></div>
+                </div>
+                <div class="uhead"><span></span><span>Video</span><span>Posted</span><span>Format</span><span>Views</span><span>Like %</span><span>vs avg</span></div>
+                <div id="uploads"></div>
+                <button class="more-btn" id="upMore" hidden>Show more</button>
+              </article>
+            </div>
+          </div>
+        </section>
+
       </main>
     </div>
     <div class="rail-spacer"></div>
@@ -469,7 +582,7 @@ a.row:hover .th img{transform:scale(1.12)}
 </div>
 
 <nav class="dock glass" id="dock" aria-label="Views">
-  <div class="seg" id="dockSeg"><span class="ind"></span><button data-go="overview" class="on">Overview</button><button data-go="shorts">Top Shorts</button></div>
+  <div class="seg" id="dockSeg"><span class="ind"></span><button data-go="overview" class="on"><span class="l">Overview</span><span class="s">Home</span></button><button data-go="shorts"><span class="l">Top Shorts</span><span class="s">Shorts</span></button><button data-go="competitors"><span class="l">Competitors</span><span class="s">Rivals</span></button></div>
   <button class="dock-plus" id="refreshDock" aria-label="Refresh data"><svg viewBox="0 0 24 24"><path d="M21 12a9 9 0 1 1-2.6-6.4M21 4v5h-5"/></svg></button>
 </nav>
 
@@ -481,6 +594,7 @@ a.row:hover .th img{transform:scale(1.12)}
 /* ================== CONFIG — edit freely ================== */
 const CONFIG = {
   api: '/api/youtube',                 // your existing Vercel endpoint
+  competitorsApi: '/api/competitors',  // api/competitors.js in your repo
   backgroundVideo: 'background.mp4',   // used if the file exists
   backgroundImage: 'background.jpg',   // fallback if there is no video
   goal: 100000,                        // Silver button
@@ -594,13 +708,14 @@ function go(name) {
   $$('[data-go]').forEach(b => b.classList.toggle('on', b.dataset.go === name && !b.classList.contains('link')));
   placeInd($('#dockSeg'));
   if (name === 'shorts') renderTop();
+  if (name === 'competitors') { lcAnimate = true; renderComp(true); }
   if (name === 'overview' && data) { animateChart(); $('#links').classList.remove('on'); queueLinks(); }
   const top = win.getBoundingClientRect().top + scrollY - 20;
   if (scrollY > top) scrollTo({ top, behavior: reduce ? 'auto' : 'smooth' });
 }
 document.addEventListener('click', e => { const b = e.target.closest('[data-go]'); if (b) { e.preventDefault(); go(b.dataset.go); } });
 addEventListener('keydown', e => { if (e.target.matches('input,textarea') || e.metaKey || e.ctrlKey || e.altKey) return;
-  if (e.key === '1') go('overview'); if (e.key === '2') go('shorts');
+  if (e.key === '1') go('overview'); if (e.key === '2') go('shorts'); if (e.key === '3') go('competitors');
   if (e.key.toLowerCase() === 'r') load(true); if (e.key.toLowerCase() === 't') setTheme(document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark'); });
 
 /* ---------- data normalisation (works with many API shapes) ---------- */
@@ -795,6 +910,179 @@ function startAsk() {
   show(); askTimer = setInterval(show, 5200);
 }
 
+/* ---------- competitors ---------- */
+const PALETTE = ['#64b5ff','#ff9f0a','#bf5af2','#ff6482','#5ee7df','#ffd60a','#ac8e68','#ff453a'];
+let comp = null, compState = 'idle', hiddenCh = new Set(), cmpMode = 'views', lbSort = 'avg', upFmt = 'all', upLimit = 10, lcAnimate = true;
+const DAY = 864e5, sod = t => { const d = new Date(t); d.setHours(0,0,0,0); return +d; };
+function normComp(raw, demo) {
+  const chs = (raw?.channels || []).map((c, i) => {
+    const videos = (c.videos || []).map(v => { const n = normVideo(v); n.duration = N(v.duration); n.format = v.format || (n.duration ? (n.duration <= 180 ? 'short' : 'long') : 'short'); return n; });
+    return { key:'c' + i, id:c.id || '', title:c.title || c.handle || 'Channel', handle:c.handle || '', avatar:c.avatar || '', subs:N(c.subs), hiddenSubs:!!c.hiddenSubs, views:N(c.views), videoCount:N(c.videoCount), videos, error:c.error || '', color:PALETTE[i % PALETTE.length],
+      url: c.handle && String(c.handle).startsWith('@') ? 'https://www.youtube.com/' + c.handle : c.id ? 'https://www.youtube.com/channel/' + c.id : '' };
+  });
+  return { demo, updatedAt: raw?.updatedAt ? new Date(raw.updatedAt) : new Date(), channels: chs };
+}
+function meEntry() {
+  if (!data) return null;
+  return { key:'me', me:true, title:data.name, handle:'You', avatar:data.avatar, subs:data.subs, views:data.totalViews, videoCount:data.videoCount,
+    videos:data.all.map(v => ({ ...v, format:'short' })), color:'#34d16a', url:data.url };
+}
+const chList = () => { const me = meEntry(); return [...(me ? [me] : []), ...(comp?.channels || []).filter(c => !c.error)]; };
+function stats(ch) {
+  if (ch._st) return ch._st;
+  const cut = Date.now() - CONFIG.windowDays*DAY;
+  const sh = ch.videos.filter(v => v.format === 'short'), rec = sh.filter(v => v.date && v.date >= cut);
+  const views = rec.reduce((s, v) => s + v.views, 0), likes = rec.reduce((s, v) => s + v.likes, 0);
+  const avgOf = f => { const a = ch.videos.filter(v => v.format === f); return a.length ? a.reduce((s, v) => s + v.views, 0)/a.length : 0; };
+  return ch._st = { n:rec.length, views, likes, avg:rec.length ? views/rec.length : 0, rate:views ? likes/views : 0, fmtAvg:{ short:avgOf('short'), long:avgOf('long') } };
+}
+const avHTML = (ch, extra = '') => `<span class="av" style="--c:${ch.color}"${extra}>${ch.avatar ? `<img src="${esc(ch.avatar)}" alt="" loading="lazy" referrerpolicy="no-referrer">` : esc((ch.title || '?').charAt(0).toUpperCase())}</span>`;
+
+function renderComp(animate = false) {
+  const body = $('#compBody');
+  if (compState === 'missing') { body.innerHTML = `<div class="card cmp-empty">This tab needs <code>api/competitors.js</code> in your repo.<br>Upload it next to <code>api/youtube.js</code> and refresh.</div>`; return; }
+  if (!comp) return;
+  if (!$('#chans')) return;
+  const list = chList();
+  const failed = comp.channels.filter(c => c.error);
+  // chips
+  $('#chans').innerHTML = list.map(ch => `<button class="cchip ${hiddenCh.has(ch.key) ? 'off' : ''}" data-k="${ch.key}" style="--c:${ch.color}" title="Show / hide">${avHTML(ch)}${esc(ch.title)}${ch.me ? ' <span class="you">You</span>' : ''}</button>`).join('')
+    + failed.map(c => `<span class="cchip off" title="${esc(c.error)}">⚠ ${esc(c.handle)} — not found</span>`).join('');
+  lcAnimate = animate || lcAnimate;
+  drawLC(); renderBoard(); renderUploads();
+  $('#compUpdated').textContent = (comp.demo ? 'Demo data · ' : '') + 'updated ' + comp.updatedAt.toLocaleTimeString('en-GB', { hour:'2-digit', minute:'2-digit' });
+  $('#compDot').classList.toggle('off', comp.demo);
+}
+document.addEventListener('click', e => { const c = e.target.closest('.cchip[data-k]'); if (!c) return;
+  const k = c.dataset.k; hiddenCh.has(k) ? hiddenCh.delete(k) : hiddenCh.add(k); c.classList.toggle('off'); lcAnimate = false; drawLC(); upLimit = 10; renderUploads(); });
+
+function seriesFor(ch) {
+  const days = CONFIG.windowDays, start = sod(Date.now()) - (days - 1)*DAY, arr = new Array(days).fill(0);
+  ch.videos.forEach(v => { if (v.format !== 'short' || !v.date) return; const i = Math.round((sod(+v.date) - start)/DAY); if (i >= 0 && i < days) arr[i] += cmpMode === 'views' ? v.views : 1; });
+  if (cmpMode === 'posts') { let s = 0; return arr.map(x => s += x); }
+  return arr.map((_, i) => { let s = 0, c = 0; for (let k = i - 2; k <= i + 2; k++) if (k >= 0 && k < days) { s += arr[k]; c++; } return s/c; });
+}
+function monotone(p) {
+  const n = p.length; if (n < 2) return ''; const dx = [], m = [], t = [];
+  for (let i = 0; i < n - 1; i++) { dx[i] = p[i+1][0] - p[i][0]; m[i] = (p[i+1][1] - p[i][1])/dx[i]; }
+  t[0] = m[0]; t[n-1] = m[n-2];
+  for (let i = 1; i < n - 1; i++) t[i] = m[i-1]*m[i] <= 0 ? 0 : (m[i-1] + m[i])/2;
+  for (let i = 0; i < n - 1; i++) { if (m[i] === 0) { t[i] = t[i+1] = 0; continue; } const a = t[i]/m[i], b = t[i+1]/m[i], h = a*a + b*b; if (h > 9) { const s = 3/Math.sqrt(h); t[i] = s*a*m[i]; t[i+1] = s*b*m[i]; } }
+  const f = x => x.toFixed(1); let d = `M${f(p[0][0])},${f(p[0][1])}`;
+  for (let i = 0; i < n - 1; i++) { const h = dx[i]/3; d += ` C${f(p[i][0] + h)},${f(p[i][1] + t[i]*h)} ${f(p[i+1][0] - h)},${f(p[i+1][1] - t[i+1]*h)} ${f(p[i+1][0])},${f(p[i+1][1])}`; }
+  return d;
+}
+const niceMax = v => { if (v <= 0) return 4; const e = Math.pow(10, Math.floor(Math.log10(v))), f = v/e; return (f <= 1 ? 1 : f <= 2 ? 2 : f <= 2.5 ? 2.5 : f <= 5 ? 5 : 10)*e; };
+function drawLC() {
+  const box = $('#lc'), svg = $('#lcSvg'); if (!box || !comp) return;
+  const W = box.clientWidth, H = box.clientHeight; if (!W) return;
+  const days = CONFIG.windowDays, L = 48, R = 10, T = 10, B = 6;
+  const vis = chList().filter(c => !hiddenCh.has(c.key)).map(c => ({ c, s: seriesFor(c) }));
+  const max = niceMax(Math.max(1, ...vis.flatMap(x => x.s)));
+  const X = i => L + i*(W - L - R)/(days - 1), Y = v => T + (1 - v/max)*(H - T - B);
+  const fmtY = v => cmpMode === 'posts' ? Math.round(v) : compact(v);
+  let h = '';
+  for (let k = 0; k <= 4; k++) { const v = max*k/4, y = Y(v).toFixed(1); h += `<line class="gl" x1="${L}" x2="${W - R}" y1="${y}" y2="${y}"/><text class="yl" x="${L - 10}" y="${+y + 4}" text-anchor="end">${fmtY(v)}</text>`; }
+  // draw "You" last so it sits on top
+  vis.sort((a, b) => (a.c.me ? 1 : 0) - (b.c.me ? 1 : 0));
+  vis.forEach(({ c, s }, idx) => {
+    const pts = s.map((v, i) => [X(i), Y(v)]), d = monotone(pts);
+    if (c.me) h += `<path class="ar" fill="${c.color}" d="${d} L${X(days - 1)},${Y(0)} L${X(0)},${Y(0)} Z"/>`;
+    h += `<path class="ln" stroke="${c.color}" d="${d}" style="${c.me ? 'stroke-width:3' : ''}"/>`;
+    for (let i = 2; i < days; i += 6) h += `<circle class="mk" cx="${pts[i][0].toFixed(1)}" cy="${pts[i][1].toFixed(1)}" r="4" fill="${c.color}"/>`;
+  });
+  h += `<line class="guide" id="lcGuide" x1="0" x2="0" y1="${T}" y2="${H - B}"/>` + vis.map(({ c }, i) => `<circle class="hd" data-i="${i}" r="5" fill="${c.color}"/>`).join('');
+  svg.innerHTML = h; box.classList.remove('hover');
+  svg._vis = vis; svg._geo = { X, Y, L, R, W, days };
+  if (lcAnimate && !reduce) {
+    svg.querySelectorAll('.ln').forEach((p, i) => { const len = p.getTotalLength(); p.style.strokeDasharray = len; p.style.strokeDashoffset = len; p.getBoundingClientRect();
+      p.style.transition = `stroke-dashoffset 1.6s var(--ease) ${i*90}ms`; p.style.strokeDashoffset = 0; });
+    svg.querySelectorAll('.ar,.mk').forEach(el => { el.style.opacity = 0; el.style.transition = 'opacity .8s ease .9s'; requestAnimationFrame(() => el.style.opacity = ''); });
+  }
+  lcAnimate = false;
+  const start = sod(Date.now()) - (days - 1)*DAY;
+  $('#lcAxis').innerHTML = [0, 7, 14, 21, days - 1].map(i => `<span>${shortDate(new Date(start + i*DAY))}</span>`).join('');
+  $('#lcLabel').firstChild.textContent = cmpMode === 'views' ? 'Views from Shorts by upload day ' : 'Shorts posted (cumulative) ';
+  $('#lcNote').textContent = cmpMode === 'views' ? 'Views earned by Shorts posted each day · 5-day average' : 'Running total of Shorts posted in the last ' + CONFIG.windowDays + ' days';
+}
+(function lcHover(){
+  const box = $('#lc'), tip = $('#lcTip');
+  const move = e => { const svg = $('#lcSvg'), g = svg._geo, vis = svg._vis; if (!g || !vis?.length) return;
+    const r = box.getBoundingClientRect(), x = e.clientX - r.left;
+    const i = Math.max(0, Math.min(g.days - 1, Math.round((x - g.L)/((g.W - g.L - g.R)/(g.days - 1)))));
+    const gx = g.X(i); const gl = $('#lcGuide'); gl.setAttribute('x1', gx); gl.setAttribute('x2', gx);
+    svg.querySelectorAll('.hd').forEach(c => { const v = vis[+c.dataset.i].s[i]; c.setAttribute('cx', gx); c.setAttribute('cy', g.Y(v)); });
+    const day = new Date(sod(Date.now()) - (g.days - 1 - i)*DAY);
+    const rows = vis.map(x => ({ c:x.c, v:x.s[i] })).sort((a, b) => b.v - a.v);
+    tip.innerHTML = `<h5>${shortDate(day)}</h5><small>${cmpMode === 'views' ? 'Views / day (5-day avg)' : 'Shorts posted (total)'}</small>` + rows.map(o => `<div><i style="background:${o.c.color}"></i><span>${esc(o.c.title)}</span><b>${cmpMode === 'views' ? compact(o.v) : Math.round(o.v)}</b></div>`).join('');
+    const tw = tip.offsetWidth; tip.style.left = Math.max(0, Math.min(r.width - tw, gx + 16 + tw > r.width ? gx - tw - 16 : gx + 16)) + 'px';
+    box.classList.add('hover'); };
+  box.addEventListener('pointermove', move); box.addEventListener('pointerdown', move);
+  box.addEventListener('pointerleave', () => box.classList.remove('hover'));
+})();
+
+function renderBoard() {
+  const list = chList(); if (!list.length) { $('#board').innerHTML = ''; return; }
+  const key = { avg: c => stats(c).avg, subs: c => c.subs, rate: c => stats(c).rate, posted: c => stats(c).n }[lbSort];
+  const sorted = [...list].sort((a, b) => key(b) - key(a));
+  const maxAvg = Math.max(1, ...list.map(c => stats(c).avg));
+  $('#board').innerHTML = sorted.map((c, i) => { const st = stats(c);
+    return `<${c.url ? `a href="${esc(c.url)}" target="_blank" rel="noopener noreferrer"` : 'div'} class="brow rise ${c.me ? 'me' : ''}" style="--i:${i}">
+      <span class="rk">${i + 1}</span>
+      <div class="bname">${avHTML(c)}<div><b>${esc(c.title)}${c.me ? '<span class="you">You</span>' : ''}</b><small>${c.hiddenSubs ? 'Subs hidden' : compact(c.subs) + ' subs'}${c.handle && !c.me ? ' · ' + esc(c.handle) : ''}</small></div></div>
+      <div class="bavg num" style="--c:${c.color}">${st.n ? compact(st.avg) : '—'}<div class="bar1"><span style="width:${st.avg/maxAvg*100}%"></span></div></div>
+      <div class="cell num">${st.n ? pct(st.rate) : '—'}<small>likes</small></div>
+      <div class="cell num c-posted">${st.n}<small>Shorts</small></div>
+      <div class="cell num c-tv">${compact(c.views)}<small>views</small></div>
+    </${c.url ? 'a' : 'div'}>`; }).join('');
+}
+
+function renderUploads() {
+  if (!comp) return;
+  const all = comp.channels.filter(c => !c.error && !hiddenCh.has(c.key))
+    .flatMap(c => c.videos.filter(v => upFmt === 'all' || v.format === upFmt).map(v => ({ v, c })))
+    .sort((a, b) => (b.v.date || 0) - (a.v.date || 0));
+  const show = all.slice(0, upLimit);
+  $('#uploads').innerHTML = show.length ? show.map(({ v, c }, i) => {
+    const avg = stats(c).fmtAvg[v.format] || 0, ratio = avg ? v.views/avg : 0;
+    const href = v.id ? (v.format === 'short' ? 'https://www.youtube.com/shorts/' : 'https://www.youtube.com/watch?v=') + encodeURIComponent(v.id) : null;
+    return `<${href ? `a href="${href}" target="_blank" rel="noopener noreferrer"` : 'div'} class="urow rise" style="--i:${Math.min(i % 10, 9)}">
+      <div class="th">${v.thumb ? `<img src="${esc(v.thumb)}" alt="" loading="lazy">` : ''}</div>
+      <div class="ttl"><b>${esc(v.title)}</b><div class="uch">${avHTML(c)}<span>${esc(c.title)} · ${ago(v.date)}</span></div></div>
+      <div class="cell c-posted" style="font-size:13px">${ago(v.date)}</div>
+      <span class="fmt c-fmt ${v.format}">${v.format === 'short' ? 'Short' : 'Long'}</span>
+      <div class="cell num">${compact(v.views)}<small>views</small></div>
+      <div class="cell num c-rate">${pct(v.rate)}<small>likes</small></div>
+      <div class="cell num vs ${ratio >= 1.25 ? 'up' : ratio && ratio < .75 ? 'down' : ''}">${ratio ? ratio.toFixed(1) + '×' : '—'}<small>vs avg</small></div>
+    </${href ? 'a' : 'div'}>`; }).join('') : '<p class="sub" style="padding:30px 0;text-align:center">No uploads to show.</p>';
+  const more = $('#upMore'); more.hidden = all.length <= upLimit; more.textContent = `Show more (${all.length - upLimit})`;
+}
+$('#upMore').addEventListener('click', () => { upLimit += 10; renderUploads(); });
+segHandler('#cmpModeSeg', b => { cmpMode = b.dataset.m; lcAnimate = true; drawLC(); });
+segHandler('#lbSeg', b => { lbSort = b.dataset.s; renderBoard(); });
+segHandler('#fmtSeg', b => { upFmt = b.dataset.f; upLimit = 10; renderUploads(); });
+let lcResize = 0; addEventListener('resize', () => { cancelAnimationFrame(lcResize); lcResize = requestAnimationFrame(() => view === 'competitors' && drawLC()); });
+
+function demoComp() {
+  let seed = 11; const rnd = () => (seed = (seed*16807) % 2147483647)/2147483647;
+  const names = ['Rival One','Rival Two','Rival Three','Rival Four','Rival Five'];
+  return { updatedAt:new Date().toISOString(), channels: names.map((n, ci) => {
+    const base = [380000, 150000, 900000, 60000, 240000][ci];
+    const videos = Array.from({ length: 30 }, (_, i) => { const long = rnd() < .12; const views = Math.round(base*(.25 + rnd()*1.8)*(long ? .4 : 1));
+      return { id:'', title:`${n} — upload #${30 - i}`, thumbnail:'', publishedAt:new Date(Date.now() - (i*(1 + ci*.35) + rnd())*DAY).toISOString(), views, likes:Math.round(views*(.03 + rnd()*.04)), comments:Math.round(views*.001), duration: long ? 620 : 35, format: long ? 'long' : 'short' }; });
+    return { id:'', handle:'@rival' + (ci + 1), title:n, avatar:'', subs:[210000, 64000, 480000, 21000, 133000][ci], views:[90e6, 21e6, 260e6, 6e6, 55e6][ci], videoCount:300 + ci*40, videos }; }) };
+}
+async function loadComp() {
+  try {
+    let raw;
+    if (DEMO) raw = demoComp();
+    else { const r = await fetch(CONFIG.competitorsApi, { cache:'no-store' });
+      if (r.status === 404) { compState = 'missing'; renderComp(); return; }
+      if (!r.ok) throw new Error('API returned ' + r.status); raw = await r.json(); if (raw.error) throw new Error(raw.error); }
+    comp = normComp(raw, DEMO); compState = 'ok'; renderComp(view === 'competitors');
+  } catch (e) { console.error(e); $('#compUpdated').textContent = 'Offline'; if (view === 'competitors') toast('Could not load competitors — ' + e.message); }
+}
+
 /* ---------- organic connections ---------- */
 const LINKS = [
   ['#goalCard','r',.30,'#cTotal','l',.72,true],
@@ -869,6 +1157,7 @@ async function load(manual = false) {
     $('#updated').textContent = (DEMO ? 'Demo data · ' : 'Live · ') + 'updated ' + t;
     $('#liveDot').classList.toggle('off', DEMO);
     if (manual) toast('Channel data refreshed');
+    loadComp();
   } catch (e) {
     console.error(e);
     $('#updated').textContent = 'Offline';
