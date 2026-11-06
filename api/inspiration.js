@@ -11,7 +11,7 @@ const CHANNELS = [
   '@행운행복건강좋아요',
   '@CamBR-l4k',
   '@viralhog',            // added: licensed viral clips (animals, funny, unexpected)
-  '@DailyDoseOfInternet'  // added: trending real-life clips
+  '@Bleu'  // added: trending real-life clips
 ];
 const VIDEOS_PER_CHANNEL = 50; // latest uploads per channel (max 50)
 
