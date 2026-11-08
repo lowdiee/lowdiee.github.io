@@ -8,8 +8,8 @@ const COMPETITORS = [
   '@móżdżini',
   '@Służbista',
   '@spngshorts',
-  '@Vernciak'
-  '@toadiee'
+  '@Vernciak',
+  '@toadiee',
   '@Pidzamka'
 ];
 const VIDEOS_PER_CHANNEL = 50; // latest uploads per channel (max 50)
